@@ -1,2 +1,1 @@
-# cipherdmg-trading
-Trading View Indicator and Tools
+# cipher-trading #

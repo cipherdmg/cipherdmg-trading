@@ -1,0 +1,167 @@
+//@version=5
+// ||###################################################################################||
+// ||                                                                                   ||
+// || Candle Stick Patterns                                                             ||
+// ||                                                                                   ||
+// ||                                                                                   ||
+// ||###################################################################################||
+
+indicator("Candle Stick Patterns", shorttitle="Candle Stick Patterns",max_labels_count = 500, overlay=true)
+
+DojiSize = input.float(0.05, minval=0.01, title='Doji size')
+
+//##################################################################################################
+//Patterns
+//##################################################################################################
+
+//https://commodity.com/technical-analysis/doji/
+//The doji is a transitional candlestick formation, signifying equality or indecision between bulls and bears.
+// @function Determine if the given candle is a Doji Candle
+// @param index
+// @returns if the given candle is a DOJI candle
+isDojiCandle(int index) =>
+    math.abs(open[index] - close[index]) <= (high[index] - low[index]) * DojiSize
+
+
+//https://commodity.com/technical-analysis/evening-star
+//The Evening Star pattern is viewed as a bearish reversal pattern in technical analysis. It usually occurs at the top of an uptrend.
+//The first part of an Evening Star reversal pattern is a large bullish green candle. On the first day, bulls are in charge – new highs are usually made.
+//The second day begins with a bullish gap up.
+//The most significant candlestick occurs on Day 3. It begins with a gap down (a bearish signal) and bears are able to press prices even further downward, often eliminating the gains seen on Day 1.
+isEveningStar(int index) =>
+    close[index + 2] > open[index + 2] and math.min(open[index + 1], close[index + 1]) > close[index + 2] and open[index] < math.min(open[index + 1], close[index + 1]) and close[index] < open[index]
+
+
+//https://commodity.com/technical-analysis/morning-star
+//The Morning Star Pattern is viewed as a bullish reversal pattern, usually occurring at the bottom of a downtrend. The pattern consists of three candlesticks:
+//morning star candlestick chart pattern Large Bearish Candle (Day 1) Small Bullish or Bearish Candle (Day 2) Large Bullish Candle (Day 3)
+isMorningStar(int index) =>
+    close[index + 2] < open[index + 2] and math.max(open[index + 1], close[index + 1]) < close[index + 2] and open[index] > math.max(open[index + 1], close[index + 1]) and close[index] > open[index]
+
+
+//https://commodity.com/technical-analysis/shooting-star/
+//The Shooting Star candlestick formation is viewed as a bearish reversal candlestick pattern that typically occurs at the top of uptrends.
+//The Shooting formation is created when the open, low, and close are roughly the same price.
+shootingStar(int index) =>
+    open[index + 1] < close[index + 1] and open[index] > close[index + 1] and high[index] - math.max(open[index], close[index]) >= math.abs(open[index] - close[index]) * 3 and math.min(close[index], open[index]) - low[index] <= math.abs(open[index] - close[index])
+
+//Hanging Man vs Hammer Candlestick Patterns The primary difference between the Hanging Man pattern and the Hammer Candlestick pattern is that the former is bullish and the latter is bearish. That’s because the Hanging Man appears at the top of uptrends while the Hammer appears at the bottom of downtrends.
+
+//https://commodity.com/technical-analysis/hammer/
+//The Hammer candlestick formation is viewed as a bullish reversal candlestick pattern that mainly occurs at the bottom of downtrends.
+//The Hammer formation is created when the open, high, and close prices are roughly the same. Also, there is a long lower shadow that’s twice the length as the real body.
+hammer(int index) =>
+    high[index] - low[index] > 3 * (open[index] - close[index]) and (close[index] - low[index]) / (.001 + high[index] - low[index]) > 0.6 and (open[index] - low[index]) / (.001 + high[index] - low[index]) > 0.6
+
+
+//https://commodity.com/technical-analysis/inverted-hammer/
+//The Inverted Hammer candlestick formation occurs mainly at the bottom of downtrends and can act as a warning of a potential bullish reversal pattern.
+//The Inverted Hammer formation is created when the open, low, and close are roughly the same price. Also, there is a long upper shadow which should be at least twice the length of the real body.
+invertedHammer(int index) =>
+    high[index] - low[index] > 3 * (open[index] - close[index]) and (high[index] - close[index]) / (.001 + high[index] - low[index]) > 0.6 and (high[index] - open[index]) / (.001 + high[index] - low[index]) > 0.6
+
+//https://commodity.com/technical-analysis/hanging-man/
+//The Hanging Man candlestick pattern, as one could predict from the name, is viewed as a bearish reversal pattern and appears at the top of up trends
+hangingMan(int index) =>
+    high[index] - low[index] > 4 * (open[index] - close[index]) and (close[index] - low[index]) / (.001 + high[index] - low[index]) >= 0.75 and (open[index] - low[index]) / (.001 + high[index] - low[index]) >= 0.75 and high[index + 1] < open[index] and high[index + 2] < open[index]
+
+
+//https://commodity.com/technical-analysis/harami/
+//The Harami Candlestick Pattern is considered a trend reversal pattern that can either be bullish or bearish, depending on the direction of the price action.
+//A Harami pattern can be either bullish or bearish, depending on the color of its candles
+bearishHarami(int index) =>
+    close[index + 1] > open[index + 1] and open[index] > close[index] and open[index] <= close[index + 1] and open[index + 1] <= close[index] and open[index] - close[index] < close[index + 1] - open[index + 1]
+
+bullishHarami(int index) =>
+    open[index + 1] > close[index + 1] and close[index] > open[index] and close[index] <= open[index + 1] and close[index + 1] <= open[index] and close[index] - open[index] < open[index + 1] - close[index + 1]
+
+
+//https://commodity.com/technical-analysis/bearish-engulfing/
+//The Bearish Engulfing Candlestick Pattern is considered to be a bearish reversal pattern, usually occurring at the top of an uptrend.
+bearishEngulfing(int index) =>
+    close[index + 1] > open[index + 1] and open[index] > close[index] and open[index] >= close[index + 1] and open[index + 1] >= close[index] and open[index] - close[index] > close[index + 1] - open[index + 1]
+
+//https://commodity.com/technical-analysis/bullish-engulfing/
+//The Bullish Engulfing Candlestick Pattern is a bullish reversal pattern, usually occurring at the bottom of a downtrend.
+bullishEngulfing(int index) =>
+    open[index + 1] > close[index + 1] and close[index] > open[index] and close[index] >= open[index + 1] and close[index + 1] >= open[index] and close[index] - open[index] > open[index + 1] - close[index + 1]
+
+//https://commodity.com/technical-analysis/piercing-pattern/
+//The Piercing Pattern is viewed as a bullish candlestick reversal pattern, similar to the Bullish Engulfing Pattern.
+piercingLine(int index) =>
+    close[index + 1] < open[index + 1] and open[index] < low[index + 1] and close[index] > close[index + 1] + (open[index + 1] - close[index + 1]) / 2 and close[index] < open[index + 1]
+
+//https://www.tradingsetupsreview.com/belt-hold-candlestick-pattern-trading-strategies-guide/
+bullishBelt(int index) =>
+    lower = ta.lowest(10)[index + 1]
+    low[index] == open[index] and open[index] < lower and open[index] < close[index] and close[index] > (high[index + 1] - low[index + 1]) / 2 + low[index + 1]
+
+//The Bullish Kicker signal often occurs after a major surprise in the news that is announced before or after market hours. Something drastic has happened,
+//causing a great shift in investor sentiment, and a reversal will inevitably follow. The larger the gap between the two candles, the more significant the signal.
+bullisnKicker(int index) =>
+    open[index + 1] > close[index + 1] and open[index] >= open[index + 1] and close[index] > open[index]
+
+
+//Bearish Kickers often appear after a startling news event that causes an abrupt change in investor sentiment before or after market hours
+bearishKicker(int index) =>
+    open[index + 1] < close[index + 1] and open[index] <= open[index + 1] and close[index] <= open[index]
+
+
+//https://commodity.com/technical-analysis/dark-cloud-cover/
+//Dark Cloud Cover is a bearish candlestick reversal pattern, similar to the Bearish Engulfing Pattern.
+darknCloudCover(int index) =>
+    close[index + 1] > open[index + 1] and (close[index + 1] + open[index + 1]) / 2 > close[index] and open[index] > close[index] and open[index] > close[index + 1] and close[index] > open[index + 1] and (open[index] - close[index]) / (.001 + high[index] - low[index]) > 0.6
+
+
+//Neutral
+plotchar(series=isDojiCandle(0), title='Doji', color=color.new(color.white, 0), text='Doji')
+
+//Bearish
+plotshape(series=isEveningStar(0), title='Evening Star', color=color.new(color.red, 0), style=shape.arrowdown, text='Evening\nStar')
+
+//Bearish
+plotshape(series=shootingStar(0), title='Shooting Star', color=color.new(color.red, 0), style=shape.arrowdown, text='Shooting\nStar')
+
+//bearish reversal pattern and appears at the top of up trends
+plotshape(series=hangingMan(0), title='Hanging Man', color=color.new(color.red, 0), style=shape.arrowdown, text='Hanging\nMan')
+
+//Bearish typically occurred at the top of a up trend
+plotshape(series=bearishHarami(0), title='Bearish Harami', color=color.new(color.red, 0), style=shape.arrowdown, text='Bearish\nHarami')
+
+//bearish reversal pattern, usually occurring at the top of an uptrend.
+plotshape(series=bearishEngulfing(0), title='Bearish Engulfing', color=color.new(color.red, 0), style=shape.arrowdown, text='Bearish\nEngulfing')
+
+//bearish reversal gap
+plotshape(series=bearishKicker(0), title='Bearish Kicker', color=color.new(color.red, 0), style=shape.arrowdown, text='Bearish\nKicker')
+
+//bearish candlestick reversal pattern
+plotshape(series=darknCloudCover(0), title='Dark Cloud Cover', color=color.new(color.red, 0), style=shape.arrowdown, text='Dark\nCloudCover')
+
+
+
+
+//Bullish
+plotshape(series=isMorningStar(0), title='Morning Star', location=location.belowbar, color=color.new(color.lime, 0), style=shape.arrowup, text='Morning\nStar')
+
+//Bullish typically occurred at the bottom of a down trend
+plotshape(series=hammer(0), title='Hammer', location=location.belowbar, color=color.new(color.white, 0), style=shape.diamond, text='H')
+
+//Bullish typically occurred at the bottom of a down trend
+plotshape(series=invertedHammer(0), title='Inverted Hammer', location=location.belowbar, color=color.new(color.white, 0), style=shape.diamond, text='IH')
+
+//Bullish typically occurred at the bottom of a down trend
+plotshape(series=bullishHarami(0), title='Bullish Harami', location=location.belowbar, color=color.new(color.lime, 0), style=shape.arrowup, text='Bullish\nHarami')
+
+//bullish reversal pattern, usually occurring at the bottom of a downtrend.
+plotshape(series=bullishEngulfing(0), title='Bullish Engulfing', location=location.belowbar, color=color.new(color.lime, 0), style=shape.arrowup, text='Bullish\nEngulfling')
+
+//bullish candlestick reversal pattern, similar to the Bullish Engulfing Pattern.
+plotshape(series=piercingLine(0), title='Piercing Line', location=location.belowbar, color=color.new(color.lime, 0), style=shape.arrowup, text='Piercing\nLine')
+
+//bullish
+plotshape(series=bullishBelt(0), title='Bullish Belt', location=location.belowbar, color=color.new(color.lime, 0), style=shape.arrowup, text='Bullish\nBelt')
+
+//bullish reversal gap
+plotshape(series=bullisnKicker(0), title='Bullish Kicker', location=location.belowbar, color=color.new(color.lime, 0), style=shape.arrowup, text='Bullish\nKicker')
+
+

@@ -1,0 +1,80 @@
+# edit_uri: 'edit/master/docs/'
+
+# base_url: 'docs'
+
+nav:
+    - Home: 'index.md'
+    - Candlestick Patterns:
+        - Candlesticks: 'patterns/patterns.md'
+    - The Strat:
+        - The Strat Cheatsheets: 'the-strat/the-strat-cheatsheet.md'
+    - References:
+        - References: 'references/references.md'
+
+# Project Information
+site_name: Stock Trading
+site_url: "https://github.com/cipherdmg/cipherdmg-trading"
+site_description: Stock Trading
+site_author: Cipher DMG
+
+# Theme
+theme:
+    name: material
+    custom_dir: custom_theme
+    logo: 'aot.png'
+    favicon: 'aot.png'
+    palette:
+        primary: 'black'
+        accent: 'red'
+    font:
+        text: 'IBM Plex Sans'
+        code: 'IBM Plex Mono'
+    features:
+        - tabs
+        - navigation.tabs
+
+# Markdown extensions
+markdown_extensions:
+    - admonition
+    - toc:
+        baselevel: 4
+        separator: "-"
+#       permalink: True
+    - sane_lists
+
+# Plugins
+plugins:
+    - search:
+        separator: '[\s\-\.]+'
+        prebuild_index: true
+    - macros
+
+docs_dir: 'docs'
+
+use_directory_urls: false
+
+# Extra stylesheet
+extra_css:
+    - 'extra-uml.css'
+    - 'pdf.css'
+    - 'mermaid.css'
+
+extra_javascript:
+    - 'extra-uml.js'
+    - 'raphael.min.js'
+    - 'underscore-min.js'
+    - 'sequence-diagram-min.js'
+    - 'flowchart.min.js'
+    - 'mermaid.min.js'
+
+
+# theme:
+#     name: bootstrap4
+
+extra:
+    version: 1.0
+    project: cipherdmg-trading
+    github:
+        https: 'git clone https://github.com/cipherdmg/cipherdmg-trading.git'
+        ssh: 'git clone git@github.com:cipherdmg/cipherdmg-trading.git'
+    test: 12.50

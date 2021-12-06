@@ -1,0 +1,72 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+#* text=auto
+* text=auto eol=lf
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.project text eol=lf
+.bashrc text eol=lf
+*.code-workspace text eol=lf
+
+*.xhtml text eol=lf
+*.wsdl text eol=lf
+*.txt text eol=lf
+*.java text eol=lf
+*.log text eol=lf
+*.xml text eol=lf
+*.js text eol=lf
+*.sh text eol=lf
+*.ftp text eol=lf
+*.htm text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+*.scss text eol=lf
+*.css text eol=lf
+*.props text eol=lf
+*.properties text eol=lf
+*.py text eol=lf
+*.jacl text eol=lf
+*.options text eol=lf
+*.env text eol=lf
+*.service text eol=lf
+*.c text eol=lf
+*.h text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.repo text eol=lf
+*.bc text eol=lf
+*.bat text eol=lf
+*.cmd text eol=lf
+*.groovy text eol=lf
+*.repo text eol=lf
+*.cfg text eol=lf
+*.conf text eol=lf
+*.ps1 text eol=lf
+*.less text eol=lf
+*.svg text eol=lf
+*.flow text eol=lf
+*.sql text eol=lf
+*.ldif text eol=lf
+*.hbs text eol=lf
+*.mqsc text eol=lf
+*.url text eol=lf
+*.csv text eol=lf
+*.project text eol=lf
+*.MF text eol=lf
+*.prefs text eol=lf
+*.launch text eol=lf
+*.rsp text eol=lf
+*.pine text eol=lf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.jar binary
+*.exe binary
+*.zip binary
+

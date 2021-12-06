@@ -1,0 +1,62 @@
+site_name: Stock Trading
+
+# repo_url: https://github.ibm.com/expertiseconnect/faq/
+# edit_uri: 'edit/master/docs/'
+
+# base_url: 'docs'
+
+nav:
+    - Home: 'index.md'
+    - Candlesticks: 'patterns/patterns.md'
+    - The Strat: 'the-strat/the-strat-cheatsheet.md'
+    - References: 'references/references.md'
+
+theme:
+    name: readthedocs
+    custom_dir: custom_theme/
+    highlightjs: true
+    hljs_languages:
+        - yaml
+        - rust
+    include_homepage_in_sidebar: true
+    prev_next_buttons_location: bottom
+    navigation_depth: 4
+    collapse_navigation: True
+    titles_only: False
+    sticky_navigation: True
+
+markdown_extensions:
+    - admonition
+    - toc:
+        baselevel: 4
+        separator: "-"
+#       permalink: True
+    - sane_lists
+
+plugins:
+    - search:
+        separator: '[\s\-\.]+'
+        min_search_length: 3
+        prebuild_index: true
+
+docs_dir: 'docs'
+
+use_directory_urls: false
+
+extra_javascript:
+  - js/extra.js
+
+extra_css:
+    - css/extra.css
+
+
+# theme:
+#     name: bootstrap4
+
+extra:
+    version: 1.0
+    project: ci-scripts
+    github:
+        https: 'git clone https://github.com/cipherdmg/cipher-trading.git'
+        ssh: 'git clone git@github.com:cipherdmg/cipher-trading.git'
+    test: 12.50

@@ -1,0 +1,147 @@
+// https://www.tradingview.com/script/soIkaMfG-Combo-Breaker-Detection/
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © pauls0101
+
+//@version=4
+lookback = 50
+study("Combo Breaker Detection", max_bars_back=lookback, overlay=true, shorttitle="CBD")
+
+var consolBars = input(defval=8, type=input.integer, title="Min Consolidation Bars")
+var swingBars = input(defval=4, type=input.integer, title="Max Bars Between Sig Swing Points")
+var pullbackBars = input(defval=3, type=input.integer, title="Max Bars to Pull Back")
+var impulseMult = input(defval=1.2, type=input.float, step=0.1, title="Impulse Move Multiplier")
+
+var sessionFilter = input(defval=false, type=input.bool, title="Alert Time Filter")
+var session = input(defval="0530-2400", type=input.session, title="Allow Alerts During")
+//var res = input(defval="", type=input.resolution, title="Resolution")
+
+var alt = false
+
+h = highest(consolBars)
+l = lowest(consolBars)
+diff = h - l
+a = atr(8)
+consol = barssince(diff > a*2) >= consolBars
+//plot(a)
+
+// Phase 1: we've successfully passed our minimum consolidation period
+// Phase 2: we have a breakout to the upside or downside
+//    we must check how far outside this consolidation area we have pushed to see if it's far enough to justify a breakout and liquidity capture
+n = barssince(consol)
+h2 = valuewhen(consol, h, 0)
+a2 = valuewhen(consol, a, 0)
+l2 = valuewhen(consol, l, 0)
+downGrab = false
+upGrab = false
+
+if consol == false and n <= swingBars
+    if h >= h2 + a2*impulseMult
+        // looks like we broke out to the high side
+        upGrab := true
+    else if l <= l2 - a2*impulseMult
+        // looks like we broke out to the low side
+        downGrab := true
+
+patternComplete = false
+upPattern = false
+drawDownGrab = false
+drawUpGrab = false
+c = color.new(color.gray, 100)
+var label1 = label.new(bar_index, low)
+
+n := barssince(upGrab)
+// Up grab, let's see if price has pulled back down into the original consolidation zone within the allocated number of bars
+if consol == false and n <= pullbackBars and not upGrab
+    if close > l2 and close < h2
+        patternComplete := true
+        upPattern := true
+        c := color.new(color.red, 90)
+        drawUpGrab := true
+        // label.set_x(label1, x)
+        // label.set_yloc(label1, yloc.abovebar)
+        // label.set_color(label1, color.red)
+        // label.set_style(label1, label.style_triangledown)
+        // label.set_tooltip(label1, "Price has pulled back into consolidation range. Look for the pullback around the liquidity grab area for SELL entry.")
+
+n := barssince(downGrab)
+// Down grab, let's see if price has pulled back down into the original consolidation zone within the allocated number of bars
+if consol == false and n <= pullbackBars and not downGrab
+    if close > l2 and close < h2
+        patternComplete := true
+        c := color.new(color.green, 90)
+        drawDownGrab := true
+        // label.set_x(label1, x)
+        // label.set_yloc(label1, yloc.belowbar)
+        // label.set_color(label1, color.green)
+        // label.set_style(label1, label.style_triangleup)
+        // label.set_tooltip(label1, "Price has pulled back into consolidation range. Look for the pullback around the liquidity grab area for BUY entry.")
+
+// label.set_x(label1, n > 10 ? 0 : n)
+// label.set_yloc(label1, yloc.abovebar)
+// label.set_color(label1, upPattern ? color.red : color.green)
+// label.set_style(label1, label.style_triangledown)
+// label.set_tooltip(label1, "Price has pulled back into consolidation range. Look for the pullback around the liquidity grab area for entry.")
+
+// if not patternComplete
+//     label.delete(label1)
+
+plotshape(patternComplete, style=shape.labelup, color=color.black, textcolor=color.white, location=location.bottom, text="Liquidity Grab")
+plotshape(drawDownGrab, style=shape.triangleup, color=color.green, location=location.belowbar)
+plotshape(drawUpGrab, style=shape.triangledown, color=color.red, location=location.abovebar)
+
+// Let's look for targets of equal highs and lows that we can use as support/resistance and targets
+// the more touches the better, the more recent the better, and only point out those who have not had price move past/through them
+// between current price and the level of interest
+levelVar = input(defval=0.0005, title="Pip Variance", type=input.float) // levelVariance: 5 pip variation for considering equal levels
+
+equalHighCount = 0
+equalLowCount = 0
+
+for i = 1 to lookback
+    if high + levelVar >= high[i] and high - levelVar <= high[i]
+        // this is a valid matching high
+        equalHighCount := equalHighCount + 1
+
+    if high[i] > high + levelVar
+        // this is a much higher high, we don't need to search for matching highs beyond this
+        break
+
+for i = 1 to lookback
+    if low + levelVar >= low[i] and low - levelVar <= low[i]
+        // this is a valid matching high
+        equalLowCount := equalLowCount + 1
+
+    if low[i] < low - levelVar
+        // this is a much lower low, we don't need to search for matching lows beyond this
+        break
+
+//plot(equalHighCount, transp=90)
+//plot(equalLowCount, transp=90)
+
+fsma = sma(equalHighCount, 5)
+ssma = sma(equalHighCount, 9)
+//p1 = plot(fsma, color=color.green, transp=80)
+//p2 = plot(ssma, color=color.blue, transp=80)
+//fill(p1, p2, color=color.blue)
+// plot(ssma - fsma, color=color.blue)
+upper = 4
+lower = -2
+// h1 = hline(4, title='top', color=color.white, linestyle=hline.style_dashed, linewidth=1)
+// h2 = hline(-2, title='bot', color=color.white, linestyle=hline.style_dashed, linewidth=1)
+bot = false
+top = false
+
+if crossover(ssma - fsma, lower)
+    bot := true
+    c := color.new(color.green, 90)
+else if crossunder(ssma - fsma, upper)
+    top := true
+    c := color.new(color.green, 90)
+
+bgcolor(c, transp=90)
+
+alt := sessionFilter ? false : true
+if sessionFilter and not na(time("1", session))
+    alt := true
+
+alertcondition(alt and (patternComplete or bot or top), title="Potential Liquidity Grab", message="{{ticker}} Potential Liquidity Grab")
