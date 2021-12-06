@@ -4,12 +4,10 @@
 
 nav:
     - Home: 'index.md'
-    - Candlestick Patterns:
-        - Candlesticks: 'patterns/patterns.md'
-    - The Strat:
-        - The Strat Cheatsheets: 'the-strat/the-strat-cheatsheet.md'
-    - References:
-        - References: 'references/references.md'
+    - The Strat: 'the-strat/the-strat-cheatsheet.md'
+    - Candlesticks: 'patterns/patterns.md'
+    - References: 'references/references.md'
+
 
 # Project Information
 site_name: Stock Trading

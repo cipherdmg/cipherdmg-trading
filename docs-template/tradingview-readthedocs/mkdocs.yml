@@ -7,8 +7,8 @@ site_name: Stock Trading
 
 nav:
     - Home: 'index.md'
-    - Candlesticks: 'patterns/patterns.md'
     - The Strat: 'the-strat/the-strat-cheatsheet.md'
+    - Candlesticks: 'patterns/patterns.md'
     - References: 'references/references.md'
 
 theme:

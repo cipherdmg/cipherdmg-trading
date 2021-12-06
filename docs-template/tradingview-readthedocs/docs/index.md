@@ -2,6 +2,8 @@
 
 Work In Progress
 
+Document Best Setups
+
 Live! #SSS 50PercentRule EXPLAINED on the Monthly
 
 1) Live Candle Must take out 1 side of previous closed candle
