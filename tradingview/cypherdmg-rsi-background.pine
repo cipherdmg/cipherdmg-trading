@@ -1,0 +1,26 @@
+//@version=5
+// ||###################################################################################||
+// ||                                                                                   ||
+// || 5 Smooth EMA                                                                      ||
+// ||                                                                                   ||
+// ||                                                                                   ||
+// ||###################################################################################||
+
+indicator(title="RSI Background Indicator", shorttitle="RSI Background Indicator", max_labels_count = 500, overlay=true)
+
+//##################################################################################################
+//Highlight background with transparent red and green to represent overbought and oversold
+//##################################################################################################
+//Plot the Relative Strength Index (RSI) when its over 70 and under 30
+rsi_len = input.int(14, minval=1, title="RSI Length")
+rsi_src = input(close, "RSI Source")
+rsi_min = input.int(30, minval=1, title="RSI Minimum Threshold")
+rsi_max = input.int(70, minval=1, title="RSI Maximum Threshold")
+
+rsi = ta.rsi(rsi_src, rsi_len)
+rsi_color = rsi > rsi_max ? color.new(color.red,80)  : rsi < rsi_min ? color.new(color.green, 80) : na
+//rsi_color = rsi > rsi_max ? color.rgb(183, 28, 28)  : rsi < rsi_min ? color.rgb(0, 77, 64) : na
+
+bgcolor(color=rsi_color, offset=0, editable=true, title="RSI")
+
+

@@ -1,0 +1,86 @@
+//@version=5
+// ||###################################################################################||
+// ||                                                                                   ||
+// || Average Daily Range                                                               ||
+// || https://www.tradingview.com/script/eHhGyI6R-CD-Average-Daily-Range-Zones-highs-and-lows-of-the-day/             ||
+// ||                                                                                   ||
+// ||                                                                                   ||
+// ||###################################################################################||
+
+
+//CD
+//Average Daily Range Levels - 10 day
+
+indicator(title='CD_Average Daily Range Zones', shorttitle='CD_Daily High/Low Zones V01', overlay=true)
+
+
+//dayHigh=security(tickerid, 'D', high[1])
+OPEN = request.security(syminfo.tickerid, 'D', open)
+
+//ADR L
+dayrange = high - low
+
+r1 = request.security(syminfo.tickerid, 'D', dayrange[1])
+r2 = request.security(syminfo.tickerid, 'D', dayrange[2])
+r3 = request.security(syminfo.tickerid, 'D', dayrange[3])
+r4 = request.security(syminfo.tickerid, 'D', dayrange[4])
+r5 = request.security(syminfo.tickerid, 'D', dayrange[5])
+r6 = request.security(syminfo.tickerid, 'D', dayrange[6])
+r7 = request.security(syminfo.tickerid, 'D', dayrange[7])
+r8 = request.security(syminfo.tickerid, 'D', dayrange[8])
+r9 = request.security(syminfo.tickerid, 'D', dayrange[9])
+r10 = request.security(syminfo.tickerid, 'D', dayrange[10])
+
+
+
+
+
+adr_10 = (r1 + r2 + r3 + r4 + r5 + r6 + r7 + r8 + r9 + r10) / 10
+adr_9 = (r1 + r2 + r3 + r4 + r5 + r6 + r7 + r8 + r9) / 9
+adr_8 = (r1 + r2 + r3 + r4 + r5 + r6 + r7 + r8) / 8
+adr_7 = (r1 + r2 + r3 + r4 + r5 + r6 + r7) / 7
+adr_6 = (r1 + r2 + r3 + r4 + r5 + r6) / 6
+adr_5 = (r1 + r2 + r3 + r4 + r5) / 5
+adr_4 = (r1 + r2 + r3 + r4) / 4
+adr_3 = (r1 + r2 + r3) / 3
+adr_2 = (r1 + r2) / 2
+adr_1 = r1
+
+
+
+
+//plot
+adrhigh10 = plot(OPEN + adr_10 / 2, title='ADR High10', style=plot.style_circles, color=color.new(color.red, 0), linewidth=2)
+adrlow10 = plot(OPEN - adr_10 / 2, title='ADR LOW10', style=plot.style_circles, color=color.new(color.green, 0), linewidth=2)
+// adrhigh9 = plot(OPEN + adr_9 / 2, title='ADR High9', style=plot.style_circles, color=color.new(color.red, 0), linewidth=2)
+// adrlow9 = plot(OPEN - adr_9 / 2, title='ADR LOW9', style=plot.style_circles, color=color.new(color.green, 0), linewidth=2)
+// adrhigh8 = plot(OPEN + adr_8 / 2, title='ADR High8', style=plot.style_circles, color=color.new(color.red, 0), linewidth=2)
+// adrlow8 = plot(OPEN - adr_8 / 2, title='ADR LOW8', style=plot.style_circles, color=color.new(color.green, 0), linewidth=2)
+// adrhigh7 = plot(OPEN + adr_7 / 2, title='ADR High7', style=plot.style_circles, color=color.new(color.red, 0), linewidth=2)
+// adrlow7 = plot(OPEN - adr_7 / 2, title='ADR LOW7', style=plot.style_circles, color=color.new(color.green, 0), linewidth=2)
+// adrhigh6 = plot(OPEN + adr_6 / 2, title='ADR High6', style=plot.style_circles, color=color.new(color.red, 0), linewidth=2)
+// adrlow6 = plot(OPEN - adr_6 / 2, title='ADR LOW6', style=plot.style_circles, color=color.new(color.green, 0), linewidth=2)
+adrhigh5 = plot(OPEN + adr_5 / 2, title='ADR High5', style=plot.style_circles, color=color.new(color.red, 0), linewidth=2)
+adrlow5 = plot(OPEN - adr_5 / 2, title='ADR LOW5', style=plot.style_circles, color=color.new(color.green, 0), linewidth=2)
+// adrhigh4 = plot(OPEN + adr_4 / 2, title='ADR High4', style=plot.style_circles, color=color.new(color.red, 0), linewidth=2)
+// adrlow4 = plot(OPEN - adr_4 / 2, title='ADR LOW4', style=plot.style_circles, color=color.new(color.green, 0), linewidth=2)
+// adrhigh3 = plot(OPEN + adr_3 / 2, title='ADR High3', style=plot.style_circles, color=color.new(color.red, 0), linewidth=2)
+// adrlow3 = plot(OPEN - adr_3 / 2, title='ADR LOW3', style=plot.style_circles, color=color.new(color.green, 0), linewidth=2)
+// adrhigh2 = plot(OPEN + adr_2 / 2, title='ADR High2', style=plot.style_circles, color=color.new(color.red, 0), linewidth=2)
+// adrlow2 = plot(OPEN - adr_2 / 2, title='ADR LOW2', style=plot.style_circles, color=color.new(color.green, 0), linewidth=2)
+// adrhigh1 = plot(OPEN + adr_1 / 2, title='ADR High1', style=plot.style_circles, color=color.new(color.red, 0), linewidth=2)
+// adrlow1 = plot(OPEN - adr_1 / 2, title='ADR LOW1', style=plot.style_circles, color=color.new(color.green, 0), linewidth=2)
+
+
+
+fill(adrlow10, adrlow5, color=color.new(color.lime, 90))
+fill(adrhigh10, adrhigh5, color=color.new(color.maroon, 90))
+// fill(adrlow2, adrlow9, color=color.new(color.lime, 90))
+// fill(adrhigh2, adrhigh9, color=color.new(color.maroon, 90))
+// fill(adrlow3, adrlow8, color=color.new(color.lime, 90))
+// fill(adrhigh3, adrhigh8, color=color.new(color.maroon, 90))
+// fill(adrlow4, adrlow7, color=color.new(color.lime, 90))
+// fill(adrhigh4, adrhigh7, color=color.new(color.maroon, 90))
+// fill(adrlow6, adrlow2, color=color.new(color.lime, 90))
+// fill(adrhigh6, adrhigh2, color=color.new(color.maroon, 90))
+

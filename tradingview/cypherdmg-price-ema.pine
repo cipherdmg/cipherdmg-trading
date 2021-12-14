@@ -1,0 +1,22 @@
+//@version=5
+// ||###################################################################################||
+// ||                                                                                   ||
+// || 5 Smooth EMA                                                                      ||
+// ||                                                                                   ||
+// ||                                                                                   ||
+// ||###################################################################################||
+
+indicator(title="Price EMA", shorttitle="Price EMA", max_labels_count = 500, overlay=true)
+
+//##################################################################################################
+//Plot the Moving Average
+//##################################################################################################
+
+maLength = input.int(5, minval=1, title="Moving Average Length")
+
+//5 tick moving average to smooth the events
+smooth_moving_average = (open + high + low + close) / 4
+
+smma = ta.sma(smooth_moving_average, maLength)
+plot(series=smma, title="Moving Average", color=color.yellow, linewidth=2, style=plot.style_line)
+

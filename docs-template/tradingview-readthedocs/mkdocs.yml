@@ -6,10 +6,9 @@ site_name: Stock Trading
 # base_url: 'docs'
 
 nav:
-    - Home: 'index.md'
-    - The Strat: 'the-strat/the-strat-cheatsheet.md'
-    - Candlesticks: 'patterns/patterns.md'
-    - References: 'references/references.md'
+    - The Strat: 'index.md'
+    - Patterns: 'patterns.md'
+    - References: 'references.md'
 
 theme:
     name: readthedocs
