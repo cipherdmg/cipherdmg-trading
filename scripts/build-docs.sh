@@ -80,14 +80,6 @@ installMkDocsReadTheDocs(){
     #${sudo} pip3 install mkdocs-gitbook
 }
 
-###############################################################################
-# @description Build Trading Docs
-#
-# @internal
-#
-buildDocsTradingMaterial(){
-    buildDocsTrading -material
-}
 
 ###############################################################################
 # @description Build Trading Docs
@@ -96,29 +88,16 @@ buildDocsTradingMaterial(){
 #
 buildDocsTrading(){
 
-    if [[ "${*}" =~ "-material" ]] ; then local material_design="true" ; else local material_design="false"; fi
-
     local local_project="/dev-projects/cipherdmg-trading"
-    local docs_material_dir="${local_project}/docs-template/tradingview-material"
-    if [[ -d "${docs_material_dir}/site" ]] ; then rm -rf "${docs_material_dir}/site"; fi
+    local docs_dir="${local_project}/docs-template"
+    if [[ -d "${docs_dir}/site" ]] ; then rm -rf "${docs_dir}/site"; fi
 
-    cd "${docs_material_dir}"
-    mkdocs build
-
-    local docs_readthedocs_dir="${local_project}/docs-template/tradingview-readthedocs"
-    if [[ -d "${docs_readthedocs_dir}/site" ]] ; then rm -rf "${docs_readthedocs_dir}/site"; fi
-
-    cd "${docs_readthedocs_dir}"
+    cd "${docs_dir}"
     mkdocs build
 
     if [[ -d "${local_project}/docs" ]] ; then rm -rf "${local_project}/docs"; fi
 
     #Copy the docs
-    if [[ "${material_design}" == "true" ]]; then
-        cp -rf "${docs_material_dir}/site" "${local_project}/docs"
-
-    else
-        cp -rf "${docs_readthedocs_dir}/site" "${local_project}/docs"
-    fi
+    cp -rf "${docs_dir}/site" "${local_project}/docs"
 }
 
