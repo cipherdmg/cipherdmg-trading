@@ -3,11 +3,32 @@
 ## [Smiths In The Black YouTube](https://www.youtube.com/user/smithsintheblack)
 
 
-|            |  Description                                                                               |                                                                       |
-|:---------- |:------------------------------------------------------------------------------------------ |:--------------------------------------------------------------------- |
-| 11/23/2021 | [What is #The Strat](https://www.youtube.com/watch?v=6ndl-DKoijw)                          |                                                                       |
-| 06/28/2020 | [The Strat Informational Sequence](https://www.youtube.com/watch?v=oVuGKLgAV1I)            |                                                                       |
-|            |                                                                                            |                                                                       |
+|            |  Description                                                                                |                                                                       |
+|:---------- |:------------------------------------------------------------------------------------------- |:--------------------------------------------------------------------- |
+| 11/23/2021 | [What is #The Strat](https://www.youtube.com/watch?v=6ndl-DKoijw)                           |                                                                       |
+| 1/1/2018   | [January 1st 2018 The Greatest Story Ever Sold](https://www.youtube.com/watch?v=Axs6YxUoXHI)|                                                                       |
+| 06/28/2020 | [The Strat Informational Sequence](https://www.youtube.com/watch?v=oVuGKLgAV1I)             |                                                                       |
+| 12/26/2016 | [Quant Edge December 26th 2016 Triangle Video](https://www.youtube.com/watch?v=TPqWMyV16SI) |                                                                       |
+
+
+
+## The Strat Coaching by Rob Smith
+* [#TheStrat **Coaching**](https://www.youtube.com/playlist?list=PLwgFZsEO6z6l3qNh8T4InFezzBSwERm0m)
+* [#TheStrat Coaching: January 4th 2018](https://www.youtube.com/watch?v=rYPFTdmyXr8)
+* [#TheStrat Coaching: January 11th 2018](https://www.youtube.com/watch?v=n8thvhEa4Jg)
+* [#TheStrat Coaching: January 18th 2018](https://www.youtube.com/watch?v=0odwWxYNyzU)
+* [#TheStrat Coaching: January 25th 2018](https://www.youtube.com/watch?v=qJCvYHWPnCY)
+* [#TheStrat Coaching: February 1st 2018](https://www.youtube.com/watch?v=DcNykZT1Zd4)
+* [#TheStrat Coaching: February 8th 2018](https://www.youtube.com/watch?v=kjxK_36dMB8)
+* [#TheStrat Coaching: February 12th 2018](https://www.youtube.com/watch?v=uvoDNwQbp28)
+* [#TheStrat Coaching: February 15th 2018 - Morning Session](https://www.youtube.com/watch?v=Tu-54qUTjeM)
+* [#TheStrat Coaching: February 22nd 2018](https://www.youtube.com/watch?v=e0lF1a7YR9Y)
+* [#TheStrat Coaching: March 1st 2018](https://www.youtube.com/watch?v=VnrnJYsAmmU)
+* [#TheStrat Coaching: March 8th 2018](https://www.youtube.com/watch?v=EsrBLj-MGoQ)
+* [#TheStrat Coaching: March 14th 2018](https://www.youtube.com/watch?v=anAiqXFHFQM)
+* [#TheStrat Coaching: March 15th 2018](https://www.youtube.com/watch?v=lIa14lSxBmc)
+* [#TheStrat Coaching: March 22nd 2018](https://www.youtube.com/watch?v=zuuSknnUlhg)
+
 
 ## Alex The Broadening Formation Phenomenon
 
@@ -36,6 +57,10 @@
 * [The Strat with Rob Smith](https://pro.benzinga.help/en/articles/4346637-the-strat-with-rob-smith)
 * [Learn this Profitable Strategy With No Indicators #TheStrat by Jermaine The Strat Soldier](https://www.youtube.com/watch?v=505mcZfeOYQ)
 * [How to Trade The Strat with Small Accounts with Jermaine The Strat Soldier](https://pro.benzinga.com/blog/how-to-trade-the-strat-with-small-accounts-with-jermaine-the-strat-soldier)
+* [Unlock The Strat, CyberDog Webinar](https://www.youtube.com/watch?v=VpdPBG5N-uc)
+* [The Strat & Dede Reversal Strategy Webinar](https://www.youtube.com/watch?v=5LWwtWdhXHk)
+* [The Strat Master Technical Analysis Tutorial](https://www.youtube.com/watch?v=wZbT77HMAXQ)
+* [How the Strat Works on One Minute Charts James Bradley ](https://www.youtube.com/watch?v=vHYbORc4XUU)
 
 ## TrendSpyder The Strat Videos
 
@@ -51,6 +76,20 @@
 
 * [What Do We Know to be True About Price Action?](https://www.newtraderu.com/2019/02/13/what-do-we-know-to-be-true-about-price-action/)
 * [Algorithmic Price Action Trading Strategies](https://www.newtraderu.com/2020/07/04/algorithmic-price-action-trading-strategies)
+
+
+## Alex's Options
+
+* [Trade Planning & Execution #Thestrat](https://www.youtube.com/watch?v=obCWAREMBEM)
+* [OPTIONS TRADING | The easiest way to trade & choose options contracts](https://www.youtube.com/watch?v=XWwIvYvySOA)
+* [My nightly routine as a DAY TRADER](https://www.youtube.com/watch?v=rUPOszh6X4c)
+* [What is #TheStrat? (WORKING TRADING STRATEGY)](https://www.youtube.com/watch?v=0uiWWbOrtj4)
+* [Automatic stops and entries using #TheStrat candlesticks (WORKS WITH OPTIONS) THINKORSWIM](https://www.youtube.com/watch?v=wE_KBvhUtWM)
+* [How to fix option spreads | Day trading options](https://www.youtube.com/watch?v=6dEjYr1D8JY)
+* [How to enter trades on lower timeframes using #TheStrat](https://www.youtube.com/watch?v=18qayXyA71U)
+* [What are broadening formations & why they're important for price action trading](https://www.youtube.com/watch?v=oaijnx6vcJs)
+* [Most EXPLOSIVE Day-Trading Pattern (HUGE MOVES)](https://www.youtube.com/watch?v=IrGVqLWcd-s&t=1s)
+
 
 
 ## Sara Strat Sniper YouTube
