@@ -4,7 +4,11 @@ The Strat teaches us *What do we know to be true?*
 
 ## Key References
 
-* [What Do We Know to Be True About Price Action?](https://pro.benzinga.com/blog/how-to-trade-the-strat-with-small-accounts-with-jermaine-the-strat-soldier)
+
+* [What Do We Know to be True About Price Action?](https://www.newtraderu.com/2019/02/13/what-do-we-know-to-be-true-about-price-action/)
+
+
+* [How to Trade The Strat with Small Accounts with Jermaine The Strat Soldier](https://pro.benzinga.com/blog/how-to-trade-the-strat-with-small-accounts-with-jermaine-the-strat-soldier)
 
 * [The Strat - Rob Smoths In The Black](https://www.youtube.com/user/smithsintheblack)
 
@@ -73,6 +77,28 @@ When mastering time frame continuity keep in mind control, confirm, conflict, an
 * The 60 min group is very important as it will determine who is in controle
 * When the 60 and the daily are confirming they override the weekly and the monthly for controle
 * The Flip (bottom of the hour) will continue to confirm the daily for control or give control back to the 60 weekly and monthly if they are in agreement
+
+### Tips for Weekly Scenrios
+
+
+### Tips for Monthly Scenarios
+
+
+### TTO "Triangle They Out" a Rob-ism
+"Triangle They Out" often followed by Git!!!
+
+*Sara's Interpretation*
+"Triangle, tight stop guys just got shaken out".  Now is the time to look to get in.
+
+Why I don't use the term TTO & prefer to use these vernacular's instead.
+1 - top or bottom of tri - good time to start looking for a reversal
+1. corrective activity - don't want to take the countertrend trade because you are fighting time frame continuity
+
+
+NOTE: When playing the monthly or higher timeframes you don't always want to take the first entry.
+
+
+Also when in taking Monthly or Weekly plays time frame continuity is all green then don't short, look at it and treat the 2D  on the lower timeframes as corrective activities or a pull back.
 
 
 ## Reversals
