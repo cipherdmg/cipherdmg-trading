@@ -2,20 +2,6 @@
 
 The Strat teaches us *What do we know to be true?*
 
-## Key References
-
-
-* [What Do We Know to be True About Price Action?](https://www.newtraderu.com/2019/02/13/what-do-we-know-to-be-true-about-price-action/)
-
-
-* [How to Trade The Strat with Small Accounts with Jermaine The Strat Soldier](https://pro.benzinga.com/blog/how-to-trade-the-strat-with-small-accounts-with-jermaine-the-strat-soldier)
-
-* [The Strat - Rob Smoths In The Black](https://www.youtube.com/user/smithsintheblack)
-
-* [Learn this Profitable Strategy With No Indicators #TheStrat](https://www.youtube.com/watch?v=505mcZfeOYQ)
-
-[Algorithmic Price Action Trading Strategies](https://www.newtraderu.com/2020/07/04/algorithmic-price-action-trading-strategies)
-
 ## Winning and Loosing Trades
 
 ### Losing trades look like...
@@ -50,9 +36,6 @@ The third scenario is where the second bar takes out both sides of the previous 
 it’s attempt to trend as you can’t have a scenario 3 without going scenario 2 first. This is
 known as an outside bar.
 
-### Other Terminology
-
-The Motherbar - The bar prior to the inside is typically referred to as a "mother bar".
 
 ![Scenario1](./img/scenarios/ScenarioTypes.gif)
 
@@ -76,7 +59,7 @@ When mastering time frame continuity keep in mind control, confirm, conflict, an
 
 * The 60 min group is very important as it will determine who is in controle
 * When the 60 and the daily are confirming they override the weekly and the monthly for controle
-* The Flip (bottom of the hour) will continue to confirm the daily for control or give control back to the 60 weekly and monthly if they are in agreement
+* The Flip (bottom of the hour) will continue to confirm the daily for control or give control back to the 60, weekly and monthly if they are in agreement
 
 ### Tips for Weekly Scenrios
 

@@ -1,15 +1,16 @@
 # References
 
-## [Smiths In The Black YouTube](https://www.youtube.com/user/smithsintheblack)
+## Smiths In The Black YouTube
 
+* [Smiths In The Black YouTube](https://www.youtube.com/user/smithsintheblack)
+* [What is #The Strat](https://www.youtube.com/watch?v=6ndl-DKoijw)
+* [January 1st 2018 The Greatest Story Ever Sold](https://www.youtube.com/watch?v=Axs6YxUoXHI)
+* [The Strat Informational Sequence](https://www.youtube.com/watch?v=oVuGKLgAV1I)
+* [Quant Edge December 26th 2016 Triangle Video](https://www.youtube.com/watch?v=TPqWMyV16SI)
 
-|            |  Description                                                                                |                                                                       |
-|:---------- |:------------------------------------------------------------------------------------------- |:--------------------------------------------------------------------- |
-| 11/23/2021 | [What is #The Strat](https://www.youtube.com/watch?v=6ndl-DKoijw)                           |                                                                       |
-| 1/1/2018   | [January 1st 2018 The Greatest Story Ever Sold](https://www.youtube.com/watch?v=Axs6YxUoXHI)|                                                                       |
-| 06/28/2020 | [The Strat Informational Sequence](https://www.youtube.com/watch?v=oVuGKLgAV1I)             |                                                                       |
-| 12/26/2016 | [Quant Edge December 26th 2016 Triangle Video](https://www.youtube.com/watch?v=TPqWMyV16SI) |                                                                       |
+## Patterms
 
+* [How to Trade the Hammer Reversal Chart Pattern](https://www.youtube.com/watch?v=8ICAJUvewYE)
 
 
 ## The Strat Coaching by Rob Smith
