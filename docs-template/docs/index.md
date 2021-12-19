@@ -2,6 +2,9 @@
 
 The Strat teaches us *What do we know to be true?*
 
+"Price Action is not governed by physics, not mathematics, its an aggregate of aggression of the buying and selling participants which we can identify though timeframe continuity combined with actionable signals as defined by the 3 universal scenarios because its impossible for price not to trade within one of these three scenarios." By Rob Black
+
+
 ## Winning and Loosing Trades
 
 ### Losing trades look like...
@@ -38,6 +41,16 @@ known as an outside bar.
 
 
 ![Scenario1](./img/scenarios/ScenarioTypes.gif)
+
+
+### Sara Strat Sniper 50 Percent Rule
+
+The 50% is for potential outside bars only.
+
+1) Live Candle Must take out 1 side of previous closed candle
+2) Live Candle must retrace 50% or more of previous closed candle
+3) Target is the other side of previous closed candle
+
 
 ## Time Frame Continuity
 
@@ -97,8 +110,3 @@ Refer to the [Patterns](patterns.md) section to see examples of **Hammers** and 
 
 ![Scenario1](./img/scenarios/the-strat-combo1.jpg)
 
-Live! #SSS 50PercentRule EXPLAINED on the Monthly
-
-1) Live Candle Must take out 1 side of previous closed candle
-2) Live Candle must retrace 50% of previous closed candle
-3) Target is the other side of previous closed candle

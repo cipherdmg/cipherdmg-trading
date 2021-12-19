@@ -7,7 +7,6 @@ site_name: Stock Trading
 
 nav:
     - The Strat: 'index.md'
-    - Patterns: 'patterns.md'
     - Sectors: 'sectors.md'
     - References: 'references.md'
 
