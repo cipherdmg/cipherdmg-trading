@@ -24,6 +24,10 @@ The Strat teaches us *What do we know to be true?*
 
 Here’s what we know, from one bar to the next, there are only three possible outcomes or scenarios.
 
+!!! tip
+    **If you are using Trading View you can use [Strat Assistant](https://www.tradingview.com/script/PWJRC2Nt-Strat-Assistant/)**
+
+
 ### Scenario 1
 
 In the first scenario the second bar is too weak to make a new high and too strong
