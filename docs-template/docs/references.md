@@ -1,5 +1,9 @@
 # References
 
+## Trading View Lists
+* [S & P 500 Tickers](https://www.tradingview.com/watchlists/68705698)
+* [Market Sectors](https://www.tradingview.com/watchlists/62862169)
+
 ## Smiths In The Black YouTube
 
 * [Smiths In The Black YouTube](https://www.youtube.com/user/smithsintheblack)
