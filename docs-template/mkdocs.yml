@@ -9,6 +9,7 @@ nav:
     - The Strat: 'index.md'
     - Swing Trading: 'swingtradingtips.md'
     - Sectors: 'sectors.md'
+    - The Strat Course: 'intro-to-the-strat.md'
     - References: 'references.md'
 
 theme:
