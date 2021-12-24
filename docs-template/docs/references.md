@@ -148,4 +148,4 @@
 ## Trading View Lists
 * [S & P 500 Tickers](https://www.tradingview.com/watchlists/68705698)
 * [Market Sectors](https://www.tradingview.com/watchlists/62862169)
-* [Dow Jones Industrial Average](https://www.tradingview.com/watchlists/68859141/)
+* [Dow Jones Industrial Average](https://www.tradingview.com/watchlists/68859141)
