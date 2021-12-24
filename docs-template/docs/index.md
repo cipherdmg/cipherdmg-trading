@@ -121,4 +121,6 @@ Refer to the [Patterns](patterns.md) section to see examples of **Hammers** and 
 
 * A 3, 2, 2 reversal can be very powerful because they were willing to pay up and sell down
 
-Motherbar issue - once you have an inside bar, the bar previous to it is called a motherbar.   Sometimes its hard to get out of the motherbar and it ends up as a chopshop
+* Motherbar issue - once you have an inside bar, the bar previous to it is called a motherbar.   Sometimes its hard to get out of the motherbar and it ends up as a chopshop
+
+* Trading the gaps, stay on the 15, 30, 60 timeframes but also pay attention to higher timeframes but don't go into the vortext of lower timeframes
