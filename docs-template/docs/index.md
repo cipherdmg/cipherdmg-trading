@@ -18,7 +18,7 @@ The Strat teaches us *What do we know to be true?*
 
 1. Scenario 2 in your favor
 2. Scenario 3 in your favor
-3. TIme frame continuity in your favor
+3. Time frame continuity in your favor
 
 ## The Scenarios
 
@@ -78,11 +78,6 @@ When mastering time frame continuity keep in mind control, confirm, conflict, an
 * When the 60 and the daily are confirming they override the weekly and the monthly for controle
 * The Flip (bottom of the hour) will continue to confirm the daily for control or give control back to the 60, weekly and monthly if they are in agreement
 
-### Tips for Weekly Scenrios
-
-
-### Tips for Monthly Scenarios
-
 
 ### TTO "Triangle They Out" a Rob-ism
 "Triangle They Out" often followed by Git!!!
@@ -114,3 +109,16 @@ Refer to the [Patterns](patterns.md) section to see examples of **Hammers** and 
 
 ![Scenario1](./img/scenarios/the-strat-combo1.jpg)
 
+
+
+## Notes from The Strat Course
+
+* Typically you would not trade in a scenario 1 but if the scenario 1 is in a much higher timeframe (i.e. Month ) because we have a much larger timeframe to get out of a 1.
+
+* For Weekly We do not want to be trading an inside week on Wednesday, Thursday or Friday.
+
+* We should be able to set a 1 cent stop as it should just work
+
+* A 3, 2, 2 reversal can be very powerful because they were willing to pay up and sell down
+
+Motherbar issue - once you have an inside bar, the bar previous to it is called a motherbar.   Sometimes its hard to get out of the motherbar and it ends up as a chopshop
