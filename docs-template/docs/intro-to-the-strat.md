@@ -22,8 +22,8 @@
 
 ## Continuity And Breaks
 
-* [The Time Frame Continuity Principle](https://drive.google.com/file/d/1VoQ-0VJ_1BHAiiwxuJzoTGl-iOJiCdJA/view?usp=sharing)
-* [Definition of Compound 3](https://drive.google.com/file/d/1VoQ-0VJ_1BHAiiwxuJzoTGl-iOJiCdJA/view?usp=sharing)
-* [Simultaneous Breaks](https://drive.google.com/file/d/1VoQ-0VJ_1BHAiiwxuJzoTGl-iOJiCdJA/view?usp=sharing)
-* [Flips And Simultaneous Breaks](https://drive.google.com/file/d/1VoQ-0VJ_1BHAiiwxuJzoTGl-iOJiCdJA/view?usp=sharing)
+* [The Time Frame Continuity Principle](https://drive.google.com/file/d/1HKPpoV4CA06zrsqLeuUgqJlmlOeXUXZP/view?usp=sharing)
+* [Definition of Compound 3](https://drive.google.com/file/d/1zqpHkoRw3tUjany6tiFjRkI_YAFyHK91/view?usp=sharing)
+* [Simultaneous Breaks](https://drive.google.com/file/d/11H874_hK-DzYdY2BJ8ijTxURuMM8FZiN/view?usp=sharing)
+* [Flips And Simultaneous Breaks](https://drive.google.com/file/d/1znpe-BQiVgsVcfu57umX949KMPDlooL-/view?usp=sharing)
 
