@@ -1,5 +1,7 @@
 # Introduction to The Strat Offical Training
 
+These Videos are locked and are only available for [**Smith in the Black**](https://sepiagroup.com) Subscribers.
+
 ## Introduction
 * [What Is The Strat](https://drive.google.com/file/d/1h_drJEADnNArjCVfTKaVlpipJhxVZVj7/view?usp=sharing)
 * [Getting Started](https://drive.google.com/file/d/1O9ifN0Ukt9VKMu8zb6Q_Z9xbh3kdimtv/view?usp=sharing)
