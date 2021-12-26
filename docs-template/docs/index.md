@@ -4,7 +4,6 @@ The Strat teaches us *What do we know to be true?*
 
 "Price Action is not governed by physics, not mathematics, its an aggregate of aggression of the buying and selling participants which we can identify though timeframe continuity combined with actionable signals as defined by the 3 universal scenarios because its impossible for price not to trade within one of these three scenarios." By Rob Black
 
-
 ## Winning and Loosing Trades
 
 ### Losing trades look like...
@@ -27,7 +26,6 @@ Here’s what we know, from one bar to the next, there are only three possible o
 !!! tip
     **If you are using Trading View you can use [Strat Assistant](https://www.tradingview.com/script/PWJRC2Nt-Strat-Assistant/)**
 
-
 ### Scenario 1
 
 In the first scenario the second bar is too weak to make a new high and too strong
@@ -43,16 +41,15 @@ The third scenario is where the second bar takes out both sides of the previous 
 it’s attempt to trend as you can’t have a scenario 3 without going scenario 2 first. This is
 known as an outside bar.
 
-
 ![Scenario1](./img/scenarios/ScenarioTypes.gif)
 
 ## Confirm
 
-* Are all particpiation groups confirming each other?  Are they going in the same direction?
+* Are all participation groups confirming each other?  Are they going in the same direction?
 
 ## Change
 
-* Are the particpation groups changing the continuity of the other groups?
+* Are the participation groups changing the continuity of the other groups?
 
 ## Control
 
@@ -62,8 +59,7 @@ known as an outside bar.
 * Daily = Who is control today
 * 60 = Who is in control right now
 
-
-## Uccoupling
+## Uncoupling
 
 Is the first time during any month where the opening prices of the 4 major time frame occur at different times.
 
@@ -74,11 +70,10 @@ Is the first time during any month where the opening prices of the 4 major time 
 * If the last day of the month is between Friday and Sunday, uncoupling doesn't occur until the second hour of trading on the FOLLOWING Tuesday.
 * If the month ends any other day, the uncoupling occurs the second hour of the following day
 
-
 ## Time Frame Continuity
 
-* Particppants that are represented by the various time frames
-* Day Trading, Swing Trading, Scalping, Long Term Inveting
+* Participants that are represented by the various time frames
+* Day Trading, Swing Trading, Scalping, Long Term Investing
 * Can separate them by price and time (Universal Truths: High, Low, Open, Close)
 * We need time to pass in order to identify the groups.  We prefer four separate openings
 * Any time the Monthly, Weekly, Daily and Hourly are all red, the algos are hitting the bids
@@ -86,17 +81,15 @@ Is the first time during any month where the opening prices of the 4 major time 
 
 When mastering time frame continuity keep in mind control, confirm, conflict, and change. Remember that the 60 is always in control because it tells you what’s happening in that moment. Reversals become important when you run into conflict. Identifying reversals such as 2-1-2 on the downside that forms a shooter can turn the rest of your time frames red, if it continues.
 
-
 ## The Flip
 * Every new hour
 * Rob recommends we aggregate at the bottom of the hour
 * Opening starts at the bottom as does Euro market closes and several other
 * important liquidity events (oil, natural gas, numbers)
 
-* The 60 min group is very important as it will determine who is in controle
-* When the 60 and the daily are confirming they override the weekly and the monthly for controle
+* The 60 min group is very important as it will determine who is in control
+* When the 60 and the daily are confirming they override the weekly and the monthly for control
 * The Flip (bottom of the hour) will continue to confirm the daily for control or give control back to the 60, weekly and monthly if they are in agreement
-
 
 ## Reversals
 
@@ -133,7 +126,6 @@ The 50% is for potential outside bars only.
 * When this occurs it typically means there is a lot of Institutional Buying or Selling happening
 * If there are a lot of failed 2s or 3s on daily or weekly then we have a bias and we are looking for another simultaneous break and it means they are not just buying something, there buying or selling everything.
 
-
 ### Use To Be Somebody
 
 * When Rob says **Use to be Somebody** it means that we are having a reversal back though previous range that use to be something **higher**.
@@ -144,12 +136,12 @@ The 50% is for potential outside bars only.
 
 * When a monthly candle is 2-2 Reversal you don't have to take it right away.
 * The 2-2 Reversal is enforced all Month so any time you have additional signals to the downside we are going to be looking for that.
-* Look for reversals on any lower timeframe (Weekly, Daily, 60s, 30s and 15s) into full timeframe cotninuity to get in
+* Look for reversals on any lower timeframe (Weekly, Daily, 60s, 30s and 15s) into full timeframe continuity to get in
 
 ### Exhaustion Risk
 
 * Exhaustion risk can occur when going though a broadening formation
-* The reason we call it exhaustion is because anybody short doesn't have any more pivits to be short against (hence exhaustion) and buyers have to step up
+* The reason we call it exhaustion is because anybody short doesn't have any more pivots to be short against (hence exhaustion) and buyers have to step up
 * This can lead to a fade near exhaustion risk
 * Usually happens in new highs or new lows
 
@@ -158,11 +150,11 @@ The 50% is for potential outside bars only.
 * Once you have an inside bar, the bar previous to it is called a motherbar
 * Sometimes its hard to get out of the motherbar and it ends up as a chopshop
 
-### Triable They Out
+### Triangle They Out
 
-* Triable They Out, they always do
+* Triangle They Out, they always do
 * Top or bottom of tri - good time to start looking for a reversal
-* Corrective activitity (aka a pull back)
+* Corrective activity (aka a pull back)
 * Don't want to take the countertrend trade because you are fighting time frame continuity
 * Good time to add during triangle they out
 
@@ -171,7 +163,6 @@ The 50% is for potential outside bars only.
 * 2-2 RevStrat where the first 2 is about 80% of the candle is Long or Short
 
 ![Scenario1](./img/scenarios/kicker.gif)
-
 
 ## Notes from The Strat Course
 
@@ -184,8 +175,7 @@ The 50% is for potential outside bars only.
 * A 3, 2, 2 reversal can be very powerful because they were willing to pay up and sell down
 
 
-
-* Trading the gaps, stay on the 15, 30, 60 timeframes but also pay attention to higher timeframes but don't go into the vortext of lower timeframes
+* Trading the gaps, stay on the 15, 30, 60 timeframes but also pay attention to higher timeframes but don't go into the vortex of lower timeframes
 
 * Compound 3 - Would have been an outside bar on a separate timeframe
 
@@ -198,5 +188,6 @@ The 50% is for potential outside bars only.
 * The Greeks - Delta highest as possible, Vega closest to ATM, Theta, at least 2 expirations
              - Strike ATM
              - Avoid, the retracements of price
+
 
 
