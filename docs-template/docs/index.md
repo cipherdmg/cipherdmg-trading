@@ -2,22 +2,9 @@
 
 The Strat teaches us *What do we know to be true?*
 
+So what do We know to be true? There are 3 universal scenarios and 4 types of reversals and the time frame continuity principal.
+
 "Price Action is not governed by physics, not mathematics, its an aggregate of aggression of the buying and selling participants which we can identify though timeframe continuity combined with actionable signals as defined by the 3 universal scenarios because its impossible for price not to trade within one of these three scenarios." By Rob Black
-
-## Winning and Loosing Trades
-
-### Losing trades look like...
-
-1. Chopped up trading a scenario 1.
-2. Scenario 2 going against you
-3. Scenario 3 going against you
-4. Time frame Continuity going against you
-
-### Winning Trades look like....
-
-1. Scenario 2 in your favor
-2. Scenario 3 in your favor
-3. Time frame continuity in your favor
 
 ## The Scenarios
 
@@ -163,6 +150,23 @@ The 50% is for potential outside bars only.
 * 2-2 RevStrat where the first 2 is about 80% of the candle is Long or Short
 
 ![Scenario1](./img/scenarios/kicker.gif)
+
+
+## Winning and Loosing Trades
+
+### Losing trades look like...
+
+1. Chopped up trading a scenario 1.
+2. Scenario 2 going against you
+3. Scenario 3 going against you
+4. Time frame Continuity going against you
+
+### Winning Trades look like....
+
+1. Scenario 2 in your favor
+2. Scenario 3 in your favor
+3. Time frame continuity in your favor
+
 
 ## Notes from The Strat Course
 
