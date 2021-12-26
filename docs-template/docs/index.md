@@ -53,14 +53,14 @@ known as an outside bar.
 ## Change
 
 * Are the particpation groups changing the continuity of the other groups?
-*
-## Determination of control though confirming conflicting or changing continuity levels
 
+## Control
+
+* Determination of control though confirming conflicting or changing continuity levels
 * We always need to stablish which participation groups are in control, and for how long
 * Monthly = Institutional Group
 * Daily = Who is control today
 * 60 = Who is in control right now
-
 
 
 ## UnCoupling
@@ -119,22 +119,6 @@ The 50% is for potential outside bars only.
 
 ## Robism
 
-### TTO "Triangle They Out" a Rob-ism
-"Triangle They Out" often followed by Git!!!
-
-*Sara's Interpretation*
-"Triangle, tight stop guys just got shaken out".  Now is the time to look to get in.
-
-Why I don't use the term TTO & prefer to use these vernacular's instead.
-1 - top or bottom of tri - good time to start looking for a reversal
-1. corrective activity - don't want to take the countertrend trade because you are fighting time frame continuity
-
-
-NOTE: When playing the monthly or higher timeframes you don't always want to take the first entry.
-
-
-Also when in taking Monthly or Weekly plays time frame continuity is all green then don't short, look at it and treat the 2D  on the lower timeframes as corrective activities or a pull back.
-
 ### Inside 60s the flavour
 
 * When Rob says **Inside 60s the flavour** that means we have a high concentration of Inside 60s that all start to break in the same direction its called a simultaneous break.
@@ -163,6 +147,14 @@ Also when in taking Monthly or Weekly plays time frame continuity is all green t
 
 * Once you have an inside bar, the bar previous to it is called a motherbar
 * Sometimes its hard to get out of the motherbar and it ends up as a chopshop
+
+### Triable They Out
+
+* Triable They Out, they always do
+* Top or bottom of tri - good time to start looking for a reversal
+* Corrective activitity (aka a pull back)
+* Don't want to take the countertrend trade because you are fighting time frame continuity
+* Good time to add during triangle they out
 
 
 ## Notes from The Strat Course
