@@ -100,12 +100,16 @@ When mastering time frame continuity keep in mind control, confirm, conflict, an
 
 Reversals can come in the form of Actionable Signals along with some key candlestick patterns.  When looking at actionable signals there are hammers, shooters, and reversals to take into consideration.
 
-* **Hammers** are important because they indicate when to take immediate entry. When a candle breaks through the hammer candle you know that a reversal is present and there is a good potential to entry
+We always want to be entering on reversals and adding on continuation patterns.  The main things we look at are the 2-2 Rev Strat, 2-1-2 Rev Strat, or the failed 2 goes 3.
 
+* **Hammers** are important because they indicate when to take immediate entry. When a candle breaks through the hammer candle you know that a reversal is present and there is a good potential to entry
 
 * **Shooters** These signals occur when the seller starts taking profits, creating the shooter. The shooter is live on the next bar, and that’s when you hit it. It’s important to remember that the shooter doesn’t indicate to get out right away, you have to look at the next bar to determine what to do.
 
 Refer to the [Patterns](patterns.md) section to see examples of **Hammers** and **Shooters**.
+
+!!! important
+    It is very important that we are always forward thinking and understanding "what if" scenarios which could change the continuity on the higher timeframes and change the entire course of trading.
 
 ![Scenario1](./img/scenarios/the-strat-combo1.jpg)
 
@@ -113,18 +117,22 @@ Refer to the [Patterns](patterns.md) section to see examples of **Hammers** and 
 
 The 50% is for potential outside bars only.
 
-1) Live Candle Must take out 1 side of previous closed candle
-2) Live Candle must retrace 50% or more of previous closed candle
-3) Target is the other side of previous closed candle
+1. Live Candle Must take out 1 side of previous closed candle
+2. Live Candle must retrace 50% or more of previous closed candle
+3. Target is the other side of previous closed candle
 
 ## Robism
 
-### Inside 60s the flavour
+### Simultaneous Break
 
-* When Rob says **Inside 60s the flavour** that means we have a high concentration of Inside 60s that all start to break in the same direction its called a simultaneous break.
+* When Rob says **Inside 60s the flavor** that means we have a high concentration of Inside 60s that all start to break in the same direction which is called a simultaneous break.
+* This can occur on any timeframe and not just the 60
+* Very powerful if this occurs on the Monthly on the SPY and all the market sectors and broader averages
+* When this occurs it typically means there is a lot of Institutional Buying or Selling happening
 * If there are a lot of failed 2s or 3s on daily or weekly then we have a bias and we are looking for another simultaneous break and it means they are not just buying something, there buying or selling everything.
 
-### Use to be Somebody
+
+### Use To Be Somebody
 
 * When Rob says **Use to be Somebody** it means that we are having a reversal back though previous range that use to be something **higher**.
 * And the reason we do, when the buyers are aggressive  on full timeframe continuity to the upside and coming back through previous range, anyone who is short will be short against known pivots which produces the pivot machine gun.
@@ -133,7 +141,7 @@ The 50% is for potential outside bars only.
 ### Enforce
 
 * When a monthly candle is 2-2 Reversal you don't have to take it right away.
-* The 2-2 Reversal is enforced all Month.
+* The 2-2 Reversal is enforced all Month so any time you have additional signals to the downside we are going to be looking for that.
 * Look for reversals on any lower timeframe (Weekly, Daily, 60s, 30s and 15s) into full timeframe cotninuity to get in
 
 ### Exhaustion Risk
@@ -155,6 +163,12 @@ The 50% is for potential outside bars only.
 * Corrective activitity (aka a pull back)
 * Don't want to take the countertrend trade because you are fighting time frame continuity
 * Good time to add during triangle they out
+
+### Kicking Pattern
+
+* 2-2 RevStrat where the first 2 is about 80% of the candle is Long or Short
+
+![Scenario1](./img/scenarios/kicker.gif)
 
 
 ## Notes from The Strat Course
