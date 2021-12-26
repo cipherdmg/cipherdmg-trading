@@ -9,8 +9,8 @@ These Videos are locked and are only available for [**Smith in the Black**](http
 
 ## What we look for
 * [Part 1](https://drive.google.com/file/d/12YsAKXMkuKSwTPqErbG_SmKnPQSbSMGZ/view?usp=sharing)
-* [Part 2](https://drive.google.com/file/d/1LWdBENzAzkhpBePGVGkxBt46wk-gKXxZ/view?usp=sharing)
-* [Part 3](https://drive.google.com/file/d/16Q98kmMYdgRKA1qYk4Vi8camA4TT6Wfz/view?usp=sharing)
+* [Part 2](https://drive.google.com/file/d/1K2nyHDgtZMIsbBsyxAIy9KA_mF-acMRw/view?usp=sharing)
+* [Part 3](https://drive.google.com/file/d/1p4M69ny7ZhQeaqzzlfm642qaZwnzopNU/view?usp=sharing)
 
 ## Prices
 * [How Prices Continue](https://drive.google.com/file/d/1VQpFTFW2kapWdslFNQH4fvOM7p1xF3cY/view?usp=sharing)

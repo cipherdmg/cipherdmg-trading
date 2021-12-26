@@ -46,14 +46,31 @@ known as an outside bar.
 
 ![Scenario1](./img/scenarios/ScenarioTypes.gif)
 
+## Confirm
 
-### Sara Strat Sniper 50 Percent Rule
+* Are all particpiation groups confirming each other?  Are they going in the same direction?
 
-The 50% is for potential outside bars only.
+## Change
 
-1) Live Candle Must take out 1 side of previous closed candle
-2) Live Candle must retrace 50% or more of previous closed candle
-3) Target is the other side of previous closed candle
+* Are the particpation groups changing the continuity of the other groups?
+*
+## Determination of control though confirming conflicting or changing continuity levels
+
+* We always need to stablish which participation groups are in control, and for how long
+* Monthly = Institutional Group
+* Daily = Who is control today
+* 60 = Who is in control right now
+
+
+
+## UnCoupling
+
+* Is the first time during any month where the opening prices of the 4 major time frame occur at different times
+* On any Monday, the Daily and Weekly opening prices are the same.  During the first hour on Tuesday, the opening prices of the 60 group and Daily group are the same
+* Thus, the earliest an uncoupling can occur is the second hour of trading on Tuesday
+* THIS MEANS that we gain more quantitative evidence in which to gauge the probability of our trades based on the separation of the participation groups
+* If the last day of the month is between Friday and Sunday, uncoupling doesn't occur until the second hour of trading on the FOLLOWING Tuesday.
+* If the month ends any other day, the uncoupling occurs the second hour of the following day
 
 
 ## Time Frame Continuity
@@ -68,7 +85,7 @@ The 50% is for potential outside bars only.
 When mastering time frame continuity keep in mind control, confirm, conflict, and change. Remember that the 60 is always in control because it tells you what’s happening in that moment. Reversals become important when you run into conflict. Identifying reversals such as 2-1-2 on the downside that forms a shooter can turn the rest of your time frames red, if it continues.
 
 
-### The Flip
+## The Flip
 * Every new hour
 * Rob recommends we aggregate at the bottom of the hour
 * Opening starts at the bottom as does Euro market closes and several other
@@ -78,6 +95,29 @@ When mastering time frame continuity keep in mind control, confirm, conflict, an
 * When the 60 and the daily are confirming they override the weekly and the monthly for controle
 * The Flip (bottom of the hour) will continue to confirm the daily for control or give control back to the 60, weekly and monthly if they are in agreement
 
+
+## Reversals
+
+Reversals can come in the form of Actionable Signals along with some key candlestick patterns.  When looking at actionable signals there are hammers, shooters, and reversals to take into consideration.
+
+* **Hammers** are important because they indicate when to take immediate entry. When a candle breaks through the hammer candle you know that a reversal is present and there is a good potential to entry
+
+
+* **Shooters** These signals occur when the seller starts taking profits, creating the shooter. The shooter is live on the next bar, and that’s when you hit it. It’s important to remember that the shooter doesn’t indicate to get out right away, you have to look at the next bar to determine what to do.
+
+Refer to the [Patterns](patterns.md) section to see examples of **Hammers** and **Shooters**.
+
+![Scenario1](./img/scenarios/the-strat-combo1.jpg)
+
+## Sara Strat Sniper 50 Percent Rule
+
+The 50% is for potential outside bars only.
+
+1) Live Candle Must take out 1 side of previous closed candle
+2) Live Candle must retrace 50% or more of previous closed candle
+3) Target is the other side of previous closed candle
+
+### Robism
 
 ### TTO "Triangle They Out" a Rob-ism
 "Triangle They Out" often followed by Git!!!
@@ -95,20 +135,34 @@ NOTE: When playing the monthly or higher timeframes you don't always want to tak
 
 Also when in taking Monthly or Weekly plays time frame continuity is all green then don't short, look at it and treat the 2D  on the lower timeframes as corrective activities or a pull back.
 
+### Inside 60s the flavour
 
-## Reversals
+* When Rob says **Inside 60s the flavour** that means we have a high concentration of Inside 60s that all start to break in the same direction its called a simultaneous break.
+* If there are a lot of failed 2s or 3s on daily or weekly then we have a bias and we are looking for another simultaneous break and it means they are not just buying something, there buying or selling everything.
 
-Reversals can come in the form of Actionable Signals along with some key candlestick patterns.  When looking at actionable signals there are hammers, shooters, and reversals to take into consideration.
+### Use to be Somebody
 
-* **Hammers** are important because they indicate when to take immediate entry. When a candle breaks through the hammer candle you know that a reversal is present and there is a good potential to entry
+* When Rob says **Use to be Somebody** it means that we are having a reversal back though previous range that use to be something **higher**.
+* And the reason we do, when the buyers are aggressive  on full timeframe continuity to the upside and coming back through previous range, anyone who is short will be short against known pivots which produces the pivot machine gun.
+* Sometimes **Use to be Somebody**'s can be very powerful and will make a lot of money
 
+### Enforce
 
-* **Shooters** These signals occur when the seller starts taking profits, creating the shooter. The shooter is live on the next bar, and that’s when you hit it. It’s important to remember that the shooter doesn’t indicate to get out right away, you have to look at the next bar to determine what to do.
+* When a monthly candle is 2-2 Reversal you don't have to take it right away.
+* The 2-2 Reversal is enforced all Month.
+* Look for reversals on any lower timeframe (Weekly, Daily, 60s, 30s and 15s) into full timeframe cotninuity to get in
 
-Refer to the [Patterns](patterns.md) section to see examples of **Hammers** and **Shooters**.
+### Exhaustion Risk
 
-![Scenario1](./img/scenarios/the-strat-combo1.jpg)
+* Exhaustion risk can occur when going though a broadening formation
+* The reason we call it exhaustion is because anybody short doesn't have any more pivits to be short against (hence exhaustion) and buyers have to step up
+* This can lead to a fade near exhaustion risk
+* Usually happens in new highs or new lows
 
+### Motherbar Issues
+
+* Once you have an inside bar, the bar previous to it is called a motherbar
+* Sometimes its hard to get out of the motherbar and it ends up as a chopshop
 
 
 ## Notes from The Strat Course
@@ -121,6 +175,20 @@ Refer to the [Patterns](patterns.md) section to see examples of **Hammers** and 
 
 * A 3, 2, 2 reversal can be very powerful because they were willing to pay up and sell down
 
-* Motherbar issue - once you have an inside bar, the bar previous to it is called a motherbar.   Sometimes its hard to get out of the motherbar and it ends up as a chopshop
+
 
 * Trading the gaps, stay on the 15, 30, 60 timeframes but also pay attention to higher timeframes but don't go into the vortext of lower timeframes
+
+* Compound 3 - Would have been an outside bar on a separate timeframe
+
+* 3-2-2 is very Powerful since it needs to take out the 3
+
+[Benzinga: #TheStrat with Arturo Peralta](https://www.youtube.com/watch?v=Knvs1I63gS8)
+
+### How I Apply The Strat To Options
+
+* The Greeks - Delta highest as possible, Vega closest to ATM, Theta, at least 2 expirations
+             - Strike ATM
+             - Avoid, the retracements of price
+
+
