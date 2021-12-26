@@ -63,11 +63,13 @@ known as an outside bar.
 * 60 = Who is in control right now
 
 
-## UnCoupling
+## Uccoupling
 
-* Is the first time during any month where the opening prices of the 4 major time frame occur at different times
-* On any Monday, the Daily and Weekly opening prices are the same.  During the first hour on Tuesday, the opening prices of the 60 group and Daily group are the same
-* Thus, the earliest an uncoupling can occur is the second hour of trading on Tuesday
+Is the first time during any month where the opening prices of the 4 major time frame occur at different times.
+
+* On any Monday, the Daily and Weekly opening prices are the same.
+* During the first hour on Tuesday, the opening prices of the 60 group and Daily group are the same
+* The earliest an uncoupling can occur is the second hour of trading on Tuesday
 * THIS MEANS that we gain more quantitative evidence in which to gauge the probability of our trades based on the separation of the participation groups
 * If the last day of the month is between Friday and Sunday, uncoupling doesn't occur until the second hour of trading on the FOLLOWING Tuesday.
 * If the month ends any other day, the uncoupling occurs the second hour of the following day
