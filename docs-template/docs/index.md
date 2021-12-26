@@ -117,7 +117,7 @@ The 50% is for potential outside bars only.
 2) Live Candle must retrace 50% or more of previous closed candle
 3) Target is the other side of previous closed candle
 
-### Robism
+## Robism
 
 ### TTO "Triangle They Out" a Rob-ism
 "Triangle They Out" often followed by Git!!!
