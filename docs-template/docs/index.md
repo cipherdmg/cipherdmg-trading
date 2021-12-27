@@ -134,6 +134,19 @@ The 50% is for potential outside bars only.
 * When this occurs it typically means there is a lot of Institutional Buying or Selling happening
 * If there are a lot of failed 2s or 3s on daily or weekly then we have a bias and we are looking for another simultaneous break and it means they are not just buying something, there buying or selling everything.
 
+### Pivot Machine Gun (PMG)
+
+A pivot is where people likely have their stops.
+
+When looking at a pivot machine gun you'll notice there is 5 pivots to the upside that haven't been hit, this means over the past 5 days (if looking at a daily chart) anyone short had no reason to exit their position so we know they are STILL short
+
+Once we've identified this we then know to buy the first reversal INTO these pivots.  When that occurs you are stopping people out while also having the daily participants bit up the price.
+
+When this occurs you have people getting stopped out (bidding the price up & removing liquidity) as well as buyers becoming aggressive which creates a large & quick move into the pivots.  This is a great example of why we look to trade though previous range, going into All Time Highs or All Time Lows means you don't stop anyone out and have exhaustion risk.   This doesn't mean we don't take stocks that are strongly going into All Time Highs it just means we would prefer to take stocks that are not.
+
+![Scenario1](./img/scenarios/pmg.gif)
+
+
 ### Use To Be Somebody
 
 * When Rob says **Use to be Somebody** it means that we are having a reversal back though previous range that use to be something **higher**.
