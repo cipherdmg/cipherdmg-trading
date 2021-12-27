@@ -102,6 +102,18 @@ Refer to the [Patterns](patterns.md) section to see examples of **Hammers** and 
 !!! important
     It is very important that we are always forward thinking and understanding "what if" scenarios which could change the continuity on the higher timeframes and change the entire course of trading.
 
+## Broadening Formation
+
+* A broadening formation is exactly what it sounds like; something that broadens
+* When trading we use broadening formations to gauge magnitude (Where price is going) because they have to occur in order for price to trade up and down
+* As shown previously a "3" candle is by definition a broadening formation because it has made a higher high and a lower low in comparison to the previous candle; also known as broadening the range
+* Boradening formations give us magnitude though the use of compound outside bars
+* Compound outside bars are 2 or more bars that create a **3** when they are compounded together
+* Every (x)-2-2 reversal uses a compound outside bar as it's target
+* All a broadening formation is telling us is there is a higher high and and a lower low
+* When drawing a broadenting formation you draw them front to back (right to left) in order to get all all of the data possible, ideally it should be a SLIGHT lower low and SLIGHT higher high
+
+
 ![Scenario1](./img/scenarios/the-strat-combo1.jpg)
 
 ## Sara Strat Sniper 50 Percent Rule
