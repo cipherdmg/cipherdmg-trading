@@ -78,6 +78,15 @@ When mastering time frame continuity keep in mind control, confirm, conflict, an
 * When the 60 and the daily are confirming they override the weekly and the monthly for control
 * The Flip (bottom of the hour) will continue to confirm the daily for control or give control back to the 60, weekly and monthly if they are in agreement
 
+## RevStrat
+
+Don't be confused by the name.   A RevStrat is not just a reversal.  A RevStrat is a consolidation followed by an outside bar or a *compound outside bar* this is shown by the highlighted boxes & the resulting broadening formation.
+
+When looking to trade a RevStrat there are two types, 1 bar RevStrat (1-3) and a normal rev strat (1-2-2).  The latter is easier to scan for as it is a 3 bar setup, while in contrast the 1-3 is a 2 bar setup.
+
+
+![Scenario1](./img/scenarios/rev-strat.gif)
+
 ## Reversals
 
 Reversals can come in the form of Actionable Signals along with some key candlestick patterns.  When looking at actionable signals there are hammers, shooters, and reversals to take into consideration.
