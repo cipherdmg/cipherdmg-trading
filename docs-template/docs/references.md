@@ -8,6 +8,24 @@
 * [The Strat Informational Sequence](https://www.youtube.com/watch?v=oVuGKLgAV1I)
 * [Quant Edge December 26th 2016 Triangle Video](https://www.youtube.com/watch?v=TPqWMyV16SI)
 
+## Rob Smith Articles
+
+* [What Do We Know to be True About Price Action?](https://www.newtraderu.com/2019/02/13/what-do-we-know-to-be-true-about-price-action/)
+* [Algorithmic Price Action Trading Strategies](https://www.newtraderu.com/2020/07/04/algorithmic-price-action-trading-strategies)
+
+
+## Alex's Options
+
+* [What is #TheStrat? (WORKING TRADING STRATEGY)](https://www.youtube.com/watch?v=0uiWWbOrtj4)
+* [What is #TheStrat Part 2 (WORKING TRADING STRATEGY)](https://www.youtube.com/watch?v=OQrakqN13wY)
+* [Trade Planning & Execution #Thestrat](https://www.youtube.com/watch?v=obCWAREMBEM)
+* [OPTIONS TRADING | The easiest way to trade & choose options contracts](https://www.youtube.com/watch?v=XWwIvYvySOA)
+* [My nightly routine as a DAY TRADER](https://www.youtube.com/watch?v=rUPOszh6X4c)
+* [Automatic stops and entries using #TheStrat candlesticks (WORKS WITH OPTIONS) THINKORSWIM](https://www.youtube.com/watch?v=wE_KBvhUtWM)
+* [How to fix option spreads | Day trading options](https://www.youtube.com/watch?v=6dEjYr1D8JY)
+* [How to enter trades on lower timeframes using #TheStrat](https://www.youtube.com/watch?v=18qayXyA71U)
+* [What are broadening formations & why they're important for price action trading](https://www.youtube.com/watch?v=oaijnx6vcJs)
+* [Most EXPLOSIVE Day-Trading Pattern (HUGE MOVES)](https://www.youtube.com/watch?v=IrGVqLWcd-s&t=1s)
 
 ## Patterms
 
@@ -79,25 +97,6 @@
 * [#TheSTRAT Breakdown With Creator Rob Smith](https://www.youtube.com/watch?v=LxrjNiUEf8w&t=32s)
 * [Sara Trendspider Scanning Segment](https://www.youtube.com/watch?v=QpLbLnxeEGc&t=38s)
 * [Software Update: The Strat and Sequential Count Indicators Added](https://www.youtube.com/watch?v=FgONPoAWPus)
-
-
-## Rob Smith Articles
-
-* [What Do We Know to be True About Price Action?](https://www.newtraderu.com/2019/02/13/what-do-we-know-to-be-true-about-price-action/)
-* [Algorithmic Price Action Trading Strategies](https://www.newtraderu.com/2020/07/04/algorithmic-price-action-trading-strategies)
-
-
-## Alex's Options
-
-* [Trade Planning & Execution #Thestrat](https://www.youtube.com/watch?v=obCWAREMBEM)
-* [OPTIONS TRADING | The easiest way to trade & choose options contracts](https://www.youtube.com/watch?v=XWwIvYvySOA)
-* [My nightly routine as a DAY TRADER](https://www.youtube.com/watch?v=rUPOszh6X4c)
-* [What is #TheStrat? (WORKING TRADING STRATEGY)](https://www.youtube.com/watch?v=0uiWWbOrtj4)
-* [Automatic stops and entries using #TheStrat candlesticks (WORKS WITH OPTIONS) THINKORSWIM](https://www.youtube.com/watch?v=wE_KBvhUtWM)
-* [How to fix option spreads | Day trading options](https://www.youtube.com/watch?v=6dEjYr1D8JY)
-* [How to enter trades on lower timeframes using #TheStrat](https://www.youtube.com/watch?v=18qayXyA71U)
-* [What are broadening formations & why they're important for price action trading](https://www.youtube.com/watch?v=oaijnx6vcJs)
-* [Most EXPLOSIVE Day-Trading Pattern (HUGE MOVES)](https://www.youtube.com/watch?v=IrGVqLWcd-s&t=1s)
 
 
 
