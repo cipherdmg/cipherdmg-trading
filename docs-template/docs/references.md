@@ -15,6 +15,7 @@
 
 
 ## The Strat Coaching by Rob Smith
+
 * [#TheStrat **Coaching**](https://www.youtube.com/playlist?list=PLwgFZsEO6z6l3qNh8T4InFezzBSwERm0m)
 * [#TheStrat Coaching: January 4th 2018](https://www.youtube.com/watch?v=rYPFTdmyXr8)
 * [#TheStrat Coaching: January 11th 2018](https://www.youtube.com/watch?v=n8thvhEa4Jg)
@@ -31,13 +32,19 @@
 * [#TheStrat Coaching: March 15th 2018](https://www.youtube.com/watch?v=lIa14lSxBmc)
 * [#TheStrat Coaching: March 22nd 2018](https://www.youtube.com/watch?v=zuuSknnUlhg)
 
+## The Dang Media
 
-## Alex The Broadening Formation Phenomenon
+[The Dang Media Youtube](https://www.youtube.com/watch?v=H93lbgG0ARo)
+
+
+## The Broadening Formation Phenomenon
+
+### Alex The Broadening Formation Phenomenon
 
 * [Price Action Trading The Broadening Formation Phenomenon](https://www.youtube.com/watch?v=7IYnExps0SQ)
 
 
-## Rob Smith The Broadening Formation Phenomenon
+### Rob Smith The Broadening Formation Phenomenon
 
 * [The Broadening Formation Phenomenon Epic Poem A C](https://www.youtube.com/watch?v=CUUEgNmpexw)
 * [The Broadening Formation Phenomenon Epic Poem D F](https://www.youtube.com/watch?v=SbI-Nf_0iwo)

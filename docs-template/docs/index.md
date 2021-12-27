@@ -140,10 +140,9 @@ The 50% is for potential outside bars only.
 ### Triangle They Out
 
 * Triangle They Out, they always do
-* Top or bottom of tri - good time to start looking for a reversal
-* Corrective activity (aka a pull back)
+* A Triangle They Out is really nothing more then corrective activity (aka a pull back)
+* If you don't get stopped out then typically this is where you can add to your winning position
 * Don't want to take the countertrend trade because you are fighting time frame continuity
-* Good time to add during triangle they out
 
 ### Kicking Pattern
 
