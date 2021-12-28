@@ -3,29 +3,29 @@
 These Videos are locked and are only available for [**Smith in the Black**](https://sepiagroup.com) Subscribers.
 
 ## Introduction
-* [What Is The Strat](https://drive.google.com/file/d/1h_drJEADnNArjCVfTKaVlpipJhxVZVj7/view?usp=sharing)
-* [Getting Started](https://drive.google.com/file/d/1O9ifN0Ukt9VKMu8zb6Q_Z9xbh3kdimtv/view?usp=sharing)
-* [Setups And Magnitude](https://drive.google.com/file/d/18tj52Ak6dG1WG_ZdtwwWObmZvzRb80YN/view?usp=sharing)
+* [What Is The Strat](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/introduction/topic/what-is-the-strat)
+* [Getting Started](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/introduction/topic/getting-started)
+* [Setups And Magnitude](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/introduction/topic/setups-and-magnitude)
 
 ## What we look for
-* [Part 1](https://drive.google.com/file/d/12YsAKXMkuKSwTPqErbG_SmKnPQSbSMGZ/view?usp=sharing)
-* [Part 2](https://drive.google.com/file/d/1K2nyHDgtZMIsbBsyxAIy9KA_mF-acMRw/view?usp=sharing)
-* [Part 3](https://drive.google.com/file/d/1p4M69ny7ZhQeaqzzlfm642qaZwnzopNU/view?usp=sharing)
+* [Part 1](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/what-we-look-for/topic/part-1)
+* [Part 2](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/what-we-look-for/topic/part-2)
+* [Part 3](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/what-we-look-for/topic/part-3)
 
 ## Prices
-* [How Prices Continue](https://drive.google.com/file/d/1VQpFTFW2kapWdslFNQH4fvOM7p1xF3cY/view?usp=sharing)
-* [How Prices Reverse](https://drive.google.com/file/d/1eN1y1CGzsDfqBv_SIoCO236hQIHdFDTp/view?usp=sharing)
+* [How Prices Continue](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/prices/topic/how-prices-continue)
+* [How Prices Reverse](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/prices/topic/how-prices-reverse)
 
 ## Trading
-* [Trading Gaps](https://drive.google.com/file/d/1U2elkEnCFZ2Y4st-UBFkmbr6W5dRIf07/view?usp=sharing)
-* [Scanning Technique](https://drive.google.com/file/d/1LB-6g_GEhBlqkW7Wb4fWNXzvuzBgA78x/view?usp=sharing)
-* [Sector Specific Simultaneous Breaks](https://drive.google.com/file/d/1LB-6g_GEhBlqkW7Wb4fWNXzvuzBgA78x/view?usp=sharing)
-* [Refining Your Universe](https://drive.google.com/file/d/1VoQ-0VJ_1BHAiiwxuJzoTGl-iOJiCdJA/view?usp=sharing)
+* [Trading Gaps](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/trading/topic/trading-gaps)
+* [Scanning Technique](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/trading/topic/scanning-technique)
+* [Sector Specific Simultaneous Breaks](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/trading/topic/sector-specific-simultaneous-breaks)
+* [Refining Your Universe](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/trading/topic/refining-your-universe)
 
 ## Continuity And Breaks
 
-* [The Time Frame Continuity Principle](https://drive.google.com/file/d/1HKPpoV4CA06zrsqLeuUgqJlmlOeXUXZP/view?usp=sharing)
-* [Definition of Compound 3](https://drive.google.com/file/d/1zqpHkoRw3tUjany6tiFjRkI_YAFyHK91/view?usp=sharing)
-* [Simultaneous Breaks](https://drive.google.com/file/d/11H874_hK-DzYdY2BJ8ijTxURuMM8FZiN/view?usp=sharing)
-* [Flips And Simultaneous Breaks](https://drive.google.com/file/d/1znpe-BQiVgsVcfu57umX949KMPDlooL-/view?usp=sharing)
+* [The Time Frame Continuity Principle](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/continuity-and-breaks/topic/the-time-frame-continuity-principle)
+* [Definition of Compound 3](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/continuity-and-breaks/topic/definition-of-compound-3)
+* [Simultaneous Breaks](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/continuity-and-breaks/topic/simultaneous-breaks)
+* [Flips And Simultaneous Breaks](https://sepiagroup.com/courses/introduction-to-the-strat/lessons/continuity-and-breaks/topic/flips-and-simultaneous-breaks)
 

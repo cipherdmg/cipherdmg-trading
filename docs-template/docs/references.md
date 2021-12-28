@@ -31,6 +31,11 @@
 
 * [How to Trade the Hammer Reversal Chart Pattern](https://www.youtube.com/watch?v=8ICAJUvewYE)
 
+## Scanners
+
+* [Strat Scan](https://runstrat.com/#/scans)
+
+
 
 ## The Strat Coaching by Rob Smith
 
