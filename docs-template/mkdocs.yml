@@ -7,7 +7,7 @@ site_name: Stock Trading
 
 nav:
     - The Strat: 'index.md'
-    - Option Picking: 'options.md'
+    - Options: 'options.md'
     - Swing Trading: 'swingtradingtips.md'
     - Sectors: 'sectors.md'
     - The Strat Course: 'intro-to-the-strat.md'
