@@ -1,5 +1,7 @@
 # The Strat Swing Trading Tips
 
+**Work In Progress**
+
 Tips for Swing Trading The Strat
 
 
