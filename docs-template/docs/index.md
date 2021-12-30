@@ -200,31 +200,3 @@ When this occurs you have people getting stopped out (bidding the price up & rem
 2. Scenario 3 in your favor
 3. Time frame continuity in your favor
 
-
-## Notes from The Strat Course
-
-* Typically you would not trade in a scenario 1 but if the scenario 1 is in a much higher timeframe (i.e. Month ) because we have a much larger timeframe to get out of a 1.
-
-* For Weekly We do not want to be trading an inside week on Wednesday, Thursday or Friday.
-
-* We should be able to set a 1 cent stop as it should just work
-
-* A 3, 2, 2 reversal can be very powerful because they were willing to pay up and sell down
-
-
-* Trading the gaps, stay on the 15, 30, 60 timeframes but also pay attention to higher timeframes but don't go into the vortex of lower timeframes
-
-* Compound 3 - Would have been an outside bar on a separate timeframe
-
-* 3-2-2 is very Powerful since it needs to take out the 3
-
-[Benzinga: #TheStrat with Arturo Peralta](https://www.youtube.com/watch?v=Knvs1I63gS8)
-
-### How I Apply The Strat To Options
-
-* The Greeks - Delta highest as possible, Vega closest to ATM, Theta, at least 2 expirations
-             - Strike ATM
-             - Avoid, the retracements of price
-
-
-
