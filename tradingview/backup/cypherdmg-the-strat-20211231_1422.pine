@@ -455,60 +455,48 @@ var table tcTable = table.new(position=position.top_right, columns = 9, rows = 2
 
 
 // get open, close, high, and low series for various time frames
-
-[tfa1PrevClose, tfa1Close] = request.security(syminfo.tickerid, tfa1, [usePreviousClose ? close[1] : open[0], close[0]], barmerge.gaps_off)
-[tfa2PrevClose, tfa2Close] = request.security(syminfo.tickerid, tfa2, [usePreviousClose ? close[1] : open[0], close[0]], barmerge.gaps_off)
-[tfa3PrevClose, tfa3Close] = request.security(syminfo.tickerid, tfa3, [usePreviousClose ? close[1] : open[0], close[0]], barmerge.gaps_off)
-[tfa4PrevClose, tfa4Close] = request.security(syminfo.tickerid, tfa4, [usePreviousClose ? close[1] : open[0], close[0]], barmerge.gaps_off)
-[tfa5PrevClose, tfa5Close] = request.security(syminfo.tickerid, tfa5, [usePreviousClose ? close[1] : open[0], close[0]], barmerge.gaps_off)
-[tfa6PrevClose, tfa6Close] = request.security(syminfo.tickerid, tfa6, [usePreviousClose ? close[1] : open[0], close[0]], barmerge.gaps_off)
-[tfa7PrevClose, tfa7Close] = request.security(syminfo.tickerid, tfa7, [usePreviousClose ? close[1] : open[0], close[0]], barmerge.gaps_off)
-
-h = high
-l = low
-c = close
-o = open
-
-onebar = h <= h[1] and l >= l[1]
-twobar = h <= h[1] and l < l[1] or h > h[1] and l >= l[1]
-threebar = h > h[1] and l < l[1]
-greenbar = o <= c
-red = o >= c
-
+[open15Value, close15Value, high15Value, low15Value, time15Value] = getSecurityByTimeFrame(tfa1)
+[open30Value, close30Value, high30Value, low30Value, time30Value] = getSecurityByTimeFrame(tfa2)
+[open60Value, close60Value, highHourValue, lowHourValue, timeHourValue] = getSecurityByTimeFrame(tfa3)
+[openDayValue, closeDayValue, highDayValue, lowDayValue, timeDayValue] = getSecurityByTimeFrame(tfa4)
+[openWeekValue, closeWeekValue, highWeekValue, lowWeekValue, timeWeekValue] = getSecurityByTimeFrame(tfa5)
+[openMonthValue, closeMonthValue, highMonthValue, lowMonthValue, timeMonthValue] = getSecurityByTimeFrame(tfa6)
+[openQuarterValue, closeQuarterValue, highQuarterValue, lowQuarterValue, timeQuarterValue] = getSecurityByTimeFrame(tfa7)
 
 
 if barstate.islast and isTfEnabled
-    tfa1Bullish = tfa1Close > tfa1PrevClose
-    tfa2Bullish = tfa2Close > tfa2PrevClose
-    tfa3Bullish = tfa3Close > tfa3PrevClose
-    tfa4Bullish = tfa4Close > tfa4PrevClose
-    tfa5Bullish = tfa5Close > tfa5PrevClose
-    tfa6Bullish = tfa6Close > tfa6PrevClose
-	tfa7Bullish = tfa7Close > tfa7PrevClose
+    tfa1Bullish = open15Value[0] <= close15Value[0]
+    tfa2Bullish = open30Value[0] <= close30Value[0]
+    tfa3Bullish = open60Value[0] <= close60Value[0]
+    tfa4Bullish = openDayValue[0] <= closeDayValue[0]
+    tfa5Bullish = openWeekValue[0] <= closeWeekValue[0]
+    tfa6Bullish = openMonthValue[0] <= closeMonthValue[0]
+	tfa7Bullish = openQuarterValue[0] <= closeQuarterValue[0]
 
-    tfa1Chg = (tfa1Close - tfa1PrevClose) / tfa1PrevClose * 100.0
+    tfa1Chg = (close15Value - open15Value) / open15Value * 100.0
     tfa1Color = tfa1Bullish ? bullishColor : bearishColor
 
-    tfa2Chg = (tfa2Close - tfa2PrevClose) / tfa2PrevClose * 100.0
+    tfa2Chg = (close30Value - open30Value) / open30Value * 100.0
     tfa2Color = tfa2Bullish ? bullishColor : bearishColor
 
-    tfa3Chg = (tfa3Close - tfa3PrevClose) / tfa3PrevClose * 100.0
+    tfa3Chg = (close60Value - open60Value) / open60Value * 100.0
     tfa3Color = tfa3Bullish ? bullishColor : bearishColor
 
-    tfa4Chg = (tfa4Close - tfa4PrevClose) / tfa4PrevClose * 100.0
+    tfa4Chg = (closeDayValue - openDayValue) / openDayValue * 100.0
     tfa4Color = tfa4Bullish ? bullishColor : bearishColor
 
-    tfa5Chg = (tfa5Close - tfa5PrevClose) / tfa5PrevClose * 100.0
+    tfa5Chg = (closeWeekValue - openWeekValue) / openWeekValue * 100.0
     tfa5Color = tfa5Bullish ? bullishColor : bearishColor
 
-    tfa6Chg = (tfa6Close - tfa6PrevClose) / tfa6PrevClose * 100.0
+    tfa6Chg = (closeMonthValue - openMonthValue) / openMonthValue * 100.0
     tfa6Color = tfa6Bullish ? bullishColor : bearishColor
 
-	tfa7Chg = (tfa7Close - tfa7PrevClose) / tfa7PrevClose * 100.0
+	tfa7Chg = (closeQuarterValue - openQuarterValue) / openQuarterValue * 100.0
     tfa7Color = tfa7Bullish ? bullishColor : bearishColor
 
     table.cell(tcTable, 0, 0, tfa1 + '\n' + str.tostring(tfa1Chg, '#.##') + '%', bgcolor=color.new(tfa1Color, tfTableOpacity), text_color=tfa1Color, text_size=size.auto, width=0)
-    table.cell(tcTable, 1, 0, tfa2 + '\n' + str.tostring(tfa2Chg, '#.##') + '%', bgcolor=color.new(tfa2Color, tfTableOpacity), text_color=tfa2Color, text_size=size.auto, width=0)
+    //table.cell(tcTable, 1, 0, tfa2 + '\n' + str.tostring(tfa2Chg, '#.##') + '%', bgcolor=color.new(tfa2Color, tfTableOpacity), text_color=tfa2Color, text_size=size.auto, width=0)
+    table.cell(tcTable, 1, 0, tfa2 + '\n' + str.tostring(closeDayValue, '#.##') + ' ' + str.tostring(openDayValue, '#.##') , bgcolor=color.new(tfa2Color, tfTableOpacity), text_color=tfa2Color, text_size=size.auto, width=0)
     table.cell(tcTable, 2, 0, tfa3 + '\n' + str.tostring(tfa3Chg, '#.##') + '%', bgcolor=color.new(tfa3Color, tfTableOpacity), text_color=tfa3Color, text_size=size.auto, width=0)
     table.cell(tcTable, 3, 0, tfa4 + '\n' + str.tostring(tfa4Chg, '#.##') + '%', bgcolor=color.new(tfa4Color, tfTableOpacity), text_color=tfa4Color, text_size=size.auto, width=0)
     table.cell(tcTable, 4, 0, tfa5 + '\n' + str.tostring(tfa5Chg, '#.##') + '%', bgcolor=color.new(tfa5Color, tfTableOpacity), text_color=tfa5Color, text_size=size.auto, width=0)
