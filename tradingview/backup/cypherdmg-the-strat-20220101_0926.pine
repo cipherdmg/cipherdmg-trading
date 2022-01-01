@@ -440,7 +440,6 @@ barcolor(color=_isInsideCandle? insideColor : _isOutsideCandle? outsideColor : _
 
 //##################################################################################################
 //STRATEGY CODE: displays at the top, strategies/combos... these generally work left to right - the far right bar is index 0, add one to go back each time
-//TODO: Use this Later if we want to identify potential reversals ahead of time
 //##################################################################################################
 is212BearishContinuationMeasuredMove = isTwoDownCandle(2) and isInsideCandle(1) and isTwoDownCandle(0)
 is212BullishContinuationMeasuredMove = isTwoUpCandle(2) and isInsideCandle(1) and isTwoUpCandle(0)
@@ -449,178 +448,22 @@ is222BullishContinuation = isTwoUpCandle(2) and isTwoUpCandle(1) and isTwoUpCand
 is2222BearishRandyJackson = isTwoDownCandle(3) and isTwoDownCandle(2) and isTwoUpCandle(1) and isTwoDownCandle(0)
 is2222BullishRandyJackson = isTwoUpCandle(3) and isTwoUpCandle(2) and isTwoDownCandle(1) and isTwoUpCandle(0)
 
-//2-2 Bearish Reversal has entry on low[1] and target low[2]
+
 is22BearishReversal = isTwoUpCandle(1) and isTwoDownCandle(0) and not isInsideCandle(2) and not isTwoDownCandle(2) and not isTwoDownCandle(3) and not isOutsideCandle(2)
-
-//2-2 Bullish Reversal has entry high[1] and target high[2]
 is22BullishReversal = isTwoDownCandle(1) and isTwoUpCandle(0) and not isInsideCandle(2) and not isTwoUpCandle(2) and not isTwoUpCandle(3) and not isOutsideCandle(2)
-
-//2-1-2 Bearish Reversal has entry low[1] and target low[2]
 is212BearishReversal = isTwoUpCandle(2) and isInsideCandle(1) and isTwoDownCandle(0)
-
-//2-1-2 Bullish Reversal has entry high[1] and target high[2]
 is212BullishReversal = isTwoDownCandle(2) and isInsideCandle(1) and isTwoUpCandle(0)
-
-//3-2-2 Bearish Reversal has entry low[1] and target low[2]
 is322BearishReversal = isOutsideCandle(2) and isTwoUpCandle(1) and isTwoDownCandle(0)
-
-//3-2-2 Bullish Reversal has entry high[1] and target high[2]
 is322BullishReversal = isOutsideCandle(2) and isTwoDownCandle(1) and isTwoUpCandle(0)
-
 is32BearishReversal = isOutsideCandle(1) and isTwoDownCandle(0)
 is32BullishReversal = isOutsideCandle(1) and isTwoUpCandle(0)
-
-//3-1-2 Bearish Reversal has entry low[1] and target low[2]
 is312BearishReversal = isOutsideCandle(2) and isInsideCandle(1) and isTwoDownCandle(0)
-
-//3-1-2 Bullish Reversal has entry high[1] and target high[2]
 is312BullishReversal = isOutsideCandle(2) and isInsideCandle(1) and isTwoUpCandle(0)
-
 is122BearishRevStratReversal = isInsideCandle(2) and isTwoUpCandle(1) and isTwoDownCandle(0)
 is122BullishRevStratReversal = isInsideCandle(2) and isTwoDownCandle(1) and isTwoUpCandle(0)
 is3BearishRevStratReversal = isOutsideCandle(0) and close[0] < low[1]
 is3BullishRevStratReversal = isOutsideCandle(0) and close[0] > low[1]
 
-//##################################################################################################
-//Anticipate the next Reversal
-//This section will search for the next reversal that could occur based on the current candles
-//##################################################################################################
-
-//Check to see if we are on a realtime bar or not.
-//if barstate.isrealtime
-
-//2-2 Bearish Reversal has entry on low[1] and target low[2] (Next Candle Needs to be 2 Down)
-//is22BearishReversalSetup = isTwoUpCandle(0) and not isInsideCandle(1) and not isTwoDownCandle(1) and not isTwoDownCandle(2) and not isOutsideCandle(1)
-is22BearishReversalSetup = isTwoUpCandle(0) and not isInsideCandle(1)
-
-//2-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle Needs to be 2 Up)
-//is22BullishReversalSetup = isTwoDownCandle(0) and not isInsideCandle(1) and not isTwoUpCandle(1) and not isTwoUpCandle(2) and not isOutsideCandle(1)
-is22BullishReversalSetup = isTwoDownCandle(0) and not isInsideCandle(1)
-
-//2-1-2 Bearish Reversal has entry low[1] and target low[2] (Next Candle Needs to be 2 Down)
-is212BearishReversalSetup = isTwoUpCandle(1) and isInsideCandle(0)
-
-//2-1-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle Needs to be 2 Up)
-is212BullishReversalSetup = isTwoDownCandle(1) and isInsideCandle(0)
-
-//3-2-2 Bearish Reversal has entry low[1] and target low[2] (Next Candle needs to be a 2 Down)
-is322BearishReversalSetup = isOutsideCandle(1) and isTwoUpCandle(0)
-
-//3-2-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle needs to be a 2 Up)
-is322BullishReversalSetup = isOutsideCandle(1) and isTwoDownCandle(0)
-
-//3-1-2 Bearish Reversal has entry low[1] and target low[2] (Next Candle needs to be 2 Down)
-is312BearishReversalSetup = isOutsideCandle(1) and isInsideCandle(0)
-
-//3-1-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle needs to be 2 Up)
-is312BullishReversalSetup = isOutsideCandle(1) and isInsideCandle(0)
-
-//1-2-2 Bearish Rev Strat has entry low[1] and target low[3] (Next Candle needs to be 2 Down)
-is122BearishRevStratReversalSetup = isInsideCandle(1) and isTwoUpCandle(0)
-
-//1-2-2 Bullish Rev Strat has entry high[1] and target high[3] (Next Candle needs to be 2 Up)
-is122BullishRevStratReversalSetup = isInsideCandle(1) and isTwoDownCandle(0)
-
-
-var nextPattern = ''
-var nextPatternColor=bullishColor
-var nextPatternProfit=0.00
-
-if (is22BearishReversalSetup)
-    nextPattern := '2-2'
-    nextPatternColor := bearishColor
-    nextPatternProfit := low[0] - low[1]
-
-
-//2-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle Needs to be 2 Up)
-//is22BullishReversalSetup = isTwoDownCandle(0) and not isInsideCandle(1) and not isTwoUpCandle(1) and not isTwoUpCandle(2) and not isOutsideCandle(1)
-else if(is22BullishReversalSetup)
-    nextPattern := '2-2'
-    nextPatternColor := bullishColor
-    nextPatternProfit := high[1] - high[0]
-
-
-//2-1-2 Bearish Reversal has entry low[1] and target low[2] (Next Candle Needs to be 2 Down)
-else if(is212BearishReversalSetup)
-    nextPattern := '2-1-2'
-    nextPatternColor := bearishColor
-    nextPatternProfit := low[0] - low[1]
-
-
-//2-1-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle Needs to be 2 Up)
-else if(is212BullishReversalSetup)
-    nextPattern := '2-1-2'
-    nextPatternColor := bullishColor
-    nextPatternProfit := high[1] - high[0]
-
-//3-2-2 Bearish Reversal has entry low[1] and target low[2] (Next Candle needs to be a 2 Down)
-else if(is322BearishReversalSetup)
-    nextPattern := '3-2-2'
-    nextPatternColor := bearishColor
-    nextPatternProfit := low[0] - low[1]
-
-//3-2-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle needs to be a 2 Up)
-else if(is322BullishReversalSetup)
-    nextPattern := '3-2-2'
-    nextPatternColor := bullishColor
-    nextPatternProfit := high[1] - high[0]
-
-//3-1-2 Bearish Reversal has entry low[1] and target low[2] (Next Candle needs to be 2 Down)
-else if(is312BearishReversalSetup)
-    nextPattern := '3-1-2'
-    nextPatternColor := bearishColor
-    nextPatternProfit := low[0] - low[1]
-
-//3-1-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle needs to be 2 Up)
-else if(is312BullishReversalSetup)
-    nextPattern := '3-1-2'
-    nextPatternColor := bullishColor
-    nextPatternProfit := high[1] - high[0]
-
-
-//1-2-2 Bearish Rev Strat has entry low[1] and target low[3] (Next Candle needs to be 2 Down)
-else if(is122BearishRevStratReversalSetup)
-    nextPattern := '1-2-2'
-    nextPatternColor := bearishColor
-    nextPatternProfit := low[0] - low[2]
-
-//1-2-2 Bullish Rev Strat has entry high[1] and target high[3] (Next Candle needs to be 2 Up)
-else if(is122BullishRevStratReversalSetup)
-    nextPattern := '1-2-2'
-    nextPatternColor := bullishColor
-    nextPatternProfit := high[2] - high[0]
-
-else
-    nextPattern := ''
-    nextPatternColor := bullishColor
-    nextPatternProfit := 0.00
-
-// stateText1() =>
-
-//     string txt = ""
-//     txt += 'is22BearishReversalSetup: ' + str.tostring(is22BearishReversalSetup)
-//     txt += '\nis22BullishReversalSetup: ' + str.tostring(is22BullishReversalSetup)
-//     txt += '\nis212BearishReversalSetup: ' + str.tostring(is212BearishReversalSetup)
-//     txt += '\nis212BullishReversalSetup: ' + str.tostring(is212BullishReversalSetup)
-//     txt += '\nis322BearishReversalSetup: ' + str.tostring(is322BearishReversalSetup)
-//     txt += '\nis322BullishReversalSetup: ' + str.tostring(is322BullishReversalSetup)
-//     txt += '\nis312BearishReversalSetup: ' + str.tostring(is312BearishReversalSetup)
-//     txt += '\nis312BullishReversalSetup: ' + str.tostring(is312BullishReversalSetup)
-//     txt += '\nis122BearishRevStratReversalSetup: ' + str.tostring(is122BearishRevStratReversalSetup)
-//     txt += '\nis122BullishRevStratReversalSetup: ' + str.tostring(is122BullishRevStratReversalSetup)
-
-// label.new(bar_index, na, stateText1(), yloc = yloc.abovebar, color = labelColor)
-
-// twoUpLabel = label.new(
-//           x         =_labelXIndex-_labelIndexOffset*5,
-//           y         = _labelYIndex,
-//           text      = createFinalFormattedLabelText(_labelTwoUpText, twoUpGreenText,twoUpRedText),
-//           color     = color.green,
-//           textcolor = _labelTextColor,
-//           style     = label.style_labelup,
-//           yloc      = yloc.price,
-//           textalign = _labelTextAlign)
-// label.delete(twoUpLabel[1])
 
 
 //##################################################################################################
@@ -654,8 +497,6 @@ isMonthValidTimeFrame = timeframe.period == 'M'
 isQuarterValidTimeFrame = timeframe.period == '3M'
 
 
-//https://www.tradingview.com/script/UFTT8ROh-RedK-Portfolio-Tracker-Table-Version/
-
 // do not show timeframes that are less than the time frame selected (it will be inaccurate)
 if barstate.islast and isTfEnabled
 
@@ -668,211 +509,134 @@ if barstate.islast and isTfEnabled
     [tf3MChg,tf3MColor] = getPercentChange(openQuarterValue,closeQuarterValue)
 
     if is15ValidTimeFrame
-        var table tcTable = table.new(position=position.top_right, columns = 9, rows = 3, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 9, rows = 2, border_width=3)
 
-        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 0, row = 1, text = tf15M + '\n' + str.tostring(tf15MChg, '#.##') + '%', bgcolor=color.new(tf15MColor, tfTableOpacity), text_color=tf15MColor, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '')
-
-        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 1, row = 1, text = tf30M + '\n' + str.tostring(tf30MChg, '#.##') + '%', bgcolor=color.new(tf30MColor, tfTableOpacity), text_color=tf30MColor, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 1, row = 2, text = '')
-
-        table.cell(table_id = tcTable, column = 2, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 2, row = 1, text = tf60M + '\n' + str.tostring(tf60MChg, '#.##') + '%', bgcolor=color.new(tf60MColor, tfTableOpacity), text_color=tf60MColor, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 2, row = 2, text = '')
-
-        table.cell(table_id = tcTable, column = 3, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 3, row = 1, text = tf1D + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 3, row = 2, text = '')
-
-        table.cell(table_id = tcTable, column = 4, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 4, row = 1, text = tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 4, row = 2, text = '')
-
-        table.cell(table_id = tcTable, column = 5, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 5, row = 1, text = tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 5, row = 2, text = '')
-
-        table.cell(table_id = tcTable, column = 6, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 6, row = 1, text = tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 6, row = 2, text = '')
-
-        table.cell(table_id = tcTable, column = 7, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 7, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 7, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
-
-        table.cell(table_id = tcTable, column = 8, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 8, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 8, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 0, 0, '')
+        table.cell(tcTable, 0, 1, tf15M + '\n' + str.tostring(tf15MChg, '#.##') + '%', bgcolor=color.new(tf15MColor, tfTableOpacity), text_color=tf15MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 1, 0, '')
+        table.cell(tcTable, 1, 1, tf30M + '\n' + str.tostring(tf30MChg, '#.##') + '%', bgcolor=color.new(tf30MColor, tfTableOpacity), text_color=tf30MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 2, 0, '')
+        table.cell(tcTable, 2, 1, tf60M + '\n' + str.tostring(tf60MChg, '#.##') + '%', bgcolor=color.new(tf60MColor, tfTableOpacity), text_color=tf60MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 3, 0, '')
+        table.cell(tcTable, 3, 1, tf1D + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 4, 0, '')
+        table.cell(tcTable, 4, 1, tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 5, 0, '')
+        table.cell(tcTable, 5, 1, tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 6, 0, '')
+        table.cell(tcTable, 6, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 7, 0, '')
+        table.cell(tcTable, 7, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(tcTable, 8, 0, '')
+        table.cell(tcTable, 8, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
 
     else if is30ValidTimeFrame
-        // var table tcTable = table.new(position=position.top_right, columns = 8, rows = 2, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 8, rows = 2, border_width=3)
 
-        // table.cell(tcTable, 0, 0, '')
-        // table.cell(tcTable, 0, 1, tf30M + '\n' + str.tostring(tf30MChg, '#.##') + '%', bgcolor=color.new(tf30MColor, tfTableOpacity), text_color=tf30MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 1, 0, '')
-        // table.cell(tcTable, 1, 1, tf60M + '\n' + str.tostring(tf60MChg, '#.##') + '%', bgcolor=color.new(tf60MColor, tfTableOpacity), text_color=tf60MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 2, 0, '')
-        // table.cell(tcTable, 2, 1, tf1D + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 3, 0, '')
-        // table.cell(tcTable, 3, 1, tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 4, 0, '')
-        // table.cell(tcTable, 4, 1, tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 5, 0, '')
-        // table.cell(tcTable, 5, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 6, 0, '')
-        // table.cell(tcTable, 6, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        // table.cell(tcTable, 7, 0, '')
-        // table.cell(tcTable, 7, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 3, border_width=3)
-
-        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
-        //table.cell(table_id = tcTable, column = 0, row = 2, text = str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
-
-        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 1, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 0, 0, '')
+        table.cell(tcTable, 0, 1, tf30M + '\n' + str.tostring(tf30MChg, '#.##') + '%', bgcolor=color.new(tf30MColor, tfTableOpacity), text_color=tf30MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 1, 0, '')
+        table.cell(tcTable, 1, 1, tf60M + '\n' + str.tostring(tf60MChg, '#.##') + '%', bgcolor=color.new(tf60MColor, tfTableOpacity), text_color=tf60MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 2, 0, '')
+        table.cell(tcTable, 2, 1, tf1D + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 3, 0, '')
+        table.cell(tcTable, 3, 1, tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 4, 0, '')
+        table.cell(tcTable, 4, 1, tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 5, 0, '')
+        table.cell(tcTable, 5, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 6, 0, '')
+        table.cell(tcTable, 6, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(tcTable, 7, 0, '')
+        table.cell(tcTable, 7, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
 
     else if isHourValidTimeFrame
-        // var table tcTable = table.new(position=position.top_right, columns = 7, rows = 2, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 7, rows = 2, border_width=3)
 
-        // table.cell(tcTable, 0, 0, '')
-        // table.cell(tcTable, 0, 1, tf60M + '\n' + str.tostring(tf60MChg, '#.##') + '%', bgcolor=color.new(tf60MColor, tfTableOpacity), text_color=tf60MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 1, 0, '')
-        // table.cell(tcTable, 1, 1, tf1D + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 2, 0, '')
-        // table.cell(tcTable, 2, 1, tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 3, 0, '')
-        // table.cell(tcTable, 3, 1, tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 4, 0, '')
-        // table.cell(tcTable, 4, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 5, 0, '')
-        // table.cell(tcTable, 5, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        // table.cell(tcTable, 6, 0, '')
-        // table.cell(tcTable, 6, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 3, border_width=3)
-
-        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
-
-        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 1, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 0, 0, '')
+        table.cell(tcTable, 0, 1, tf60M + '\n' + str.tostring(tf60MChg, '#.##') + '%', bgcolor=color.new(tf60MColor, tfTableOpacity), text_color=tf60MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 1, 0, '')
+        table.cell(tcTable, 1, 1, tf1D + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 2, 0, '')
+        table.cell(tcTable, 2, 1, tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 3, 0, '')
+        table.cell(tcTable, 3, 1, tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 4, 0, '')
+        table.cell(tcTable, 4, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 5, 0, '')
+        table.cell(tcTable, 5, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(tcTable, 6, 0, '')
+        table.cell(tcTable, 6, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
 
     else if isDayValidTimeFrame
-        // var table tcTable = table.new(position=position.top_right, columns = 6, rows = 2, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 6, rows = 2, border_width=3)
 
-        // table.cell(tcTable, 0, 0, '')
-        // table.cell(tcTable, 0, 1, tf1D + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 1, 0, '')
-        // table.cell(tcTable, 1, 1, tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 2, 0, '')
-        // table.cell(tcTable, 2, 1, tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 3, 0, '')
-        // table.cell(tcTable, 3, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 4, 0, '')
-        // table.cell(tcTable, 4, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        // table.cell(tcTable, 5, 0, '')
-        // table.cell(tcTable, 5, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 3, border_width=3)
-
-        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
-
-        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 1, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 0, 0, '')
+        table.cell(tcTable, 0, 1, tf1D + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 1, 0, '')
+        table.cell(tcTable, 1, 1, tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 2, 0, '')
+        table.cell(tcTable, 2, 1, tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 3, 0, '')
+        table.cell(tcTable, 3, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 4, 0, '')
+        table.cell(tcTable, 4, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(tcTable, 5, 0, '')
+        table.cell(tcTable, 5, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
 
     else if isWeekValidTimeFrame
-        // var table tcTable = table.new(position=position.top_right, columns = 5, rows = 2, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 5, rows = 2, border_width=3)
 
-        // table.cell(tcTable, 0, 0, '')
-        // table.cell(tcTable, 0, 1, tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 1, 0, '')
-        // table.cell(tcTable, 1, 1, tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 1, 0, '')
-        // table.cell(tcTable, 2, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 1, 0, '')
-        // table.cell(tcTable, 3, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        // table.cell(tcTable, 1, 0, '')
-        // table.cell(tcTable, 4, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 3, border_width=3)
-
-        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
-
-        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 1, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 0, 0, '')
+        table.cell(tcTable, 0, 1, tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 1, 0, '')
+        table.cell(tcTable, 1, 1, tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 1, 0, '')
+        table.cell(tcTable, 2, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 1, 0, '')
+        table.cell(tcTable, 3, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(tcTable, 1, 0, '')
+        table.cell(tcTable, 4, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
 
     else if isMonthValidTimeFrame
-        // var table tcTable = table.new(position=position.top_right, columns = 4, rows = 2, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 4, rows = 2, border_width=3)
 
 
-        // table.cell(tcTable, 0, 0, '') //Add Filler
-        // table.cell(tcTable, 0, 1, tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 1, 0, '')
-        // table.cell(tcTable, 1, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 2, 0, '')
-        // table.cell(tcTable, 2, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        // table.cell(tcTable, 3, 0, '')
-        // table.cell(tcTable, 3, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 3, border_width=3)
-
-        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
-
-        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 1, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 0, 0, '') //Add Filler
+        table.cell(tcTable, 0, 1, tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 1, 0, '')
+        table.cell(tcTable, 1, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 2, 0, '')
+        table.cell(tcTable, 2, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(tcTable, 3, 0, '')
+        table.cell(tcTable, 3, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
 
     else if isQuarterValidTimeFrame
-        // var table tcTable = table.new(position=position.top_right, columns = 3, rows = 2, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 3, rows = 2, border_width=3)
 
-        // table.cell(tcTable, 0, 0, '')
-        // table.cell(tcTable, 0, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
-        // table.cell(tcTable, 1, 0, '')
-        // table.cell(tcTable, 1, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        // table.cell(tcTable, 2, 0, '')
-        // table.cell(tcTable, 2, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 3, border_width=3)
-
-        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
-
-        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 1, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 0, 0, '')
+        table.cell(tcTable, 0, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+        table.cell(tcTable, 1, 0, '')
+        table.cell(tcTable, 1, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(tcTable, 2, 0, '')
+        table.cell(tcTable, 2, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
 
-// // previous high low lines
-// if (timeframe.isintraday or timeframe.isdaily)
-//     highDayLine = line.new(x1=timeDayValue[1], y1=highDayValue[1], x2=time, xloc=xloc.bar_time, y2=highDayValue[1], extend=extend.right, color=color.green, style=line.style_dashed, width=1)
-//     line.delete(highDayLine[1])
 
-// if (timeframe.isintraday or timeframe.isdaily)
-//     lowDayLine = line.new(x1=timeDayValue[1], y1=lowDayValue[1], x2=time, xloc=xloc.bar_time, y2=lowDayValue[1], extend=extend.right, color=color.red, style=line.style_dashed, width=1)
-//     line.delete(lowDayLine[1])
+// previous high low lines
+if (timeframe.isintraday or timeframe.isdaily)
+    highDayLine = line.new(x1=timeDayValue[1], y1=highDayValue[1], x2=time, xloc=xloc.bar_time, y2=highDayValue[1], extend=extend.right, color=color.green, style=line.style_dashed, width=1)
+    line.delete(highDayLine[1])
+
+if (timeframe.isintraday or timeframe.isdaily)
+    lowDayLine = line.new(x1=timeDayValue[1], y1=lowDayValue[1], x2=time, xloc=xloc.bar_time, y2=lowDayValue[1], extend=extend.right, color=color.red, style=line.style_dashed, width=1)
+    line.delete(lowDayLine[1])
 
 // if (timeframe.isintraday or timeframe.isdaily or timeframe.isweekly)
 //     highWeekLine = line.new(x1=timeDayValue[1], y1=highWeekValue[1], x2=time, xloc=xloc.bar_time, y2=highWeekValue[1], extend=extend.right, color=color.green, style=line.style_dashed, width=1)

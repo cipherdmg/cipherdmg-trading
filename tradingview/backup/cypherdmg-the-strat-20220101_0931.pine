@@ -529,7 +529,7 @@ var nextPatternProfit=0.00
 if (is22BearishReversalSetup)
     nextPattern := '2-2'
     nextPatternColor := bearishColor
-    nextPatternProfit := low[0] - low[1]
+    nextPatternProfit := low[1] - low[0]
 
 
 //2-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle Needs to be 2 Up)
@@ -544,7 +544,7 @@ else if(is22BullishReversalSetup)
 else if(is212BearishReversalSetup)
     nextPattern := '2-1-2'
     nextPatternColor := bearishColor
-    nextPatternProfit := low[0] - low[1]
+    nextPatternProfit := low[1] - low[0]
 
 
 //2-1-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle Needs to be 2 Up)
@@ -557,7 +557,7 @@ else if(is212BullishReversalSetup)
 else if(is322BearishReversalSetup)
     nextPattern := '3-2-2'
     nextPatternColor := bearishColor
-    nextPatternProfit := low[0] - low[1]
+    nextPatternProfit := low[1] - low[0]
 
 //3-2-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle needs to be a 2 Up)
 else if(is322BullishReversalSetup)
@@ -569,7 +569,7 @@ else if(is322BullishReversalSetup)
 else if(is312BearishReversalSetup)
     nextPattern := '3-1-2'
     nextPatternColor := bearishColor
-    nextPatternProfit := low[0] - low[1]
+    nextPatternProfit := low[1] - low[0]
 
 //3-1-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle needs to be 2 Up)
 else if(is312BullishReversalSetup)
@@ -582,7 +582,7 @@ else if(is312BullishReversalSetup)
 else if(is122BearishRevStratReversalSetup)
     nextPattern := '1-2-2'
     nextPatternColor := bearishColor
-    nextPatternProfit := low[0] - low[2]
+    nextPatternProfit := low[2] - low[0]
 
 //1-2-2 Bullish Rev Strat has entry high[1] and target high[3] (Next Candle needs to be 2 Up)
 else if(is122BullishRevStratReversalSetup)
@@ -700,7 +700,7 @@ if barstate.islast and isTfEnabled
 
         table.cell(table_id = tcTable, column = 7, row = 0, text = '')
         table.cell(table_id = tcTable, column = 7, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 7, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 7, row = 2, text = str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 8, row = 0, text = '')
         table.cell(table_id = tcTable, column = 8, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
@@ -731,7 +731,7 @@ if barstate.islast and isTfEnabled
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
         table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 2, text = str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
         //table.cell(table_id = tcTable, column = 0, row = 2, text = str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
@@ -761,7 +761,7 @@ if barstate.islast and isTfEnabled
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
         table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 2, text = str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
         table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
@@ -788,7 +788,7 @@ if barstate.islast and isTfEnabled
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
         table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 2, text = str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
         table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
@@ -813,7 +813,7 @@ if barstate.islast and isTfEnabled
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
         table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 2, text = str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
         table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
@@ -837,7 +837,7 @@ if barstate.islast and isTfEnabled
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
         table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 2, text = str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
         table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
@@ -858,7 +858,7 @@ if barstate.islast and isTfEnabled
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
         table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 2, text = str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
         table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
