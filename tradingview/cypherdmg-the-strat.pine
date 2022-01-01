@@ -68,7 +68,7 @@ bearishColor = input.color(color.new(color.red, 0), title='Bearish Candle color'
 insideColor = input.color(color.new(color.yellow, 0), title='Inside Candle color', group='Colors')
 outsideColor = input.color(color.new(color.fuchsia, 0), title='Outside Candle color', group='Colors')
 tfTableOpacity = input.int(80, title='Multi time frame table opacity', group='Colors')
-isTfEnabled = input.bool(true, title='Enabled', group='Time Frame Continuation')
+isTfEnabled = input.bool(true, title='Time Frame Continuity Panel Enabled', group='Time Frame Continuation')
 usePreviousClose = input.bool(false, title='Use Previous Close', group='Time Frame Continuation')
 
 tf15M = input.timeframe('15', title='Time Frame 1', group='Time Frame Continuation')
