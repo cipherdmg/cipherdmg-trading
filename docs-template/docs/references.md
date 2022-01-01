@@ -26,6 +26,10 @@
 * [How to enter trades on lower timeframes using #TheStrat](https://www.youtube.com/watch?v=18qayXyA71U)
 * [What are broadening formations & why they're important for price action trading](https://www.youtube.com/watch?v=oaijnx6vcJs)
 * [Most EXPLOSIVE Day-Trading Pattern (HUGE MOVES)](https://www.youtube.com/watch?v=IrGVqLWcd-s&t=1s)
+* [How to make price targets in trading! (HOW TO GAUGE MAGNITUDE)](https://www.youtube.com/watch?v=LmQRu0P00xo)
+* [Live Q/A #TheStrat](https://www.youtube.com/watch?v=xlfuFpFncio)
+
+
 
 ## Patterms
 
