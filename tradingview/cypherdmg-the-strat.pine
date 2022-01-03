@@ -812,15 +812,15 @@ if barstate.islast and isTfEnabled
         // table.cell(tcTable, 1, 0, '')
         // table.cell(tcTable, 4, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 3, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 2, border_width=3)
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        //table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 1, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 1, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        //table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 1, row = 1, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
 
     else if isMonthValidTimeFrame
@@ -836,15 +836,15 @@ if barstate.islast and isTfEnabled
         // table.cell(tcTable, 3, 0, '')
         // table.cell(tcTable, 3, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 3, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 2, border_width=3)
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        //table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 1, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 1, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        //table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 1, row = 1, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
 
     else if isQuarterValidTimeFrame
@@ -857,15 +857,15 @@ if barstate.islast and isTfEnabled
         // table.cell(tcTable, 2, 0, '')
         // table.cell(tcTable, 2, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 3, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 2, border_width=3)
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        //table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 1, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
-        table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
-        table.cell(table_id = tcTable, column = 1, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        //table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 1, row = 1, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
 
 // // previous high low lines
