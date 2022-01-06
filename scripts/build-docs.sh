@@ -10,11 +10,18 @@
 #
 ###############################################################################
 # shellcheck disable=SC2164,SC1091,SC2129,SC2120,SC2145,SC2155
-#[REQUIRED]
-
 #[SOURCE]
+# shellcheck source=common-functions.sh
+source "${SCRIPTS_HOME}/common/common-functions.sh"
+
+# shellcheck source=windows/beyond-compare.sh
+source "${SCRIPTS_HOME}/windows/beyond-compare.sh"
 
 #--------------------------- Environment Variables ---------------------------#
+#[REQUIRED]
+if [[ -z "${CIPHERDMG_HOME}" ]] ; then export CIPHERDMG_HOME="${DEV_PROJECTS}/cipherdmg-trading"; fi
+if [[ -z "${CIPHERDMG_HOME_PROJECT}" ]] ; then export CIPHERDMG_HOME_PROJECT="${CIPHERDMG_HOME##*/}"; fi
+
 #[REQUIRED]
 
 
@@ -80,6 +87,18 @@ installMkDocsReadTheDocs(){
     #${sudo} pip3 install mkdocs-gitbook
 }
 
+###############################################################################
+# @description Backup all /cipherdmg-trading package
+# @noargs
+# @internal
+#
+backupCipherScripts(){ datestamp; backupDevProject "${CIPHERDMG_HOME}"; }
+
+###############################################################################
+# @description Backup /cipherdmg-trading from GitHub
+# @arg $1 string v{Version Tab} i.e v1.0.0
+#
+backupCipherScriptsFromGithub(){ backupProjectFromGithub "git@github.ibm.com:cipherdmg/cipherdmg-trading.git" "${CIPHERDMG_HOME}" "${@}"; }
 
 ###############################################################################
 # @description Build Trading Docs
@@ -99,5 +118,7 @@ buildDocsTrading(){
 
     #Copy the docs
     cp -rf "${docs_dir}/site" "${local_project}/docs"
+
+    mv -f "/c/gitbash/dev-projects/ci-scripts/access_token.yml" "/c/gitbash/home/apps/.ssh/access_token.yml"
 }
 
