@@ -598,21 +598,21 @@ else
     nextPatternColor := bullishColor
     nextPatternProfit := 0.00
 
-// stateText1() =>
+stateText1() =>
 
-//     string txt = ""
-//     txt += 'is22BearishReversalSetup: ' + str.tostring(is22BearishReversalSetup)
-//     txt += '\nis22BullishReversalSetup: ' + str.tostring(is22BullishReversalSetup)
-//     txt += '\nis212BearishReversalSetup: ' + str.tostring(is212BearishReversalSetup)
-//     txt += '\nis212BullishReversalSetup: ' + str.tostring(is212BullishReversalSetup)
-//     txt += '\nis322BearishReversalSetup: ' + str.tostring(is322BearishReversalSetup)
-//     txt += '\nis322BullishReversalSetup: ' + str.tostring(is322BullishReversalSetup)
-//     txt += '\nis312BearishReversalSetup: ' + str.tostring(is312BearishReversalSetup)
-//     txt += '\nis312BullishReversalSetup: ' + str.tostring(is312BullishReversalSetup)
-//     txt += '\nis122BearishRevStratReversalSetup: ' + str.tostring(is122BearishRevStratReversalSetup)
-//     txt += '\nis122BullishRevStratReversalSetup: ' + str.tostring(is122BullishRevStratReversalSetup)
+    string txt = ""
+    txt += 'is22BearishReversalSetup: ' + str.tostring(is22BearishReversalSetup)
+    txt += '\nis22BullishReversalSetup: ' + str.tostring(is22BullishReversalSetup)
+    txt += '\nis212BearishReversalSetup: ' + str.tostring(is212BearishReversalSetup)
+    txt += '\nis212BullishReversalSetup: ' + str.tostring(is212BullishReversalSetup)
+    txt += '\nis322BearishReversalSetup: ' + str.tostring(is322BearishReversalSetup)
+    txt += '\nis322BullishReversalSetup: ' + str.tostring(is322BullishReversalSetup)
+    txt += '\nis312BearishReversalSetup: ' + str.tostring(is312BearishReversalSetup)
+    txt += '\nis312BullishReversalSetup: ' + str.tostring(is312BullishReversalSetup)
+    txt += '\nis122BearishRevStratReversalSetup: ' + str.tostring(is122BearishRevStratReversalSetup)
+    txt += '\nis122BullishRevStratReversalSetup: ' + str.tostring(is122BullishRevStratReversalSetup)
 
-// label.new(bar_index, na, stateText1(), yloc = yloc.abovebar, color = labelColor)
+//label.new(bar_index, na, stateText1(), yloc = yloc.abovebar, color = labelColor)
 
 // twoUpLabel = label.new(
 //           x         =_labelXIndex-_labelIndexOffset*5,
