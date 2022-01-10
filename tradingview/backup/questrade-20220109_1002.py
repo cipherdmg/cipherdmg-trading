@@ -15,7 +15,7 @@ import sys
 
 from qtrade import Questrade
 
-#accessCode = ""
+#accessCode = "pAvWESe6O03uIkNLZ3pRAnY2-ScHOMaz0"
 
 fridayDate = datetime(int(2022), int(1), 7)
 
@@ -30,27 +30,26 @@ def getTickers():
 
     tickers_ETFs= ["SPY","QQQ", "DIA", "IWM", "XBI", "XHB", "XLB", "XLC", "XLE", "XLF", "XLI", "XLK", "XLP", "XLRE", "XLU", "XLY", "XLV", "XOP", "IYT", "OIH", "IBB"]
 
-    tickers_Auto = ["AYRO", "BLNK", "CMI", "CHPT", "F", "GM", "HMC", "LCID", "LI", "LYFT", "MVIS", "NKLA", "NIO", "RIDE", "TM", "TSLA", "UBER", "VLTA", "WKHS", "WBX", "XPEV"]
     tickers_Airlines = [ "BA", "LUB", "UAL", "DAL", "AAL", "RCL", "CCL" ]
-    tickers_Biotech = ["AMN", "BNTX", "JAZZ","HUM", "MRNA", "MRK", "NVAX","PFE", "TDOC" ]
-    tickers_Cannabis=["SNDL", "TLRY", "CGC", "MO", "ACB", "OGI", "AMRS", "CPMD", "HEXO"]
-    tickers_Energy = ["AMRC", "ARVL", "BEP", "BEPC", "BLNK", "CHPT", "DQ", "DUK", "ENPH", "EVGO", "FSLR", "FCEL", "HPK", "IVAN", "ISUN", "JKS", "MAXN", "NEE", "NEP", "PPSI", "QCLN", "QS", "RUN", "RIVN", "SEDG", "SO", "SOLO", "SPWR", "SU", "VST", "VLO"  ]
+    tickers_Tech = ["AAPL","ABNB","ADBE", "AFRM", "AMD","AMZN","ADP","BABA","BIDU","CRM","CRWD", "CSCO", "COIN", "DISH", "DIS", "EXPE", "FB", "FUBO", "FVRR", "GOOG", "GOOGL", "IBM" , "INOD", "JD", "JNPR", "KLIC", "LSPD","MCHP", "META", "MU", "MSFT", "NFLX", "NVDA", "ORCL", "PLTR", "RBLX", "ROKU", "RNG", "SAVE", "SHOP", "SPOT","SMH", "SPLK", "TDOC", "TWLO", "U", "UBER", "Z", "ZG", "ZM", "WDAY"]
+    tickers_Biotech = ["BNTX", "JAZZ", "MRNA", "MRK"]
     tickers_Financial = ["JPM", "MS", "BAC", "WFC", "SQ", "C", "HIG", "AXP", "DFS", "COF", "MA", "V" ]
-    tickers_Gas = ["OXY", "APA", "CRL", "DVN", "EOG", "HES", "MRO", "MUR", "PXD", "WMB", "SLB","HAL", "HP", "KMI", "PSX", "CVI"]
-    tickers_Gamming = ["CZR", "DKNG", "EA", "FUBO", "GENI", "GNOG", "SEAH", "LVS", "MGM", "PENN"]
     tickers_Insurance = ["AIG", "ALL"]
-    tickers_Materials = ["AA", "SCCO", "TECK", "VALE"]
     tickers_Retail = ["AMZN", "BBBY", "CHWY", "COST", "DG", "DLTR", "EBAY", "ETSY", "EXPR", "GME", "GRPN", "GPS", "HD", "JD", "JACK",  "KR", "LOW", "M", "NEGG", "PVH", "PETS", "TGT", "URBN", "W", "WMT"]
-    tickers_Tech = ["AAPL","ABNB","ADBE", "AFRM", "AMD","AMZN","ADP","BABA","BIDU","CRM","CRWD", "CSCO", "CHKP", "COIN", "DISH", "DIS", "EXPE", "FB", "FUBO", "FVRR", "GOOG", "GOOGL", "IBM" , "INOD", "JNPR", "KLIC", "LSPD","MCHP", "META", "MU", "MSFT", "NFLX", "NVDA", "ORCL", "PLTR", "QCOM", "QRVO", "RBLX", "ROKU", "RNG", "SAVE", "SNPS", "SHOP", "SPOT","SMH", "SPLK", "TDOC", "TTD", "TWLO", "U", "UBER", "Z", "ZG", "ZM", "WDAY"]
+    tickers_Cannabis=["SNDL", "TLRY", "CGC", "MO", "ACB", "OGI", "AMRS", "CPMD", "HEXO"]
+    tickers_Auto = ["AYRO", "BLNK", "CHPT", "F", "GM", "HMC", "LCID", "LI", "LYFT", "MVIS", "NKLA", "NIO", "RIDE", "TM", "TSLA", "UBER", "VLTA", "WKHS", "WBX", "XPEV"]
+    tickers_Energy = [ "AMRC", "ARVL", "BEP", "BEPC", "BLNK", "CHPT", "DQ", "DUK", "ENPH", "EVGO", "FSLR", "FCEL", "HPK", "IVAN", "ISUN", "JKS", "MAXN", "NEE", "NEP", "PPSI", "QCLN", "QS", "RUN", "RIVN", "SEDG", "SO", "SOLO", "SPWR", "SU", "VST", "VLO"  ]
+    tickers_Gas = ["OXY", "APA", "CRL", "DVN", "EOG", "HES", "MRO", "MUR", "PXD", "WMB", "SLB","HAL", "HP", "KMI", "PSX", "CVI"]
 
     if 'accessCode' in globals():
         tickers = tickers_TEST
     else:
-        tickers = tickers_ETFs + tickers_Auto + tickers_Airlines + tickers_Biotech + tickers_Cannabis + tickers_Energy + tickers_Financial + tickers_Gas + tickers_Gamming + tickers_Insurance + tickers_Materials + tickers_Retail + tickers_Tech
+        tickers = tickers_ETFs + tickers_Airlines +  tickers_Tech + tickers_Biotech + tickers_Retail + tickers_Cannabis + tickers_Auto + tickers_Energy + tickers_Gas + tickers_Insurance + tickers_Financial
 
-    #tickers = tickers_TEST
+    tickers = tickers_TEST
+   # tickers = tickers_ETFs + tickers_Airlines + tickers_Tech + tickers_Biotech + tickers_Retail + tickers_Cannabis + tickers_Auto + tickers_Energy  + tickers_Gas + tickers_Insurance + tickers_Financial
 
-    tickers.sort()
+    #tickers.sort()
     return tickers
 
 

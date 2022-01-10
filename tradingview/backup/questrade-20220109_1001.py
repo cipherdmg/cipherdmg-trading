@@ -15,7 +15,7 @@ import sys
 
 from qtrade import Questrade
 
-#accessCode = ""
+#accessCode = "wBYYXBotlmeHlCJRApXDdaWo8vyE5hvo0"
 
 fridayDate = datetime(int(2022), int(1), 7)
 
@@ -28,46 +28,37 @@ fridayDate = datetime(int(2022), int(1), 7)
 def getTickers():
     tickers_TEST = ["AAPL", "RBLX"]
 
-    tickers_ETFs= ["SPY","QQQ", "DIA", "IWM", "XBI", "XHB", "XLB", "XLC", "XLE", "XLF", "XLI", "XLK", "XLP", "XLRE", "XLU", "XLY", "XLV", "XOP", "IYT", "OIH", "IBB"]
+    tickers_ETFs= ["SPY","QQQ", "DIA", "IWM", "XBI", "XHB", "XLB", "XLC", "XLE", "XLF", "XLI", "XLK", "XLP", "XLRE", "XLU", "XLY", "XLV", "XOP"]
 
-    tickers_Auto = ["AYRO", "BLNK", "CMI", "CHPT", "F", "GM", "HMC", "LCID", "LI", "LYFT", "MVIS", "NKLA", "NIO", "RIDE", "TM", "TSLA", "UBER", "VLTA", "WKHS", "WBX", "XPEV"]
-    tickers_Airlines = [ "BA", "LUB", "UAL", "DAL", "AAL", "RCL", "CCL" ]
-    tickers_Biotech = ["AMN", "BNTX", "JAZZ","HUM", "MRNA", "MRK", "NVAX","PFE", "TDOC" ]
+    tickersA_I = ["AAPL","ABNB","ADBE", "AFRM", "AMD","AMZN","ADP","BABA","BIDU","CRM","CRWD", "CSCO", "COIN", "DISH", "DIS", "EXPE", "FB", "FUBO", "FVRR", "GOOG", "GOOGL", "IBM" , "INOD"]
+    tickersJ_R = ["JD", "JNPR", "KLIC", "LSPD","MCHP", "META", "MU", "MSFT", "MA", "NFLX", "NVDA", "ORCL", "PLTR", "RBLX", "ROKU", "RNG"]
+    tickersS_Z = ["SAVE", "SHOP", "SPOT", "SPLK", "TDOC", "TWLO", "U", "UBER", "V", "Z", "ZG", "ZM", "WDAY"]
+
+
+    tickers_Retail = ["AMZN", "BBBY", "CHWY", "COST", "DG", "DLTR", "EBAY", "ETSY", "EXPR", "GME", "GRPN", "GPS", "HD", "JD", "KR", "LOW", "M", "NEGG", "PETS", "TGT", "URBN", "W", "WMT"]
     tickers_Cannabis=["SNDL", "TLRY", "CGC", "MO", "ACB", "OGI", "AMRS", "CPMD", "HEXO"]
-    tickers_Energy = ["AMRC", "ARVL", "BEP", "BEPC", "BLNK", "CHPT", "DQ", "DUK", "ENPH", "EVGO", "FSLR", "FCEL", "HPK", "IVAN", "ISUN", "JKS", "MAXN", "NEE", "NEP", "PPSI", "QCLN", "QS", "RUN", "RIVN", "SEDG", "SO", "SOLO", "SPWR", "SU", "VST", "VLO"  ]
-    tickers_Financial = ["JPM", "MS", "BAC", "WFC", "SQ", "C", "HIG", "AXP", "DFS", "COF", "MA", "V" ]
-    tickers_Gas = ["OXY", "APA", "CRL", "DVN", "EOG", "HES", "MRO", "MUR", "PXD", "WMB", "SLB","HAL", "HP", "KMI", "PSX", "CVI"]
-    tickers_Gamming = ["CZR", "DKNG", "EA", "FUBO", "GENI", "GNOG", "SEAH", "LVS", "MGM", "PENN"]
-    tickers_Insurance = ["AIG", "ALL"]
-    tickers_Materials = ["AA", "SCCO", "TECK", "VALE"]
-    tickers_Retail = ["AMZN", "BBBY", "CHWY", "COST", "DG", "DLTR", "EBAY", "ETSY", "EXPR", "GME", "GRPN", "GPS", "HD", "JD", "JACK",  "KR", "LOW", "M", "NEGG", "PVH", "PETS", "TGT", "URBN", "W", "WMT"]
-    tickers_Tech = ["AAPL","ABNB","ADBE", "AFRM", "AMD","AMZN","ADP","BABA","BIDU","CRM","CRWD", "CSCO", "CHKP", "COIN", "DISH", "DIS", "EXPE", "FB", "FUBO", "FVRR", "GOOG", "GOOGL", "IBM" , "INOD", "JNPR", "KLIC", "LSPD","MCHP", "META", "MU", "MSFT", "NFLX", "NVDA", "ORCL", "PLTR", "QCOM", "QRVO", "RBLX", "ROKU", "RNG", "SAVE", "SNPS", "SHOP", "SPOT","SMH", "SPLK", "TDOC", "TTD", "TWLO", "U", "UBER", "Z", "ZG", "ZM", "WDAY"]
+    tickers_Auto = ["AYRO", "BLNK", "CHPT", "F", "GM", "HMC", "LCID", "LI", "LYFT", "MVIS", "NKLA", "NIO", "RIDE", "TM", "TSLA", "UBER", "VLTA", "WKHS", "WBX", "XPEV"]
+    tickers_Energy = [ "AMRC", "ARVL", "BEP", "BEPC", "BLNK", "CHPT", "DQ", "DUK", "ENPH", "EVGO", "FSLR", "FCEL", "HPK", "IVAN", "ISUN", "JKS", "MAXN", "NEE", "NEP", "PPSI", "QCLN", "QS", "RUN", "RIVN", "SEDG", "SO", "SOLO", "SPWR", "SU", "VST", "VLO"  ]
+
 
     if 'accessCode' in globals():
         tickers = tickers_TEST
     else:
-        tickers = tickers_ETFs + tickers_Auto + tickers_Airlines + tickers_Biotech + tickers_Cannabis + tickers_Energy + tickers_Financial + tickers_Gas + tickers_Gamming + tickers_Insurance + tickers_Materials + tickers_Retail + tickers_Tech
+        tickers = tickers_ETFs + tickersA_I + tickersJ_R + tickersS_Z + tickers_Retail + tickers_Cannabis + tickers_Auto + tickers_Energy
 
-    #tickers = tickers_TEST
+    tickers = tickers_TEST
+    # tickers = tickers_ETFs + tickersA_I + tickersJ_R + tickersS_Z + tickers_Retail + tickers_Cannabis + tickers_Auto + tickers_Energy
 
-    tickers.sort()
+    #tickers.sort()
     return tickers
 
 
-def takeTimeFrameAmount(ticker):
+def getPercentChange(ticker):
     openPrice=ticker['open']
     closePrice=ticker['close']
 
-    # percentChange = (closePrice - openPrice) / openPrice * 100.0
-    # return percentChange
-    takeTimeframe = (closePrice - openPrice)
-
-    takeTimeframeStr="[green]$" +  str(round(takeTimeframe, 2)) + "[/green]"
-
-    if(str(takeTimeframe).startswith("-")):
-        takeTimeframeStr="[red]$" +  str(round(takeTimeframe, 2)) + "[/red]"
-
-    return takeTimeframeStr
+    percentChange = (closePrice - openPrice) / openPrice * 100.0
+    return percentChange
 
 # def isPriceMoveMatchThreshold(table,ticker,lastStartDateTimeString,timeframe,stratPattern, profitTarget, tickers):
 
@@ -145,11 +136,7 @@ def isGreenCandle(candles, idx):
 def isRedCandle(candles, idx):
     return candles[idx]['open'] >= candles[idx]['close']
 
-def stratBotTimeframe(table,timeframeShortForm, tickers, ticker,takeDailyAmount,takeWeeklyAmount,takeMonthlyAmount):
-
-    #We have to take into considerations new IPO stocks so we have to have at least 6 candles
-    if(len(tickers) <= 5):
-        return
+def stratBotTimeframe(table,timeframeShortForm, tickers, ticker,takeDailyPercentage,takeWeeklyPercentage,takeMonthlyPercentage):
 
     #ticker_candles = qtrade.get_historical_data(ticker, fourthLastSundayDate, todaysDate, timeframe)
     #ticker_candles = qtrade.get_historical_data(ticker, '2021-12-30', '2022-01-05', timeframes[index])
@@ -191,7 +178,7 @@ def stratBotTimeframe(table,timeframeShortForm, tickers, ticker,takeDailyAmount,
         profitTarget = lastCandleLow - secondLastCandleLow
         stratPattern = secondLastCandle + "," + lastCandle + ",[red]2D[/red]"
 
-        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount)
+        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyPercentage, takeWeeklyPercentage, takeMonthlyPercentage)
 
     # 2-1-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle Needs to be 2 Up)
     elif("2D" in secondLastCandle and "1" in lastCandle):
@@ -200,7 +187,7 @@ def stratBotTimeframe(table,timeframeShortForm, tickers, ticker,takeDailyAmount,
         #Calculate what this reversal would be worth based on the first pivot/target
         profitTarget = secondLastCandleHigh - lastCandleHigh
         stratPattern = secondLastCandle + "," + lastCandle + ",[green]2U[/green]"
-        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount)
+        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyPercentage, takeWeeklyPercentage, takeMonthlyPercentage)
 
     # 3-2-2 Bearish Reversal has entry low[1] and target low[2] (Next Candle needs to be a 2 Down)
     elif("3" in secondLastCandle and "2U" in lastCandle):
@@ -209,7 +196,7 @@ def stratBotTimeframe(table,timeframeShortForm, tickers, ticker,takeDailyAmount,
         #Calculate what this reversal would be worth based on the first pivot/target
         profitTarget = lastCandleLow - secondLastCandleLow
         stratPattern = secondLastCandle + "," + lastCandle + ",[red]2D[/red]"
-        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount)
+        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyPercentage, takeWeeklyPercentage, takeMonthlyPercentage)
 
     # 3-2-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle needs to be a 2 Up)
     elif("3" in secondLastCandle and "2D" in lastCandle):
@@ -218,7 +205,7 @@ def stratBotTimeframe(table,timeframeShortForm, tickers, ticker,takeDailyAmount,
         #Calculate what this reversal would be worth based on the first pivot/target
         profitTarget = secondLastCandleHigh - lastCandleHigh
         stratPattern = secondLastCandle + "," + lastCandle + ",[green]2U[/green]"
-        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount)
+        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyPercentage, takeWeeklyPercentage, takeMonthlyPercentage)
 
     # 3-1-2 Bearish Reversal has entry low[1] and target low[2] (Next Candle needs to be 2 Down)
     elif("3" in secondLastCandle and "1" in lastCandle):
@@ -227,7 +214,7 @@ def stratBotTimeframe(table,timeframeShortForm, tickers, ticker,takeDailyAmount,
         #Calculate what this reversal would be worth based on the first pivot/target
         profitTarget = lastCandleLow - secondLastCandleLow
         stratPattern =  secondLastCandle + "," + lastCandle + ",[green]2D/2U[/green]"
-        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount)
+        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyPercentage, takeWeeklyPercentage, takeMonthlyPercentage)
 
     # 3-1-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle needs to be 2 Up)
 
@@ -238,7 +225,7 @@ def stratBotTimeframe(table,timeframeShortForm, tickers, ticker,takeDailyAmount,
         #Calculate what this reversal would be worth based on the first pivot/target
         profitTarget = lastCandleLow - secondLastCandleLow
         stratPattern =  secondLastCandle + "," + lastCandle + ",[red]2D[/red]"
-        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount)
+        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyPercentage, takeWeeklyPercentage, takeMonthlyPercentage)
 
     # 1-2-2 Bullish Rev Strat has entry high[1] and target high[3] (Next Candle needs to be 2 Up)
     elif("1" in secondLastCandle and "2D" in lastCandle):
@@ -247,7 +234,7 @@ def stratBotTimeframe(table,timeframeShortForm, tickers, ticker,takeDailyAmount,
         #Calculate what this reversal would be worth based on the first pivot/target
         profitTarget = secondLastCandleHigh - lastCandleHigh
         stratPattern =  secondLastCandle + "," + lastCandle + ",[green]2U[/green]"
-        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount)
+        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyPercentage, takeWeeklyPercentage, takeMonthlyPercentage)
 
     #2-2 Bearish Reversal has entry on low[1] and target low[2] (Next Candle Needs to be 2 Down)
     #For quick reversal on the 2s make sure that its been running for a little bit
@@ -259,7 +246,7 @@ def stratBotTimeframe(table,timeframeShortForm, tickers, ticker,takeDailyAmount,
         #Calculate what this reversal would be worth based on the first pivot/target
         profitTarget = lastCandleLow - secondLastCandleLow
         stratPattern =  lastCandle + ",[red]2D[/red]"
-        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount)
+        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyPercentage, takeWeeklyPercentage, takeMonthlyPercentage)
 
     # 2-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle Needs to be 2 Up)
     #elif (lastCandle == "2D" and secondLastCandle != "2U" and thirdLastCandle != "2U"):
@@ -270,7 +257,7 @@ def stratBotTimeframe(table,timeframeShortForm, tickers, ticker,takeDailyAmount,
         #Calculate what this reversal would be worth based on the first pivot/target
         profitTarget = secondLastCandleHigh - lastCandleHigh
         stratPattern =  lastCandle + ",[green]2U[/green]"
-        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount)
+        addTickerToTable(table, ticker,timeframeShortForm,stratPattern, candlePattern, profitTarget, tickers, takeDailyPercentage, takeWeeklyPercentage, takeMonthlyPercentage)
 
     #table.add_row(str(ticker), str(timeframeShortForm), thirdLastCandle + "," + secondLastCandle + "," + lastCandle , str(lastClose), getCandleColor(tickers,len(ticker_candles)-1))
 
@@ -382,13 +369,34 @@ def stratBot():
 
         monthly_candles = qtrade.get_historical_data(ticker, '2021-08-01', todaysDate, "OneMonth")
 
-        takeDailyAmount = takeTimeFrameAmount(daily_candles[len(daily_candles)-1])
-        takeWeeklyAmount = takeTimeFrameAmount(weekly_candles[len(weekly_candles)-1])
-        takeMonthlyAmount = takeTimeFrameAmount(monthly_candles[len(monthly_candles)-1])
+        takeDailyPercentage = getPercentChange(daily_candles[len(daily_candles)-1])
+        takeWeeklyPercentage = getPercentChange(weekly_candles[len(weekly_candles)-1])
+        takeMonthlyPercentage = getPercentChange(monthly_candles[len(monthly_candles)-1])
 
-        stratBotTimeframe(dailyTable,"1D",daily_candles, ticker, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount)
-        stratBotTimeframe(weeklyTable,"1W",weekly_candles, ticker, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount)
-        stratBotTimeframe(monthlyTable,"1M",monthly_candles, ticker, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount)
+        takeDailyPercentageStr= str(round(takeDailyPercentage, 2))
+        takeWeeklyPercentageStr= str(round(takeWeeklyPercentage, 2))
+        takeMonthlyPercentageStr= str(round(takeMonthlyPercentage, 2))
+
+        if(takeDailyPercentageStr.startswith("-")):
+            takeDailyPercentageStr="[red]" + takeDailyPercentageStr + "%[/red]"
+        else:
+            takeDailyPercentageStr="[green]" + takeDailyPercentageStr + "%[/green]"
+
+        if(takeWeeklyPercentageStr.startswith("-")):
+            takeWeeklyPercentageStr="[red]" + takeWeeklyPercentageStr + "%[/red]"
+        else:
+            takeWeeklyPercentageStr="[green]" + takeWeeklyPercentageStr + "%[/green]"
+
+        if(takeMonthlyPercentageStr.startswith("-")):
+            takeMonthlyPercentageStr="[red]" + takeMonthlyPercentageStr + "%[/red]"
+        else:
+            takeMonthlyPercentageStr="[green]" + takeMonthlyPercentageStr + "%[/green]"
+
+
+
+        stratBotTimeframe(dailyTable,"1D",daily_candles, ticker, takeDailyPercentageStr, takeWeeklyPercentageStr, takeMonthlyPercentageStr)
+        stratBotTimeframe(weeklyTable,"1W",weekly_candles, ticker, takeDailyPercentageStr, takeWeeklyPercentageStr, takeMonthlyPercentageStr)
+        stratBotTimeframe(monthlyTable,"1M",monthly_candles, ticker, takeDailyPercentageStr, takeWeeklyPercentageStr, takeMonthlyPercentageStr)
 
 
     console.print(dailyTable)
