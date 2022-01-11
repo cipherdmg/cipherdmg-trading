@@ -34,24 +34,50 @@ def getTickers():
     tickers_Airlines = [ "BA", "LUB", "UAL", "DAL", "AAL", "RCL", "CCL" ]
     tickers_Biotech = ["AMN", "BNTX", "JAZZ","HUM", "MRNA", "MRK", "NVAX","PFE", "TDOC" ]
     tickers_Cannabis=["SNDL", "TLRY", "CGC", "MO", "ACB", "OGI", "AMRS", "CPMD", "HEXO"]
-    tickers_Energy = ["AMRC", "ARVL", "BEP", "BEPC", "BLNK", "CHPT", "DQ", "DUK", "ENPH", "EVGO", "FSLR", "FCEL", "HPK", "IVAN", "ISUN", "JKS", "MAXN", "NEE", "NEP", "PPSI", "QCLN", "QS", "RUN", "RIVN", "SEDG", "SO", "SOLO", "SPWR", "SU", "VST", "VLO"  ]
+    tickers_Energy = ["AMRC", "ARVL", "BEP", "BEPC", "BLNK", "DQ", "DUK", "ENPH", "EVGO", "FSLR", "FCEL", "HPK", "IVAN", "ISUN", "JKS", "MAXN", "NEE", "NEP", "PPSI", "QCLN", "QS", "RUN", "RIVN", "SEDG", "SO", "SOLO", "SPWR", "SU", "VST", "VLO"  ]
     tickers_Financial = ["JPM", "MS", "BAC", "WFC", "SQ", "C", "HIG", "AXP", "DFS", "COF", "MA", "V" ]
     tickers_Gas = ["OXY", "APA", "CRL", "DVN", "EOG", "HES", "MRO", "MUR", "PXD", "WMB", "SLB","HAL", "HP", "KMI", "PSX", "CVI"]
     tickers_Gamming = ["CZR", "DKNG", "EA", "FUBO", "GENI", "GNOG", "SEAH", "LVS", "MGM", "PENN"]
     tickers_Insurance = ["AIG", "ALL"]
     tickers_Materials = ["AA", "SCCO", "TECK", "VALE"]
     tickers_Retail = ["AMZN", "BBBY", "CHWY", "COST", "DG", "DLTR", "EBAY", "ETSY", "EXPR", "GME", "GRPN", "GPS", "HD", "JD", "JACK",  "KR", "LOW", "M", "NEGG", "PVH", "PETS", "TGT", "URBN", "W", "WMT"]
-    tickers_Tech = ["AAPL","ABNB","ADBE", "AFRM", "AMD","AMZN","ADP","BABA","BIDU","CRM","CRWD", "CSCO", "CHKP", "COIN", "DISH", "DIS", "EXPE", "FB", "FUBO", "FVRR", "GOOG", "GOOGL", "IBM" , "INOD", "JNPR", "KLIC", "LSPD","MCHP", "META", "MU", "MSFT", "NFLX", "NVDA", "ORCL", "PLTR", "QCOM", "QRVO", "RBLX", "ROKU", "RNG", "SAVE", "SNPS", "SHOP", "SPOT","SMH", "SPLK", "TDOC", "TTD", "TWLO", "U", "UBER", "Z", "ZG", "ZM", "WDAY"]
+    tickers_Tech = ["AAPL","ABNB","ADBE", "AFRM", "AMD","AMZN","ADP","BABA","BIDU","CRM","CRWD", "CSCO", "CHKP", "COIN", "DISH", "DIS", "EXPE", "FB", "FVRR", "GOOG", "GOOGL", "IBM" , "INOD", "JNPR", "KLIC", "LSPD","MCHP", "META", "MU", "MSFT", "NFLX", "NVDA", "ORCL", "PLTR", "QCOM", "QRVO", "RBLX", "ROKU", "RNG", "SAVE", "SNPS", "SHOP", "SPOT","SMH", "SPLK", "TDOC", "TTD", "TWLO", "U", "Z", "ZG", "ZM", "WDAY"]
 
     if 'accessCode' in globals():
         tickers = tickers_TEST
     else:
         tickers = tickers_ETFs + tickers_Auto + tickers_Airlines + tickers_Biotech + tickers_Cannabis + tickers_Energy + tickers_Financial + tickers_Gas + tickers_Gamming + tickers_Insurance + tickers_Materials + tickers_Retail + tickers_Tech
 
-    #tickers = tickers_TEST
+    tickers = tickers_TEST
 
     tickers.sort()
     return tickers
+
+
+def isShootingStar(ticker,nextTicker):
+    openPrice=ticker['open']
+    closePrice=ticker['close']
+    highPrice=ticker['high']
+    lowPrice=ticker['low']
+
+    nextOpenPrice=nextTicker['open']
+    nextClosePrice=nextTicker['close']
+    nextHighPrice=nextTicker['high']
+    nextLowPrice=nextTicker['low']
+
+    return (nextOpenPrice < nextClosePrice and openPrice > nextClosePrice and highPrice - max(openPrice, closePrice) >= abs(openPrice - closePrice) * 3 and min(closePrice, openPrice) - lowPrice <= abs(openPrice - closePrice))
+
+#Hanging Man vs Hammer Candlestick Patterns The primary difference between the Hanging Man pattern and the Hammer Candlestick pattern is that the former is bullish and the latter is bearish. That’s because the Hanging Man appears at the top of uptrends while the Hammer appears at the bottom of downtrends.
+
+# https://commodity.com/technical-analysis/hammer/
+# The Hammer candlestick formation is viewed as a bullish reversal candlestick pattern that mainly occurs at the bottom of downtrends.
+# The Hammer formation is created when the open, high, and close prices are roughly the same. Also, there is a long lower shadow that’s twice the length as the real body.
+def isHammer(ticker):
+    openPrice=ticker['open']
+    closePrice=ticker['close']
+    highPrice=ticker['high']
+    lowPrice=ticker['low']
+    return (highPrice - lowPrice > 3 * (openPrice - closePrice) and (closePrice - lowPrice) / (.001 +highPrice - lowPrice) > 0.6 and (openPrice - lowPrice) / (.001 + highPrice - lowPrice) > 0.6)
 
 
 def takeTimeFrameAmount(ticker):
@@ -74,12 +100,30 @@ def takeTimeFrameAmount(ticker):
 def addTickerToTable(table,ticker,timeframe,stratPattern, candlePattern, profitTarget, tickers,takeDailyPercentage,takeWeeklyPercentage,takeMonthlyPercentage):
     if(profitTarget >= 2.00):
 
+        lastHammer = isHammer(tickers[len(tickers)-1])
+        lastShooter = isShootingStar(tickers[len(tickers)-2],tickers[len(tickers)-1])
         if(timeframe == "1D"):
-            table.add_row(str(ticker),str(timeframe), stratPattern , "$" + str(round(profitTarget, 2)),candlePattern, takeDailyPercentage,takeWeeklyPercentage,takeMonthlyPercentage)
+
+            if(lastHammer):
+                table.add_row(str(ticker),str(timeframe), stratPattern , "$" + str(round(profitTarget, 2)),candlePattern, takeDailyPercentage,takeWeeklyPercentage,takeMonthlyPercentage,"hammer")
+            elif(lastShooter):
+                table.add_row(str(ticker),str(timeframe), stratPattern , "$" + str(round(profitTarget, 2)),candlePattern, takeDailyPercentage,takeWeeklyPercentage,takeMonthlyPercentage,"shooter")
+            else:
+                table.add_row(str(ticker),str(timeframe), stratPattern , "$" + str(round(profitTarget, 2)),candlePattern, takeDailyPercentage,takeWeeklyPercentage,takeMonthlyPercentage, "")
         elif(timeframe == "1W"):
-            table.add_row(str(ticker),str(timeframe), stratPattern , "$" + str(round(profitTarget, 2)),candlePattern,takeWeeklyPercentage,takeMonthlyPercentage)
+            if(lastHammer):
+                table.add_row(str(ticker),str(timeframe), stratPattern , "$" + str(round(profitTarget, 2)),candlePattern,takeWeeklyPercentage,takeMonthlyPercentage, "hammer")
+            elif(lastShooter):
+                table.add_row(str(ticker),str(timeframe), stratPattern , "$" + str(round(profitTarget, 2)),candlePattern,takeWeeklyPercentage,takeMonthlyPercentage, "shooter")
+            else:
+                table.add_row(str(ticker),str(timeframe), stratPattern , "$" + str(round(profitTarget, 2)),candlePattern,takeWeeklyPercentage,takeMonthlyPercentage,"")
         elif(timeframe == "1M"):
-            table.add_row(str(ticker),str(timeframe), stratPattern , "$" + str(round(profitTarget, 2)),candlePattern,takeMonthlyPercentage)
+            if(lastHammer):
+                table.add_row(str(ticker),str(timeframe), stratPattern , "$" + str(round(profitTarget, 2)),candlePattern,takeMonthlyPercentage, "hammer")
+            elif(lastShooter):
+                table.add_row(str(ticker),str(timeframe), stratPattern , "$" + str(round(profitTarget, 2)),candlePattern,takeMonthlyPercentage, "shooter")
+            else:
+                table.add_row(str(ticker),str(timeframe), stratPattern , "$" + str(round(profitTarget, 2)),candlePattern,takeMonthlyPercentage, "")
 
 def getStratNumber(candles,idx):
 
@@ -288,6 +332,7 @@ def stratBot():
     dailyTable.add_column("Day", justify="right", style="cyan", no_wrap=True)
     dailyTable.add_column("Week", justify="right", style="cyan", no_wrap=True)
     dailyTable.add_column("Month", justify="right", style="cyan", no_wrap=True)
+    dailyTable.add_column("Candle Pattern", justify="right", style="cyan", no_wrap=True)
 
     weeklyTable = Table(title="Weekly")
     weeklyTable.add_column("Ticker", justify="right", style="cyan", no_wrap=True)
@@ -297,6 +342,7 @@ def stratBot():
     weeklyTable.add_column("Candle Pattern", justify="right", style="cyan", no_wrap=True)
     weeklyTable.add_column("Week", justify="right", style="cyan", no_wrap=True)
     weeklyTable.add_column("Month", justify="right", style="cyan", no_wrap=True)
+    weeklyTable.add_column("Candle Pattern", justify="right", style="cyan", no_wrap=True)
 
 
     monthlyTable = Table(title="Monthly")
@@ -306,6 +352,7 @@ def stratBot():
     monthlyTable.add_column("Profit", justify="right", style="cyan", no_wrap=True)
     monthlyTable.add_column("Candle Pattern", justify="right", style="cyan", no_wrap=True)
     monthlyTable.add_column("Month", justify="right", style="cyan", no_wrap=True)
+    monthlyTable.add_column("Candle Pattern", justify="right", style="cyan", no_wrap=True)
 
     tickers=getTickers()
     for ticker in tickers:
