@@ -13,6 +13,10 @@ nav:
     - Sectors: 'sectors.md'
     - The Strat Course: 'intro-to-the-strat.md'
     - References: 'references.md'
+    - Strat Bot:
+        - Daily: 'stratbot/daily.html'
+        - Weekly: 'stratbot/weekly.html'
+        - Monthly: 'stratbot/monthly.html'
 
 theme:
     name: readthedocs
