@@ -41,14 +41,14 @@ def getTickers():
     tickers_Insurance = ["AIG", "ALL"]
     tickers_Materials = ["AA", "SCCO", "TECK", "VALE"]
     tickers_Retail = ["AMZN", "BBBY", "CHWY", "COST", "DG", "DLTR", "EBAY", "ETSY", "EXPR", "GME", "GRPN", "GPS", "HD", "JD", "JACK",  "KR", "LOW", "M", "NEGG", "PVH", "PETS", "TGT", "URBN", "W", "WMT"]
-    tickers_Tech = ["AAPL","ABNB","ADBE", "AFRM", "AMD","AMZN","ADP","BABA","BIDU","CRM","CRWD", "CSCO", "CHKP", "COIN", "DISH", "DIS", "EXPE", "FB", "FVRR", "GOOG", "GOOGL", "IBM" , "INOD", "JNPR", "KLIC", "LSPD","MCHP", "META", "MU", "MSFT", "NFLX", "NVDA", "ORCL", "PLTR", "QCOM", "QRVO", "RBLX", "ROKU", "RNG", "SAVE", "SNPS", "SHOP", "SPOT","SMH", "SPLK", "TDOC", "TTD", "TWLO", "U", "Z", "ZG", "ZM", "WDAY"]
+    tickers_Tech = ["AAPL","ABNB","ADBE", "AFRM", "AMD","AMZN","ADP","BABA","BIDU","CRM","CRWD", "CSCO", "CHKP", "COIN", "DISH", "DIS", "EXPE", "FB", "FVRR", "GOOG", "GOOGL", "IBM" , "INOD", "JNPR", "KLIC", "LSPD","MCHP", "META", "MU", "MSFT", "NFLX", "NVDA", "ORCL", "PLTR", "QCOM", "QRVO", "RBLX", "ROKU", "RNG", "SAVE", "SNPS", "SHOP", "SPOT","SMH", "SPLK", "TTD", "TWLO", "U", "Z", "ZG", "ZM", "WDAY"]
 
     if 'accessCode' in globals():
         tickers = tickers_TEST
     else:
         tickers = tickers_ETFs + tickers_Auto + tickers_Airlines + tickers_Biotech + tickers_Cannabis + tickers_Energy + tickers_Financial + tickers_Gas + tickers_Gamming + tickers_Insurance + tickers_Materials + tickers_Retail + tickers_Tech
 
-    tickers = tickers_TEST
+    #tickers = tickers_TEST
 
     tickers.sort()
     return tickers
@@ -321,7 +321,7 @@ def stratBotTimeframe(table,timeframeShortForm, tickers, ticker,takeDailyAmount,
 
 def stratBot():
 
-    console = Console()
+    console = Console(record=True)
 
     dailyTable = Table(title="Daily")
     dailyTable.add_column("Ticker", justify="right", style="cyan", no_wrap=True)
@@ -439,8 +439,11 @@ def stratBot():
 
 
     console.print(dailyTable)
+    console.save_html("daily.html")
     console.print(weeklyTable)
+    console.save_html("weeklyTable.html")
     console.print(monthlyTable)
+    console.save_html("monthlyTable.html")
 
 if __name__ == "__main__":
 
