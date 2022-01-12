@@ -8,6 +8,7 @@
 from rich import print
 from rich.console import Console
 from rich.table import Table
+from rich.markdown import Markdown
 
 from datetime import datetime, timedelta
 import os
@@ -128,30 +129,30 @@ def addTickerToTable(table,ticker,timeframe,stratPattern,enforced, candlePattern
         lastShooter = isShootingStar(tickers[len(tickers)-2],tickers[len(tickers)-1])
         stratEnforced = ""
         if(enforced==True):
-            stratEnforced = "Enforced"
+            stratEnforced = "[blue]Enforced[/blue]"
 
         if(timeframe == "1D"):
 
             if(lastHammer):
-                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeDailyPercentage,takeWeeklyPercentage,takeMonthlyPercentage,candlePattern + "[hammer]")
+                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeDailyPercentage,takeWeeklyPercentage,takeMonthlyPercentage,candlePattern, "[bold]hammer[/bold]")
             elif(lastShooter):
-                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)),  takeDailyPercentage,takeWeeklyPercentage,takeMonthlyPercentage, candlePattern + "[shooter]")
+                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)),  takeDailyPercentage,takeWeeklyPercentage,takeMonthlyPercentage, candlePattern, "[bold]shooter[/bold]")
             else:
-                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)),  takeDailyPercentage,takeWeeklyPercentage,takeMonthlyPercentage, candlePattern + "")
+                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)),  takeDailyPercentage,takeWeeklyPercentage,takeMonthlyPercentage, candlePattern, "")
         elif(timeframe == "1W"):
             if(lastHammer):
-                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeWeeklyPercentage,takeMonthlyPercentage, candlePattern + "[hammer]")
+                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeWeeklyPercentage,takeMonthlyPercentage, candlePattern, "[bold]hammer[/bold]")
             elif(lastShooter):
-                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeWeeklyPercentage,takeMonthlyPercentage, candlePattern + "[shooter]")
+                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeWeeklyPercentage,takeMonthlyPercentage, candlePattern, "[bold]shooter[/bold]")
             else:
-                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeWeeklyPercentage,takeMonthlyPercentage, candlePattern + "")
+                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeWeeklyPercentage,takeMonthlyPercentage, candlePattern, "")
         elif(timeframe == "1M"):
             if(lastHammer):
-                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeMonthlyPercentage, candlePattern + "[hammer]")
+                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeMonthlyPercentage, candlePattern, "[bold]hammer[/bold]")
             elif(lastShooter):
-                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeMonthlyPercentage, candlePattern + "[shooter]")
+                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeMonthlyPercentage, candlePattern, "[bold]shooter[/bold]")
             else:
-                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeMonthlyPercentage, candlePattern + "")
+                table.add_row(str(ticker),str(timeframe), stratPattern ,stratEnforced, "$" + str(round(profitTarget, 2)), takeMonthlyPercentage, candlePattern, "")
 
 def getStratNumber(candles,idx):
 
@@ -546,34 +547,37 @@ def stratBot():
 
     dailyTable = Table(title="Daily")
     dailyTable.add_column("Ticker", justify="right", style="cyan", no_wrap=True)
-    dailyTable.add_column("Aggregation", justify="right", style="cyan", no_wrap=True)
+    dailyTable.add_column("Timeframe", justify="right", style="cyan", no_wrap=True)
     dailyTable.add_column("Setup", justify="right", style="cyan", no_wrap=True)
     dailyTable.add_column("Enforced", justify="right", style="cyan", no_wrap=True)
     dailyTable.add_column("Profit", justify="right", style="cyan", no_wrap=True)
     dailyTable.add_column("Day", justify="right", style="cyan", no_wrap=True)
     dailyTable.add_column("Week", justify="right", style="cyan", no_wrap=True)
     dailyTable.add_column("Month", justify="right", style="cyan", no_wrap=True)
-    dailyTable.add_column("Candle Pattern", justify="right", style="cyan", no_wrap=True)
+    dailyTable.add_column("Last 6 Candles", justify="right", style="cyan", no_wrap=True)
+    dailyTable.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
 
     weeklyTable = Table(title="Weekly")
     weeklyTable.add_column("Ticker", justify="right", style="cyan", no_wrap=True)
-    weeklyTable.add_column("Aggregation", justify="right", style="cyan", no_wrap=True)
+    weeklyTable.add_column("Timeframe", justify="right", style="cyan", no_wrap=True)
     weeklyTable.add_column("Setup", justify="right", style="cyan", no_wrap=True)
     weeklyTable.add_column("Enforced", justify="right", style="cyan", no_wrap=True)
     weeklyTable.add_column("Profit", justify="right", style="cyan", no_wrap=True)
     weeklyTable.add_column("Week", justify="right", style="cyan", no_wrap=True)
     weeklyTable.add_column("Month", justify="right", style="cyan", no_wrap=True)
-    weeklyTable.add_column("Candle Pattern", justify="right", style="cyan", no_wrap=True)
+    weeklyTable.add_column("Last 6 Candles", justify="right", style="cyan", no_wrap=True)
+    weeklyTable.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
 
 
     monthlyTable = Table(title="Monthly")
     monthlyTable.add_column("Ticker", justify="right", style="cyan", no_wrap=True)
-    monthlyTable.add_column("Aggregation", justify="right", style="cyan", no_wrap=True)
+    monthlyTable.add_column("Timeframe", justify="right", style="cyan", no_wrap=True)
     monthlyTable.add_column("Setup", justify="right", style="cyan", no_wrap=True)
     monthlyTable.add_column("Enforced", justify="right", style="cyan", no_wrap=True)
     monthlyTable.add_column("Profit", justify="right", style="cyan", no_wrap=True)
     monthlyTable.add_column("Month", justify="right", style="cyan", no_wrap=True)
-    monthlyTable.add_column("Candle Pattern", justify="right", style="cyan", no_wrap=True)
+    monthlyTable.add_column("Last 6 Candles", justify="right", style="cyan", no_wrap=True)
+    monthlyTable.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
 
     tickers=getTickers()
     for ticker in tickers:
@@ -657,6 +661,7 @@ def stratBot():
         stratBotTimeframe(dailyTable,"1D",daily_candles, ticker, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount,False)
         stratBotTimeframe(weeklyTable,"1W",weekly_candles, ticker, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount,True)
         stratBotTimeframe(monthlyTable,"1M",monthly_candles, ticker, takeDailyAmount, takeWeeklyAmount, takeMonthlyAmount,True)
+
 
 
     console.print(dailyTable)
