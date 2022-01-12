@@ -551,9 +551,9 @@ def stratBot():
     dailyTable.add_column("Setup", justify="right", style="cyan", no_wrap=True)
     dailyTable.add_column("Enforced", justify="right", style="cyan", no_wrap=True)
     dailyTable.add_column("Profit", justify="right", style="cyan", no_wrap=True)
-    dailyTable.add_column("Day", justify="right", style="cyan", no_wrap=True)
-    dailyTable.add_column("Week", justify="right", style="cyan", no_wrap=True)
-    dailyTable.add_column("Month", justify="right", style="cyan", no_wrap=True)
+    dailyTable.add_column("Price to Change \nDaily Continuity", justify="right", style="cyan", no_wrap=False)
+    dailyTable.add_column("Price to Change \nWeekly Continuity", justify="right", style="cyan", no_wrap=False)
+    dailyTable.add_column("Price to Change \nMonthly Continuity", justify="right", style="cyan", no_wrap=False)
     dailyTable.add_column("Last 6 Candles", justify="right", style="cyan", no_wrap=True)
     dailyTable.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
 
@@ -563,8 +563,8 @@ def stratBot():
     weeklyTable.add_column("Setup", justify="right", style="cyan", no_wrap=True)
     weeklyTable.add_column("Enforced", justify="right", style="cyan", no_wrap=True)
     weeklyTable.add_column("Profit", justify="right", style="cyan", no_wrap=True)
-    weeklyTable.add_column("Week", justify="right", style="cyan", no_wrap=True)
-    weeklyTable.add_column("Month", justify="right", style="cyan", no_wrap=True)
+    weeklyTable.add_column("Price to Change \nWeekly Continuity", justify="right", style="cyan", no_wrap=False)
+    weeklyTable.add_column("Price to Change \nMonthly Continuity", justify="right", style="cyan", no_wrap=False)
     weeklyTable.add_column("Last 6 Candles", justify="right", style="cyan", no_wrap=True)
     weeklyTable.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
 
@@ -575,7 +575,7 @@ def stratBot():
     monthlyTable.add_column("Setup", justify="right", style="cyan", no_wrap=True)
     monthlyTable.add_column("Enforced", justify="right", style="cyan", no_wrap=True)
     monthlyTable.add_column("Profit", justify="right", style="cyan", no_wrap=True)
-    monthlyTable.add_column("Month", justify="right", style="cyan", no_wrap=True)
+    monthlyTable.add_column("Price to Change \nMonthly Continuity", justify="right", style="cyan", no_wrap=False)
     monthlyTable.add_column("Last 6 Candles", justify="right", style="cyan", no_wrap=True)
     monthlyTable.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
 
