@@ -23,7 +23,8 @@ if [[ -z "${CIPHERDMG_HOME}" ]] ; then export CIPHERDMG_HOME="${DEV_PROJECTS}/ci
 if [[ -z "${CIPHERDMG_HOME_PROJECT}" ]] ; then export CIPHERDMG_HOME_PROJECT="${CIPHERDMG_HOME##*/}"; fi
 
 #[REQUIRED]
-
+export TRADING_VIEW_BACKUP_DIR="${CIPHERDMG_HOME}/tradingview/backup"
+export QUESTRADE_PY="${CIPHERDMG_HOME}/scripts/questrade.py"
 
 #[DEFAULTS]
 
@@ -31,6 +32,7 @@ if [[ -z "${CIPHERDMG_HOME_PROJECT}" ]] ; then export CIPHERDMG_HOME_PROJECT="${
 #[CONSTANTS]
 
 #-------------------------------- Alias Values -------------------------------#
+alias cdc="cd ${CIPHERDMG_HOME}"
 
 #--------------------------------- Sourcing ----------------------------------#
 #[SOURCE]
@@ -38,6 +40,13 @@ if [[ -z "${CIPHERDMG_HOME_PROJECT}" ]] ; then export CIPHERDMG_HOME_PROJECT="${
 #[ALL_VARIABLES_ARRAY]
 
 #============================= Script Functions ==============================#
+
+###############################################################################
+# @description Backup questrade.py
+# @noargs
+# @internal
+#
+backupQuestradeScanBot(){ backupFile "${QUESTRADE_PY}" "${TRADING_VIEW_BACKUP_DIR}";}
 
 
 ###############################################################################

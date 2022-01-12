@@ -11,7 +11,7 @@ import sys
 
 from qtrade import Questrade
 
-#accessCode = "wBYYXBotlmeHlCJRApXDdaWo8vyE5hvo0"
+#accessCode = ""
 
 fridayDate = datetime(int(2022), int(1), 7)
 
