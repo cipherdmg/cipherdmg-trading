@@ -25,6 +25,7 @@ if [[ -z "${CIPHERDMG_HOME_PROJECT}" ]] ; then export CIPHERDMG_HOME_PROJECT="${
 #[REQUIRED]
 export TRADING_VIEW_BACKUP_DIR="${CIPHERDMG_HOME}/tradingview/backup"
 export QUESTRADE_PY="${CIPHERDMG_HOME}/scripts/questrade.py"
+export INDICATOR_PINE="${CIPHERDMG_HOME}/tradingview/cypherdmg-the-strat.pine"
 
 #[DEFAULTS]
 
@@ -42,11 +43,43 @@ alias cdc="cd ${CIPHERDMG_HOME}"
 #============================= Script Functions ==============================#
 
 ###############################################################################
+# @description Daily Backup
+#
+# @noargs
+#
+backupIB(){
+    local description=("Backup Interactive Broker Trader Workstation" "${@}")
+    if logEntry "${description[@]}" ; then return ;fi
+
+    datestamp #Initialize a new DATESTAMP for the backup
+
+    #Backup Development
+    rmf "${DEV_PROJECTS}/Jts"
+
+    cpf "/c/Jts" "${DEV_PROJECTS}/Jts"
+
+    backupDevProject "${DEV_PROJECTS}/Jts"
+
+    rmf "${DEV_PROJECTS}/Jts"
+
+    logExit #Call Exit Function
+}
+
+
+###############################################################################
 # @description Backup questrade.py
 # @noargs
 # @internal
 #
-backupQuestradeScanBot(){ backupFile "${QUESTRADE_PY}" "${TRADING_VIEW_BACKUP_DIR}";}
+backupQuestradeScanBot(){ backupFile "${INDICATOR_PINE}" "${TRADING_VIEW_BACKUP_DIR}";}
+
+###############################################################################
+# @description Backup cypherdmg-the-strat.pine
+# @noargs
+# @internal
+#
+backupTradingviewIndicator(){ backupFile "${INDICATOR_PINE}" "${TRADING_VIEW_BACKUP_DIR}";}
+
 
 
 ###############################################################################

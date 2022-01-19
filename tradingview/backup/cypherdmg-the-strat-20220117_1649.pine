@@ -443,6 +443,44 @@ barcolor(color=_isInsideCandle? insideColor : _isOutsideCandle? outsideColor : _
 //STRATEGY CODE: displays at the top, strategies/combos... these generally work left to right - the far right bar is index 0, add one to go back each time
 //TODO: Use this Later if we want to identify potential reversals ahead of time
 //##################################################################################################
+is212BearishContinuationMeasuredMove = isTwoDownCandle(2) and isInsideCandle(1) and isTwoDownCandle(0)
+is212BullishContinuationMeasuredMove = isTwoUpCandle(2) and isInsideCandle(1) and isTwoUpCandle(0)
+is222BearishContinuation = isTwoDownCandle(2) and isTwoDownCandle(1) and isTwoDownCandle(0)
+is222BullishContinuation = isTwoUpCandle(2) and isTwoUpCandle(1) and isTwoUpCandle(0)
+is2222BearishRandyJackson = isTwoDownCandle(3) and isTwoDownCandle(2) and isTwoUpCandle(1) and isTwoDownCandle(0)
+is2222BullishRandyJackson = isTwoUpCandle(3) and isTwoUpCandle(2) and isTwoDownCandle(1) and isTwoUpCandle(0)
+
+//2-2 Bearish Reversal has entry on low[1] and target low[2]
+is22BearishReversal = isTwoUpCandle(1) and isTwoDownCandle(0) and not isInsideCandle(2) and not isTwoDownCandle(2) and not isTwoDownCandle(3) and not isOutsideCandle(2)
+
+//2-2 Bullish Reversal has entry high[1] and target high[2]
+is22BullishReversal = isTwoDownCandle(1) and isTwoUpCandle(0) and not isInsideCandle(2) and not isTwoUpCandle(2) and not isTwoUpCandle(3) and not isOutsideCandle(2)
+
+//2-1-2 Bearish Reversal has entry low[1] and target low[2]
+is212BearishReversal = isTwoUpCandle(2) and isInsideCandle(1) and isTwoDownCandle(0)
+
+//2-1-2 Bullish Reversal has entry high[1] and target high[2]
+is212BullishReversal = isTwoDownCandle(2) and isInsideCandle(1) and isTwoUpCandle(0)
+
+//3-2-2 Bearish Reversal has entry low[1] and target low[2]
+is322BearishReversal = isOutsideCandle(2) and isTwoUpCandle(1) and isTwoDownCandle(0)
+
+//3-2-2 Bullish Reversal has entry high[1] and target high[2]
+is322BullishReversal = isOutsideCandle(2) and isTwoDownCandle(1) and isTwoUpCandle(0)
+
+is32BearishReversal = isOutsideCandle(1) and isTwoDownCandle(0)
+is32BullishReversal = isOutsideCandle(1) and isTwoUpCandle(0)
+
+//3-1-2 Bearish Reversal has entry low[1] and target low[2]
+is312BearishReversal = isOutsideCandle(2) and isInsideCandle(1) and isTwoDownCandle(0)
+
+//3-1-2 Bullish Reversal has entry high[1] and target high[2]
+is312BullishReversal = isOutsideCandle(2) and isInsideCandle(1) and isTwoUpCandle(0)
+
+is122BearishRevStratReversal = isInsideCandle(2) and isTwoUpCandle(1) and isTwoDownCandle(0)
+is122BullishRevStratReversal = isInsideCandle(2) and isTwoDownCandle(1) and isTwoUpCandle(0)
+is3BearishRevStratReversal = isOutsideCandle(0) and close[0] < low[1]
+is3BullishRevStratReversal = isOutsideCandle(0) and close[0] > low[1]
 
 //##################################################################################################
 //Anticipate the next Reversal
@@ -452,10 +490,171 @@ barcolor(color=_isInsideCandle? insideColor : _isOutsideCandle? outsideColor : _
 //Check to see if we are on a realtime bar or not.
 //if barstate.isrealtime
 
+candleIndex=(barstate.isrealtime ? 1: 0)
+
 var nextPattern = ''
 var nextPatternColor=bullishColor
 var nextPatternProfit=0.00
 var inForce=false
+
+
+//2-1-2 Bearish Reversal has entry low[1] and target low[2] (Next Candle Needs to be 2 Down)[Inforce]
+if (isTwoUpCandle(candleIndex + 2) and isInsideCandle(candleIndex + 1) and isTwoDownCandle(candleIndex))
+    nextPattern := '2-1-2'
+    nextPatternColor := bearishColor
+    nextPatternProfit := low[candleIndex + 1] - low[candleIndex + 2]
+    inForce = true
+
+else if (isTwoUpCandle(candleIndex + 2) and isInsideCandle(candleIndex + 1))
+    nextPattern := '2-1-2'
+    nextPatternColor := bearishColor
+    nextPatternProfit := low[candleIndex + 1] - low[candleIndex + 2]
+    inForce = false
+
+//2-1-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle Needs to be 2 Up)[Inforce]
+else if (isTwoDownCandle(candleIndex + 2) and isInsideCandle(candleIndex + 1) and isTwoUpCandle(candleIndex))
+    nextPattern := '2-1-2'
+    nextPatternColor := bullishColor
+    nextPatternProfit := high[candleIndex + 2] - high[candleIndex + 1]
+    inForce = true
+
+else if (isTwoDownCandle(candleIndex + 2) and isInsideCandle(candleIndex + 1))
+    nextPattern := '2-1-2'
+    nextPatternColor := bullishColor
+    nextPatternProfit := high[candleIndex + 2] - high[candleIndex + 1]
+    inForce = false
+
+
+//3-2-2 Bearish Reversal has entry low[1] and target low[2] (Next Candle needs to be a 2 Down)
+else if (isOutsideCandle(candleIndex + 2) and isTwoUpCandle(candleIndex + 1) and isTwoDownCandle(candleIndex))
+    nextPattern := '3-2-2'
+    nextPatternColor := bearishColor
+    nextPatternProfit := low[candleIndex + 1] - low[candleIndex + 2]
+    inForce = true
+else if (isOutsideCandle(candleIndex + 2) and isTwoUpCandle(candleIndex + 1))
+    nextPattern := '3-2-2'
+    nextPatternColor := bearishColor
+    nextPatternProfit := low[candleIndex + 1] - low[candleIndex + 2]
+    inForce = false
+
+//3-2-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle needs to be a 2 Up)
+else if (isOutsideCandle(candleIndex + 2) and isTwoDownCandle(candleIndex + 1) and isTwoUpCandle(candleIndex))
+    nextPattern := '3-2-2'
+    nextPatternColor := bullishColor
+    nextPatternProfit := high[candleIndex + 2] - high[candleIndex + 1]
+    inForce = true
+else if (isOutsideCandle(candleIndex + 2) and isTwoDownCandle(candleIndex + 1))
+    nextPattern := '3-2-2'
+    nextPatternColor := bullishColor
+    nextPatternProfit := high[candleIndex + 2] - high[candleIndex + 1]
+    inForce = false
+
+
+
+//3-1-2 Bearish Reversal has entry low[1] and target low[2] (Next Candle needs to be 2 Down)
+else if (isOutsideCandle(candleIndex + 2) and isInsideCandle(candleIndex + 1) and isTwoDownCandle(candleIndex))
+    nextPattern := '3-1-2'
+    nextPatternColor := bearishColor
+    nextPatternProfit := low[candleIndex + 1] - low[candleIndex + 2]
+    inForce = true
+
+
+//3-1-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle needs to be 2 Up)
+else if (isOutsideCandle(candleIndex + 2) and isInsideCandle(candleIndex + 1) and isTwoUpCandle(candleIndex))
+    nextPattern := '3-1-2'
+    nextPatternColor := bullishColor
+    nextPatternProfit := high[candleIndex + 2] - high[candleIndex + 1]
+    inForce = true
+
+//Could be bearish or bullish
+else if (isOutsideCandle(candleIndex + 2) and isInsideCandle(candleIndex + 1))
+    nextPattern := '3-1-2'
+    nextPatternColor := bullishColor
+    nextPatternProfit := low[candleIndex + 1] - low[candleIndex + 2]
+    inForce = false
+
+
+//1-2-2 Bearish Rev Strat has entry low[1] and target low[3] (Next Candle needs to be 2 Down)
+else if (isInsideCandle(candleIndex + 2) and isTwoUpCandle(candleIndex + 1) and isTwoDownCandle(candleIndex))
+    nextPattern := '1-2-2'
+    nextPatternColor := bearishColor
+    nextPatternProfit := low[candleIndex + 1] - low[candleIndex + 3]
+    inForce = true
+else if (isInsideCandle(candleIndex + 2) and isTwoUpCandle(candleIndex + 1))
+    nextPattern := '1-2-2'
+    nextPatternColor := bearishColor
+    nextPatternProfit := low[candleIndex + 1] - low[candleIndex + 3]
+    inForce = false
+
+//1-2-2 Bullish Rev Strat has entry high[1] and target high[3] (Next Candle needs to be 2 Up)
+else if (isInsideCandle(candleIndex + 2) and isTwoDownCandle(candleIndex + 1) and isTwoUpCandle(candleIndex))
+    nextPattern := '1-2-2'
+    nextPatternColor := bullishColor
+    nextPatternProfit := high[candleIndex + 3] - high[candleIndex + 1]
+    inForce = true
+else if (isInsideCandle(candleIndex + 2) and isTwoDownCandle(candleIndex + 1))
+    nextPattern := '1-2-2'
+    nextPatternColor := bullishColor
+    nextPatternProfit := high[candleIndex + 3] - high[candleIndex + 1]
+    inForce = false
+
+
+//2-2 Bearish Reversal has entry on low[1] and target low[2] (Next Candle Needs to be 2 Down)
+else if (not isInsideCandle(candleIndex + 2) and isTwoUpCandle(candleIndex + 1) and isTwoDownCandle(candleIndex))
+    nextPattern := '2-2'
+    nextPatternColor := bearishColor
+    nextPatternProfit := low[candleIndex + 1] - low[candleIndex + 2]
+    inForce = true
+else if (isInsideCandle(candleIndex + 2) and isTwoDownCandle(candleIndex + 1))
+    nextPattern := '2-2'
+    nextPatternColor := bearishColor
+    nextPatternProfit := low[candleIndex + 1] - low[candleIndex + 2]
+    inForce = false
+
+//2-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle Needs to be 2 Up)
+else if (not isInsideCandle(candleIndex + 2) and isTwoDownCandle(candleIndex + 1) and isTwoUpCandle(candleIndex))
+    nextPattern := '2-2'
+    nextPatternColor := bullishColor
+    nextPatternProfit := high[candleIndex + 2] - high[candleIndex + 1]
+    inForce = true
+else if (isInsideCandle(candleIndex + 2) and isTwoDownCandle(candleIndex + 1))
+    nextPattern := '2-2'
+    nextPatternColor := bullishColor
+    nextPatternProfit := high[candleIndex + 2] - high[candleIndex + 1]
+    inForce = false
+
+else
+    nextPattern := 'N/A'
+    nextPatternColor := bullishColor
+    nextPatternProfit := 0.00
+
+stateText1() =>
+
+    string txt = ""
+    txt += 'is22BearishReversalSetup: ' + str.tostring(is22BearishReversalSetup)
+    txt += '\nis22BullishReversalSetup: ' + str.tostring(is22BullishReversalSetup)
+    txt += '\nis212BearishReversalSetup: ' + str.tostring(is212BearishReversalSetup)
+    txt += '\nis212BullishReversalSetup: ' + str.tostring(is212BullishReversalSetup)
+    txt += '\nis322BearishReversalSetup: ' + str.tostring(is322BearishReversalSetup)
+    txt += '\nis322BullishReversalSetup: ' + str.tostring(is322BullishReversalSetup)
+    txt += '\nis312BearishReversalSetup: ' + str.tostring(is312BearishReversalSetup)
+    txt += '\nis312BullishReversalSetup: ' + str.tostring(is312BullishReversalSetup)
+    txt += '\nis122BearishRevStratReversalSetup: ' + str.tostring(is122BearishRevStratReversalSetup)
+    txt += '\nis122BullishRevStratReversalSetup: ' + str.tostring(is122BullishRevStratReversalSetup)
+
+//label.new(bar_index, na, stateText1(), yloc = yloc.abovebar, color = labelColor)
+
+// twoUpLabel = label.new(
+//           x         =_labelXIndex-_labelIndexOffset*5,
+//           y         = _labelYIndex,
+//           text      = createFinalFormattedLabelText(_labelTwoUpText, twoUpGreenText,twoUpRedText),
+//           color     = color.green,
+//           textcolor = _labelTextColor,
+//           style     = label.style_labelup,
+//           yloc      = yloc.price,
+//           textalign = _labelTextAlign)
+// label.delete(twoUpLabel[1])
+
 
 //##################################################################################################
 //FTFC
@@ -502,34 +701,43 @@ if barstate.islast and isTfEnabled
     [tf3MChg,tf3MColor] = getPercentChange(openQuarterValue,closeQuarterValue)
 
     if is15ValidTimeFrame
-        var table tcTable = table.new(position=position.top_right, columns = 9, rows = 2, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 9, rows = 3, border_width=3)
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
         table.cell(table_id = tcTable, column = 0, row = 1, text = tf15M + '\n' + str.tostring(tf15MChg, '#.##') + '%', bgcolor=color.new(tf15MColor, tfTableOpacity), text_color=tf15MColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 2, text = '')
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
         table.cell(table_id = tcTable, column = 1, row = 1, text = tf30M + '\n' + str.tostring(tf30MChg, '#.##') + '%', bgcolor=color.new(tf30MColor, tfTableOpacity), text_color=tf30MColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 1, row = 2, text = '')
 
         table.cell(table_id = tcTable, column = 2, row = 0, text = '')
         table.cell(table_id = tcTable, column = 2, row = 1, text = tf60M + '\n' + str.tostring(tf60MChg, '#.##') + '%', bgcolor=color.new(tf60MColor, tfTableOpacity), text_color=tf60MColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 2, row = 2, text = '')
 
         table.cell(table_id = tcTable, column = 3, row = 0, text = '')
         table.cell(table_id = tcTable, column = 3, row = 1, text = tf1D + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 3, row = 2, text = '')
 
         table.cell(table_id = tcTable, column = 4, row = 0, text = '')
         table.cell(table_id = tcTable, column = 4, row = 1, text = tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 4, row = 2, text = '')
 
         table.cell(table_id = tcTable, column = 5, row = 0, text = '')
         table.cell(table_id = tcTable, column = 5, row = 1, text = tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 5, row = 2, text = '')
 
         table.cell(table_id = tcTable, column = 6, row = 0, text = '')
         table.cell(table_id = tcTable, column = 6, row = 1, text = tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 6, row = 2, text = '')
 
         table.cell(table_id = tcTable, column = 7, row = 0, text = '')
         table.cell(table_id = tcTable, column = 7, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 7, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 8, row = 0, text = '')
         table.cell(table_id = tcTable, column = 8, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 8, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
 
     else if is30ValidTimeFrame
@@ -552,13 +760,17 @@ if barstate.islast and isTfEnabled
         // table.cell(tcTable, 7, 0, '')
         // table.cell(tcTable, 7, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 2, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 3, border_width=3)
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
         table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+        //table.cell(table_id = tcTable, column = 0, row = 2, text = str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
         table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 1, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+
 
     else if isHourValidTimeFrame
         // var table tcTable = table.new(position=position.top_right, columns = 7, rows = 2, border_width=3)
@@ -578,13 +790,15 @@ if barstate.islast and isTfEnabled
         // table.cell(tcTable, 6, 0, '')
         // table.cell(tcTable, 6, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 2, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 3, border_width=3)
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
         table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
         table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 1, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
 
     else if isDayValidTimeFrame
@@ -603,13 +817,15 @@ if barstate.islast and isTfEnabled
         // table.cell(tcTable, 5, 0, '')
         // table.cell(tcTable, 5, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 2, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 3, border_width=3)
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
         table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 2, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
         table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 1, row = 2, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
 
     else if isWeekValidTimeFrame
@@ -626,11 +842,15 @@ if barstate.islast and isTfEnabled
         // table.cell(tcTable, 1, 0, '')
         // table.cell(tcTable, 4, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 21, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 2, border_width=3)
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        //table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 1, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        //table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 1, row = 1, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
 
     else if isMonthValidTimeFrame
@@ -646,11 +866,16 @@ if barstate.islast and isTfEnabled
         // table.cell(tcTable, 3, 0, '')
         // table.cell(tcTable, 3, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 1, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 2, border_width=3)
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        //table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 1, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        //table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 1, row = 1, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
+
 
     else if isQuarterValidTimeFrame
         // var table tcTable = table.new(position=position.top_right, columns = 3, rows = 2, border_width=3)
@@ -662,11 +887,15 @@ if barstate.islast and isTfEnabled
         // table.cell(tcTable, 2, 0, '')
         // table.cell(tcTable, 2, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
 
-        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 1, border_width=3)
+        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 2, border_width=3)
 
         table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        //table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 0, row = 1, text = '$ ' + str.tostring(nextPatternProfit, '#.##'), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
         table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        //table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        table.cell(table_id = tcTable, column = 1, row = 1, text = str.tostring(nextPattern), bgcolor=color.new(nextPatternColor, tfTableOpacity), text_color=nextPatternColor, text_size=size.auto, width=0)
 
 
 // // previous high low lines
@@ -687,3 +916,26 @@ if barstate.islast and isTfEnabled
 //     line.delete(lowWeekLine[1])
 
 
+
+
+//plot shapes for strat combos
+// plotshape(is222BearishContinuation, title='222 Bearish \nContinuation', style=shape.flag, color=color.new(color.red, 0), location=location.top, text='222 Bearish \nContinuation', textcolor=color.new(color.red, 0), offset=3, show_last=1)
+// plotshape(is222BullishContinuation, title='222 Bullish \nContinuation', style=shape.flag, color=color.new(color.green, 0), location=location.top, text='222 Bullish \nContinuation', textcolor=color.new(color.green, 0), offset=3, show_last=1)
+// plotshape(is212BearishContinuationMeasuredMove, title='212 Bearish Continuation \nMeasured Move', style=shape.flag, color=color.new(color.red, 0), location=location.top, text='212 Bearish Continuation \nMeasured Move', textcolor=color.new(color.red, 0), offset=3, show_last=1)
+// plotshape(is212BullishContinuationMeasuredMove, title='212 Bullish Continuation \nMeasured Move', style=shape.flag, color=color.new(color.green, 0), location=location.top, text='212 Bullish Continuation \nMeasured Move', textcolor=color.new(color.green, 0), offset=3, show_last=1)
+// plotshape(is22BearishReversal, title='22 Bearish \nReversal', style=shape.flag, color=color.new(color.red, 0), location=location.top, text='22 Bearish \nReversal', textcolor=color.new(color.red, 0), offset=3, show_last=1)
+// plotshape(is22BullishReversal, title='22 Bullish \nReversal', style=shape.flag, color=color.new(color.green, 0), location=location.top, text='22 Bullish \nReversal', textcolor=color.new(color.green, 0), offset=3, show_last=1)
+// plotshape(is212BearishReversal, title='212 Bearish \nReversal', style=shape.flag, color=color.new(color.red, 0), location=location.top, text='212 Bearish \nReversal', textcolor=color.new(color.red, 0), offset=3, show_last=1)
+// plotshape(is212BullishReversal, title='212 Bullish \nReversal', style=shape.flag, color=color.new(color.green, 0), location=location.top, text='212 Bullish \nReversal', textcolor=color.new(color.green, 0), offset=3, show_last=1)
+// plotshape(is322BearishReversal, title='322 Bearish \nReversal', style=shape.flag, color=color.new(color.red, 0), location=location.top, text='322 Bearish \nReversal', textcolor=color.new(color.red, 0), offset=3, show_last=1)
+// plotshape(is322BullishReversal, title='322 Bullish \nReversal', style=shape.flag, color=color.new(color.green, 0), location=location.top, text='322 Bullish \nReversal', textcolor=color.new(color.green, 0), offset=3, show_last=1)
+// plotshape(is32BearishReversal, title='32 Bearish \nReversal', style=shape.flag, color=color.new(color.red, 0), location=location.top, text='32 Bearish \nReversal', textcolor=color.new(color.red, 0), offset=3, show_last=1)
+// plotshape(is32BullishReversal, title='32 Bullish \nReversal', style=shape.flag, color=color.new(color.green, 0), location=location.top, text='32 Bullish \nReversal', textcolor=color.new(color.green, 0), offset=3, show_last=1)
+// plotshape(is312BearishReversal, title='312 Bearish \nReversal', style=shape.flag, color=color.new(color.red, 0), location=location.top, text='312 Bearish \nReversal', textcolor=color.new(color.red, 0), offset=3, show_last=1)
+// plotshape(is312BullishReversal, title='312 Bullish \nReversal', style=shape.flag, color=color.new(color.green, 0), location=location.top, text='312 Bullish \nReversal', textcolor=color.new(color.green, 0), offset=3, show_last=1)
+// plotshape(is122BearishRevStratReversal, title='122 Bearish RevStrat \nReversal', style=shape.flag, color=color.new(color.red, 0), location=location.top, text='122 Bearish RevStrat \nReversal', textcolor=color.new(color.red, 0), offset=3, show_last=1)
+// plotshape(is122BullishRevStratReversal, title='122 Bullish RevStrat \nReversal', style=shape.flag, color=color.new(color.green, 0), location=location.top, text='122 Bullish RevStrat \nReversal', textcolor=color.new(color.green, 0), offset=3, show_last=1)
+// plotshape(is2222BearishRandyJackson, title='2222 Bearish \nRandyJackson', style=shape.flag, color=color.new(color.red, 0), location=location.top, text='2222 Bearish \nRandyJackson', textcolor=color.new(color.red, 0), offset=3, show_last=1)
+// plotshape(is2222BullishRandyJackson, title='2222 Bullish \nRandyJackson', style=shape.flag, color=color.new(color.green, 0), location=location.top, text='2222 Bullish \nRandyJackson', textcolor=color.new(color.green, 0), offset=3, show_last=1)
+// plotshape(is3BearishRevStratReversal, title='3 Bearish \nRevStrat Reversal', style=shape.flag, color=color.new(color.red, 0), location=location.top, text='3 Bearish \nRevStrat Reversal', textcolor=color.new(color.red, 0), offset=3, show_last=1)
+// plotshape(is3BullishRevStratReversal, title='3 Bullish \nRevStrat Reversal', style=shape.flag, color=color.new(color.green, 0), location=location.top, text='3 Bullish \nRevStrat Reversal', textcolor=color.new(color.green, 0), offset=3, show_last=1)

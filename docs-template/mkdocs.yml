@@ -7,16 +7,13 @@ site_name: Stock Trading
 
 nav:
     - The Strat: 'index.md'
+    - Benzinga Options School: 'options-benzinga.md'
     - Options: 'options.md'
     - Scripts: 'scripts.md'
     - Swing Trading: 'swingtradingtips.md'
     - Sectors: 'sectors.md'
     - The Strat Course: 'intro-to-the-strat.md'
     - References: 'references.md'
-    - Strat Bot:
-        - Daily: 'stratbot/daily.html'
-        - Weekly: 'stratbot/weekly.html'
-        - Monthly: 'stratbot/monthly.html'
 
 theme:
     name: readthedocs
