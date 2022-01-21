@@ -70,7 +70,7 @@ def getTickers():
         tickers = tickers_ETFs + tickers_Auto + tickers_Airlines + tickers_Biotech + tickers_Cannabis + tickers_Energy + tickers_Financial + tickers_Gas + tickers_Gamming + tickers_Insurance + tickers_Materials + tickers_Retail + tickers_Tech
 
     tickers=[random.choice (tickers)]
-    #tickers=['Roku']
+    tickers=['WMG']
     #tickers = tickers_TEST
     return tickers
 
@@ -102,30 +102,39 @@ def getClose(candle):
     return candle.close
 # end of getClose()
 
-def getCandleColor(candles, idx):
-    if(isGreenCandle(candles,idx)):
+def getCandleColor(candle):
+    if(isGreenCandle(candle)):
         return "green"
     else:
         return "red"
 # end of getCandleColor()
 
-def isGreenCandle(candles, idx):
-    return getOpen(candles[idx]) < getClose(candles[idx])
+def isGreenCandle(candle):
+    return getOpen(candle) < getClose(candle)
 # end of isGreenCandle()
 
-def isRedCandle(candles, idx):
-    return getOpen(candles[idx]) >= getClose(candles[idx])
+def isRedCandle(candle):
+    return getOpen(candle) >= getClose(candle)
 # end of isRedCandle()
 
-def isShootingStar(ticker):
-    openPrice=getOpen(ticker)
-    closePrice=getClose(ticker)
-    highPrice=getHigh(ticker)
-    lowPrice=getLow(ticker)
+def isShootingStar(candle):
+    openPrice=getOpen(candle)
+    closePrice=getClose(candle)
+    highPrice=getHigh(candle)
+    lowPrice=getLow(candle)
 
     hc=highPrice-closePrice
     hl=highPrice-lowPrice
-    return (((highPrice-closePrice)/(highPrice-lowPrice)>= 0.75))
+
+    if(isRedCandle(candle)):
+        ratio = (highPrice - openPrice) / (openPrice-closePrice) #This will give you a ratio of the top wick compared to the body which should be
+        ratioTail = (closePrice - lowPrice)/ (highPrice - openPrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
+        return ((ratio > 2) and (ratioTail < 0.30))
+    else:
+        ratio = (highPrice - closePrice) / (closePrice - openPrice) #This will give you a ratio of the top wick compared to the body which should be
+        ratioTail = (openPrice - lowPrice)/ (highPrice - closePrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
+        return ((ratio > 2) and (ratioTail < 0.30))
+
 # end of isShootingStar()
 
 
@@ -139,7 +148,16 @@ def isHammer(candle):
     closePrice=getClose(candle)
     highPrice=getHigh(candle)
     lowPrice=getLow(candle)
-    return (highPrice - lowPrice > 3 * (openPrice - closePrice) and (closePrice - lowPrice) / (.001 +highPrice - lowPrice) > 0.6 and (openPrice - lowPrice) / (.001 + highPrice - lowPrice) > 0.6)
+    #return (highPrice - lowPrice > 3 * (openPrice - closePrice) and (closePrice - lowPrice) / (.001 +highPrice - lowPrice) > 0.6 and (openPrice - lowPrice) / (.001 + highPrice - lowPrice) > 0.6)
+    if(isGreenCandle(candle)):
+        ratio = (closePrice - lowPrice) / (closePrice-openPrice) #This will give you a ratio of the bottom wick compared to the body which should be
+        ratioTip = (highPrice - closePrice)/ (openPrice - lowPrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
+        return ((ratio > 2) and (ratioTip < 0.30))
+    else:
+        ratio = (openPrice - lowPrice) / (openPrice - closePrice) #This will give you a ratio of the bottom wick compared to the body which should be
+        ratioTip = (highPrice - openPrice)/ (closePrice - lowPrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
+        return ((ratio > 2) and (ratioTip < 0.30))
+
 # end of isHammer()
 
 
@@ -341,7 +359,7 @@ if __name__ == "__main__":
     for ticker in tickers:
         console.print("Searching Ticker %s ..." % (ticker))
         #getStockHistory("AAPL","1 D", "15 mins")
-        getStockHistory(dailyTable, ticker,"5400 S", "15 mins") #90 Mins all together [6 Candles of 15 mins]
+        #getStockHistory(dailyTable, ticker,"5400 S", "15 mins") #90 Mins all together [6 Candles of 15 mins]
 
 
         # getStockHistory("AAPL","1 D","30 mins")
@@ -352,7 +370,7 @@ if __name__ == "__main__":
         #getStockHistory("AAPL","21600 S","1 hour") #360 Mins all together [6 Candles of 60 mins]
 
 
-        # getStockHistory("AAPL","1 W","1 day")
+        getStockHistory(dailyTable, ticker,"1 W","1 day")
 
         #console.print("[red]AAPL Weekly 1 Month of Data [/red]")
         # getStockHistory("AAPL","1 M","1 week")
