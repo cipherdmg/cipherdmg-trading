@@ -1,1 +1,1 @@
-# cipher-trading #
+# cipherdmg-trading #

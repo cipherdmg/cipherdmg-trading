@@ -24,7 +24,9 @@ if [[ -z "${CIPHERDMG_HOME_PROJECT}" ]] ; then export CIPHERDMG_HOME_PROJECT="${
 
 #[REQUIRED]
 export TRADING_VIEW_BACKUP_DIR="${CIPHERDMG_HOME}/tradingview/backup"
-export QUESTRADE_PY="${CIPHERDMG_HOME}/scripts/questrade.py"
+export STRATBOT_PY="${CIPHERDMG_HOME}/stratbot/stratbot.py"
+export STRATBOT_BACKUP_DIR="${CIPHERDMG_HOME}/stratbot/backup"
+
 export INDICATOR_PINE="${CIPHERDMG_HOME}/tradingview/cypherdmg-the-strat.pine"
 
 #[DEFAULTS]
@@ -71,7 +73,7 @@ backupIB(){
 # @noargs
 # @internal
 #
-backupQuestradeScanBot(){ backupFile "${INDICATOR_PINE}" "${TRADING_VIEW_BACKUP_DIR}";}
+backupStratBot(){ backupFile "${STRATBOT_PY}" "${STRATBOT_BACKUP_DIR}";}
 
 ###############################################################################
 # @description Backup cypherdmg-the-strat.pine

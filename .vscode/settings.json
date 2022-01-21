@@ -1,0 +1,289 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "eslint.validate": [ "javascript", "javascriptreact", "html", "typescriptreact" ],
+    "eslint.workingDirectories": [
+        "./server"
+    ],
+
+    //Workbench colorTheme
+    "workbench.colorTheme": "Dracula Pro (Custom)",
+
+    //https://code.visualstudio.com/docs/supporting/faq
+    "update.mode": "none",
+
+    //Window title
+    "window.title": "${dirty} ${activeEditorMedium}${separator}${rootName}",
+
+    //Hide open editor sections
+    "explorer.openEditors.visible": 0,
+
+    //Shellcheck Configuration Options
+    "shellcheck.enable": true,
+    "shellcheck.enableQuickFix": false,
+    "shellcheck.run": "onType",
+	"shellcheck.executablePath": "C:\\gitbash\\dev-projects\\ci-scripts\\bin\\shellcheck.exe",
+    "shellcheck.exclude": ["2164", "1091", "2129", "2120", "2145", "2155"],
+    "shellcheck.customArgs": [],
+    "shellcheck.ignorePatterns": {"**/*.ksh": true},
+    "shellcheck.ignoreFileSchemes": ["git", "gitfs"],
+    "shellcheck.useWSL": false,
+
+    "python.languageServer": "Pylance",
+
+    //Path to Python, you can use a custom version of Python by modifying this setting to include the full path.
+    "python.pythonPath": "C:\\gitbash\\opt\\python3\\python.exe",
+
+    // Is git enabled
+    "git.enabled": false,
+
+    // Path to the git executable
+    //"git.path": "C:\\gitbash\\cmd\\git.exe",
+
+    "workbench.iconTheme": "material-icon-theme",
+
+    // Whether auto fetching is enabled.
+    "git.autofetch": false,
+
+    //disable jshint
+    //"jshint.enable" : true,
+
+      // Controls the font size in pixels.
+    "editor.fontSize": 14,
+
+    // The number of spaces a tab is equal to. This setting is overriden based on the file contents when `editor.detectIndentation` is on.
+    "editor.tabSize": 4,
+
+    // Insert spaces when pressing Tab. This setting is overriden based on the file contents when `editor.detectIndentation` is on.
+    "editor.insertSpaces": true,
+
+    // When opening a file, `editor.tabSize` and `editor.insertSpaces` will be detected based on the file contents.
+    "editor.detectIndentation": false,
+
+    // Controls if the minimap is shown
+    "editor.minimap.enabled": true,
+
+    // Limit the width of the minimap to render at most a certain number of columns
+    "editor.minimap.maxColumn": 150,
+
+    //Render the actual characters on a line as opposed to color blocks
+    "editor.minimap.renderCharacters": false,
+
+    //Controls when the minimap slider is shown
+    "editor.minimap.showSlider": "always",
+
+    //Controls how the editor should render whitespace characters
+    "editor.renderWhitespace": "all",
+
+    //Controls whether the editor will scroll using an animation
+    "editor.smoothScrolling": true,
+
+    //Control the cursor animation style
+    "editor.cursorBlinking": "phase",
+
+    //Controls whether the smooth caret animation should be enabled
+    "editor.cursorSmoothCaretAnimation": true,
+
+    //When enabled, insert a final new line at the end of the file when saving it
+    "files.insertFinalNewline": true,
+
+    //When enabled, will trim trailing whitespace when saving a file
+    "files.trimTrailingWhitespace": true,
+
+    //Disable crash reports sent to Microsoft
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+
+    //Integrated Terminal Settings
+    // Whether to confirm on exit if there are active terminal sessions.
+    "terminal.integrated.confirmOnExit": false,
+
+    // When set, text selected in the terminal will be copied to the clipboard.
+    "terminal.integrated.copyOnSelection": false,
+
+    // Controls whether the terminal cursor blinks.
+    "terminal.integrated.cursorBlinking": false,
+
+    // Controls the style of terminal cursor.
+    "terminal.integrated.cursorStyle": "block",
+
+    // An explicit start path where the terminal will be launched, this is used as the current working directory (cwd) for the shell process. This may be particularly useful in workspace settings if the root directory is not a convenient cwd.
+    "terminal.integrated.cwd": "",
+
+    // Whether the terminal bell is enabled or not.
+    "terminal.integrated.enableBell": false,
+
+    // Controls the font family of the terminal, this defaults to editor.fontFamily's value.
+    "terminal.integrated.fontFamily": "",
+
+    // Controls the font size in pixels of the terminal.
+    "terminal.integrated.fontSize": 14,
+
+    // The font weight to use within the terminal for non-bold text.
+    "terminal.integrated.fontWeight": "normal",
+
+    // The font weight to use within the terminal for bold text.
+    "terminal.integrated.fontWeightBold": "bold",
+
+    // Controls the letter spacing of the terminal, this is an integer value which represents the amount of additional pixels to add between characters.
+    "terminal.integrated.letterSpacing": 0,
+
+    // Controls how terminal reacts to right click, possibilities are "default", "copyPaste", and "selectWord". "default" will show the context menu, "copyPaste" will copy when there is a selection otherwise paste, "selectWord" will select the word under the cursor and show the context menu.
+    "terminal.integrated.rightClickBehavior": "copyPaste",
+
+    // Controls the maximum amount of lines the terminal keeps in its buffer.
+    "terminal.integrated.scrollback": 1000,
+
+    // Controls whether locale variables are set at startup of the terminal, this defaults to true on OS X, false on other platforms.
+    "terminal.integrated.setLocaleVariables": false,
+
+    //Terminal Settings [PRE 1.56.0]
+    // "terminal.integrated.shell.osx": "sh",
+    // "terminal.integrated.shell.windows": "C:\\gitbash\\usr\\bin\\bash.exe",
+    // "terminal.integrated.shell.linux": "/usr/bin/bash",
+
+    //Terminal Settings [POST 1.56.0]
+    //"terminal.integrated.tabs.enabled": true,
+    "terminal.integrated.allowWorkspaceConfiguration": true,
+    "terminal.integrated.defaultProfile.windows": "GitBash",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.gpuAcceleration": "off",
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "/usr/bin/bash",
+            "args": ["-l"]
+        },
+    },
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        },
+        "Command Prompt": {
+            "path": [
+            "${env:windir}\\Sysnative\\cmd.exe",
+            "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+        "GitBash": {
+            "path": ["C:\\gitbash\\usr\\bin\\bash.exe"],
+            "icon": "terminal-bash"
+        }
+    },
+
+    //todohighlight extension settings
+    "todohighlight.isEnable": true,
+    "todohighlight.isCaseSensitive": true,
+    "todohighlight.keywords": [
+        "DEBUG:",
+        "REVIEW:",
+        {
+            "text": "NOTE:",
+            "color": "#ff0000",
+            "backgroundColor": "yellow",
+            "overviewRulerColor": "grey"
+        },
+        {
+            "text": "HACK:",
+            "color": "#000",
+            "isWholeLine": false
+        },
+        {
+            "text": "TODO:",
+            "color": "green",
+            "backgroundColor": "rgba(0,0,0,.2)",
+            //"backgroundColor": "#005000",
+            "cursor": "pointer",
+            "border": "2px solid #FFA500",
+            "borderRadius": "10px",
+            "isWholeLine": true
+        }
+    ],
+    "todohighlight.keywordsPattern": "TODO:|FIXME:|TESTME:|NOTE:|REVIEW:|DEBUG:",
+    "todohighlight.defaultStyle": {
+        "color": "white",
+        "backgroundColor": "#005000",
+        // "overviewRulerColor": "#005000",
+        "cursor": "pointer",
+        "border": "2px solid #FFA500",
+        "borderRadius": "10px",
+        "isWholeLine": true
+    },
+    "todohighlight.include": [
+        "**/*.sh",
+        "**/*.java",
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.html",
+        "**/*.php",
+        "**/*.css",
+        "**/*.scss"
+    ],
+    "todohighlight.exclude": [
+        "**/node_modules/**",
+        "**/bower_components/**",
+        "**/dist/**",
+        "**/build/**",
+        "**/.vscode/**",
+        "**/.github/**",
+        "**/_output/**",
+        "**/*.min.*",
+        "**/*.map",
+        "**/.next/**"
+    ],
+    "todohighlight.maxFilesForSearch": 5120,
+    "todohighlight.toggleURI": false,
+
+    "outline.showFunctions": true,
+    "outline.showFields": true,
+    "outline.showInterfaces": true,
+    "outline.showMethods": true,
+    "outline.showModules": true,
+    "outline.showNamespaces": true,
+    "outline.showNull": true,
+    "outline.showObjects": true,
+    "outline.showOperators": true,
+    "outline.showVariables": false,
+    "outline.showStrings": true,
+    "outline.showProperties": true,
+
+    // Configure editor settings to be overridden for [yaml] language.
+    "[yaml]":  {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
+    },
+
+    // Configure glob patterns for excluding files and folders in searches. Inherits all glob patterns from the files.exclude setting.
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/lib": true
+    },
+
+    // Configure glob patterns for excluding files and folders.
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true
+    },
+    "python.linting.enabled": true,
+
+    /* CSpell Settings */
+    "cSpell.diagnosticLevel": "Hint",
+
+    "cSpell.words": [
+        "Toolkits",
+        "conntype",
+        "jython",
+        "openshift",
+        "shellcheck",
+        "wsadmin"
+    ],
+    "cSpell.enableFiletypes": [
+        "shellscript"
+    ]
+}

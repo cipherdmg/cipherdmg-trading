@@ -24,7 +24,10 @@
 11. [Q&A Session - Three & Four Legged Option Strategies](https://www.benzinga.com/school/past/667304260)
 
 12. [Combining Options with Price Action](https://www.benzinga.com/school/past/661996863)
+13. [Q&A Session - Combining Options with Price Action](https://www.benzinga.com/school/past/662330556)
 
+14. [Market Gamma & How to Build Your Own Option Strategies](https://www.benzinga.com/school/past/661997346)
+15. [Q&A Session - Market Gamma & How to Build Your Own Option Strategies](https://www.benzinga.com/school/past/667968822)
 
 
 
