@@ -54,12 +54,13 @@ from rich.console import Console
 def getTickers():
     tickers_TEST = ["RBLX"]
 
-    tickers_ETFs= ["SPY","QQQ", "DIA", "IWM", "XBI", "XHB", "XLB", "XLC", "XLF", "XLI", "XLK", "XLP", "XLRE", "XLU", "XLY", "XLV", "IYT", "OIH", "IBB"]
+    tickers_ETFs= ["SPY","QQQ", "DIA", "IWM", "XBI", "XHB", "XLB", "XLC", "XLF", "XLI", "XLK", "XLRE", "XLU", "XLY", "XLV", "IYT", "OIH", "IBB"]
 
     tickers_Auto = ["AYRO", "CMI", "CHPT", "F", "GM", "HMC", "LCID", "LI", "LYFT", "MVIS", "NKLA", "NIO", "RIDE", "TM", "TSLA", "UBER", "VLTA", "WKHS", "WBX", "XPEV"]
     tickers_Airlines = [ "BA", "LUB", "UAL", "DAL", "AAL", "RCL", "CCL" ]
     tickers_Biotech = ["AMN", "BNTX", "JAZZ","HUM", "MRNA", "MRK", "NVAX","PFE", "TDOC" ]
-    tickers_Cannabis=["SNDL", "TLRY", "CGC", "MO", "ACB", "OGI", "AMRS", "CPMD", "HEXO"]
+    tickers_Cannabis=["SNDL", "TLRY", "CGC", "ACB", "OGI", "AMRS", "CPMD", "HEXO"]
+    tickers_Consumer_Staples=["XLP","PG","COST","PEP","KO","PM","MDLZ","WMT","MO","EL","CL"]
     tickers_Energy = ["AMRC", "ARVL", "BEP", "BEPC", "BLNK", "DQ", "DUK", "ENPH", "EVGO", "FSLR", "FCEL", "HPK", "IVAN", "ISUN", "JKS", "MAXN", "NEE", "NEP", "PPSI", "QCLN", "QS", "RUN", "RIVN", "SEDG", "SO", "SOLO", "SPWR", "SU", "VST", "VLO"  ]
     tickers_Financial = ["JPM", "MS", "BAC", "WFC", "SQ", "C", "HIG", "AXP", "DFS", "COF", "MA", "V" ]
     tickers_XLE=["XLE","APA","BKR","BEP","CHPT","CVI", "CRL", "COP","COO","CVX","DVN","DUK","EOG","FAN","FTI","FCEL","FSLR","HAL","HES","HFC","HP","KMB","KMI","MCP","MAXN","NEE","NOV","OKE","OXY","PSX","PXD","PLUG","SLB","SPWR","SOLO","SU","VLCN","VLO","XOM","WMB","WM"]
@@ -67,13 +68,13 @@ def getTickers():
     tickers_Gamming = ["CZR", "DKNG", "EA", "FUBO", "GENI", "GNOG", "SEAH", "LVS", "MGM", "PENN"]
     tickers_Insurance = ["AIG", "ALL"]
     tickers_Materials = ["AA", "SCCO", "TECK", "VALE"]
-    tickers_Retail = ["AMZN", "BBBY", "CHWY", "COST", "DG", "DLTR", "EBAY", "ETSY", "EXPR", "GME", "GRPN", "GPS", "HD", "JD", "JACK",  "KR", "LOW", "M", "NEGG", "PVH", "PETS", "TGT", "URBN", "W", "WMT"]
+    tickers_Retail = ["AMZN", "BBBY", "CHWY", "DG", "DLTR", "EBAY", "ETSY", "EXPR", "GME", "GRPN", "GPS", "HD", "JD", "JACK",  "KR", "LOW", "M", "NEGG", "PVH", "PETS", "TGT", "URBN", "W", "WMT"]
     tickers_Tech = ["AAPL","ABNB","ADBE", "AFRM", "AMD","ADP","BABA","BIDU","CRM","CRWD", "CSCO", "CHKP", "COIN", "DISH", "DIS", "EXPE", "FB", "FVRR", "GOOG", "GOOGL", "IBM" , "INOD", "JNPR", "KLIC", "LSPD","MCHP", "META", "MU", "MSFT", "NFLX", "NVDA", "ORCL", "PLTR", "QCOM", "QRVO", "RBLX", "ROKU", "RNG", "SAVE", "SNPS", "SHOP", "SPOT","SMH", "SPLK", "TTD", "TWLO", "U", "Z", "ZG", "ZM", "WDAY"]
 
     if 'accessCode' in globals():
         tickers = tickers_TEST
     else:
-        tickers = tickers_ETFs + tickers_Auto + tickers_Airlines + tickers_Biotech + tickers_Cannabis + tickers_Energy + tickers_Financial + tickers_XLE + tickers_Oil + tickers_Gamming + tickers_Insurance + tickers_Materials + tickers_Retail + tickers_Tech
+        tickers = tickers_ETFs + tickers_Auto + tickers_Airlines + tickers_Biotech + tickers_Cannabis + tickers_Consumer_Staples + tickers_Energy + tickers_Financial + tickers_XLE + tickers_Oil + tickers_Gamming + tickers_Insurance + tickers_Materials + tickers_Retail + tickers_Tech
 
     # tickers=[random.choice (tickers)]
     # tickers=['WMG']

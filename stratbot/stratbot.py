@@ -64,6 +64,8 @@ console = Console(record=True)
 from rich.table import Table
 from rich.markdown import Markdown
 
+THROTTLE_SLEEP=10
+
 def getYahooFinanceDailyCandles(symbol):
 
     candles = []
@@ -100,20 +102,26 @@ def getYahooFinanceWeeklyCandles(symbol):
     period2 = int(time.mktime(datetime.datetime(2022,1,22,23,59).timetuple()))
     interval = '1wk'
     query_string = f'https://query1.finance.yahoo.com/v7/finance/download/{symbol}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
-    df = pandas.read_csv(query_string)
 
-    for ind in df.index:
-        high = df['High'][ind]
-        low = df['Low'][ind]
-        open = df['Open'][ind]
-        close = df['Close'][ind]
-        volume = df['Volume'][ind]
-
-        #print(str(ind) + " open: " + str(open) + " close: " + str(close) + " low: " + str(low) + " high: " + str(high))
-
-        candle = stratbotapi.Candle(symbol,open,close,high,low,ind,volume)
-        candles.append(candle)
     #print(df)
+
+    try:
+        df = pandas.read_csv(query_string)
+
+        for ind in df.index:
+            high = df['High'][ind]
+            low = df['Low'][ind]
+            open = df['Open'][ind]
+            close = df['Close'][ind]
+            volume = df['Volume'][ind]
+
+            #print(str(ind) + " open: " + str(open) + " close: " + str(close) + " low: " + str(low) + " high: " + str(high))
+
+            candle = stratbotapi.Candle(symbol,open,close,high,low,ind,volume)
+            candles.append(candle)
+    except:
+        print("Unable to find symbol " + symbol)
+
 
     return candles
 
@@ -126,19 +134,23 @@ def getYahooFinanceMonthlyCandles(symbol):
     period2 = int(time.mktime(datetime.datetime(2022,1,22,23,59).timetuple()))
     interval = '1mo'
     query_string = f'https://query1.finance.yahoo.com/v7/finance/download/{symbol}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
-    df = pandas.read_csv(query_string)
 
-    for ind in df.index:
-        high = df['High'][ind]
-        low = df['Low'][ind]
-        open = df['Open'][ind]
-        close = df['Close'][ind]
-        volume = df['Volume'][ind]
+    try:
+        df = pandas.read_csv(query_string)
 
-        #print(str(ind) + " open: " + str(open) + " close: " + str(close) + " low: " + str(low) + " high: " + str(high))
+        for ind in df.index:
+            high = df['High'][ind]
+            low = df['Low'][ind]
+            open = df['Open'][ind]
+            close = df['Close'][ind]
+            volume = df['Volume'][ind]
 
-        candle = stratbotapi.Candle(symbol,open,close,high,low,ind,volume)
-        candles.append(candle)
+            #print(str(ind) + " open: " + str(open) + " close: " + str(close) + " low: " + str(low) + " high: " + str(high))
+
+            candle = stratbotapi.Candle(symbol,open,close,high,low,ind,volume)
+            candles.append(candle)
+    except:
+        print("Unable to find symbol " + symbol)
 
     #print(df)
     return candles
@@ -164,7 +176,7 @@ if __name__ == "__main__":
 
     for symbol in symbols:
 
-        #time.sleep(15) #Sleep 15 seconds betwean each api call
+        time.sleep(THROTTLE_SLEEP) #Sleep 15 seconds betwean each api call
 
         candles = getYahooFinanceDailyCandles(symbol)
 
@@ -191,7 +203,7 @@ if __name__ == "__main__":
 
     for symbol in symbols:
 
-        #time.sleep(15) #Sleep 15 seconds betwean each api call
+        time.sleep(THROTTLE_SLEEP) #Sleep 15 seconds betwean each api call
 
         candles = getYahooFinanceWeeklyCandles(symbol)
 
@@ -219,12 +231,12 @@ if __name__ == "__main__":
 
     for symbol in symbols:
 
-        #time.sleep(15) #Sleep 15 seconds betwean each api call
+        time.sleep(THROTTLE_SLEEP) #Sleep 15 seconds betwean each api call
 
         candles = getYahooFinanceMonthlyCandles(symbol)
 
         if(len(candles) > 0):
-            stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1M",False)
+            stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1M",True)
             table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
         else:
             console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
