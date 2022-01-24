@@ -1,5 +1,11 @@
 # References
 
+## Federal Reserve Calendar
+* [Federal Reserve Calendar](https://www.federalreserve.gov/newsevents/calendar.htm)
+
+## Earnings Calendar
+* [The Most Anticipated Earnings Releases](https://alpha.earningswhispers.com/calweek)
+
 ## Smiths In The Black YouTube
 
 * [Smiths In The Black YouTube](https://www.youtube.com/user/smithsintheblack)

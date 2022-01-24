@@ -166,7 +166,5 @@ buildDocsTrading(){
 
     #Copy the docs
     cp -rf "${docs_dir}/site" "${local_project}/docs"
-
-    mv -f "/c/gitbash/dev-projects/ci-scripts/access_token.yml" "/c/gitbash/home/apps/.ssh/access_token.yml"
 }
 
