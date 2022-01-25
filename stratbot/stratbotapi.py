@@ -46,13 +46,16 @@ from datetime import date
 import sys
 import random
 import time
+import logging
 
 from rich import print
 from rich.console import Console
 
+logging.basicConfig(level=logging.DEBUG)
+
 
 def getTickers():
-    tickers_TEST = ["RBLX"]
+    tickers_TEST = ["RBLX","SPY","QQQ"]
 
     tickers_ETFs= ["SPY","QQQ", "DIA", "IWM", "XBI", "XHB", "XLB", "XLC", "XLF", "XLI", "XLK", "XLRE", "XLU", "XLY", "XLV", "IYT", "OIH", "IBB"]
 
@@ -71,11 +74,10 @@ def getTickers():
     tickers_Retail = ["AMZN", "BBBY", "CHWY", "DG", "DLTR", "EBAY", "ETSY", "EXPR", "GME", "GRPN", "GPS", "HD", "JD", "JACK",  "KR", "LOW", "M", "NEGG", "PVH", "PETS", "TGT", "URBN", "W", "WMT"]
     tickers_Tech = ["AAPL","ABNB","ADBE", "AFRM", "AMD","ADP","BABA","BIDU","CRM","CRWD", "CSCO", "CHKP", "COIN", "DISH", "DIS", "EXPE", "FB", "FVRR", "GOOG", "GOOGL", "IBM" , "INOD", "JNPR", "KLIC", "LSPD","MCHP", "META", "MU", "MSFT", "NFLX", "NVDA", "ORCL", "PLTR", "QCOM", "QRVO", "RBLX", "ROKU", "RNG", "SAVE", "SNPS", "SHOP", "SPOT","SMH", "SPLK", "TTD", "TWLO", "U", "Z", "ZG", "ZM", "WDAY"]
 
-    if 'accessCode' in globals():
-        tickers = tickers_TEST
-    else:
-        tickers = tickers_ETFs + tickers_Auto + tickers_Airlines + tickers_Biotech + tickers_Cannabis + tickers_Consumer_Staples + tickers_Energy + tickers_Financial + tickers_XLE + tickers_Oil + tickers_Gamming + tickers_Insurance + tickers_Materials + tickers_Retail + tickers_Tech
+    tickers = tickers_ETFs + tickers_Auto + tickers_Airlines + tickers_Biotech + tickers_Cannabis + tickers_Consumer_Staples + tickers_Energy + tickers_Financial + tickers_XLE + tickers_Oil + tickers_Gamming + tickers_Insurance + tickers_Materials + tickers_Retail + tickers_Tech
 
+
+    tickers = tickers_TEST
     # tickers=[random.choice (tickers)]
     # tickers=['WMG']
     # tickers = tickers_TEST
@@ -207,7 +209,7 @@ def isShootingStar(candle):
             ratio = (highPrice - openPrice) / (openPrice-closePrice) #This will give you a ratio of the top wick compared to the body which should be
             ratioTail = (closePrice - lowPrice) / (highPrice - openPrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
             return ((ratio > 2) and (ratioTail < 0.30))
-        except ZeroDivisionError:
+        except:
             False
 
     else:
@@ -215,7 +217,7 @@ def isShootingStar(candle):
             ratio = (highPrice - closePrice) / (closePrice - openPrice) #This will give you a ratio of the top wick compared to the body which should be
             ratioTail = (openPrice - lowPrice)/ (highPrice - closePrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
             return ((ratio > 2) and (ratioTail < 0.30))
-        except ZeroDivisionError:
+        except:
             False
 
 
@@ -548,7 +550,7 @@ def determineStratSetup(symbol,candles,timeframe,isLastCandleActive) -> StratSet
 
         #Calculate what this reversal would be worth based on the first pivot/target
         profitTarget = thirdLastCandleHigh - secondLastCandleHigh
-        stratPattern =  secondLastCandle + ",[green]2D[/green]"
+        stratPattern =  secondLastCandle + ",[green]2U[/green]"
         isInForce="false"
 
     # 2-2 Bullish Reversal Anticipate The Next Setup
@@ -565,10 +567,12 @@ def determineStratSetup(symbol,candles,timeframe,isLastCandleActive) -> StratSet
 
     else:
         profitTarget = 0.00
-        stratPattern =  ""
-        isInForce=""
+        stratPattern =  None
+        isInForce=None
 
-
-    return StratSetup(str(symbol),str(timeframe), stratPattern ,isInForce, profitTarget,  candlePattern, lastCandlePattern)
+    if(isInForce is None):
+        return None
+    else:
+        return StratSetup(str(symbol),str(timeframe), stratPattern ,isInForce, profitTarget,  candlePattern, lastCandlePattern)
 
 # end of getStratSetup()

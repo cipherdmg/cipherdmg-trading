@@ -48,6 +48,8 @@
 ###############################################################################
 #
 
+
+import logging
 from ast import For
 import datetime
 import sys
@@ -64,7 +66,10 @@ console = Console(record=True)
 from rich.table import Table
 from rich.markdown import Markdown
 
-THROTTLE_SLEEP=10
+THROTTLE_SLEEP=5
+PROFIT_TARGET=5.00
+
+logging.basicConfig(level=logging.DEBUG)
 
 today=datetime.date.today()
 friday = today + datetime.timedelta( (4-today.weekday()) % 7 )
@@ -73,6 +78,7 @@ tomorrow = today + datetime.timedelta(days=1)
 
 def getYahooFinanceDailyCandles(symbol):
 
+    logging.debug("Getting Yahoo {} Symbol: {}".format('Daily', symbol))
     candles = []
 
     period1 = int(time.mktime(datetime.datetime(2021,1,1,23,59).timetuple()))
@@ -101,6 +107,8 @@ def getYahooFinanceDailyCandles(symbol):
     return candles
 
 def getYahooFinanceWeeklyCandles(symbol):
+
+    logging.debug("Getting Yahoo {} Symbol: {}".format('Weekly', symbol))
 
     candles = []
 
@@ -134,6 +142,8 @@ def getYahooFinanceWeeklyCandles(symbol):
 
 
 def getYahooFinanceMonthlyCandles(symbol):
+
+    logging.debug("Getting Yahoo {} Symbol: {}".format('Monthly', symbol))
 
     candles = []
 
@@ -188,9 +198,15 @@ if __name__ == "__main__":
 
         candles = getYahooFinanceDailyCandles(symbol)
 
-        if(len(candles) > 0):
+        if(len(candles) > 5):
             stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1D",False)
-            table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+            if(stratSetup is None):
+                console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
+            else:
+                if(stratSetup.profit >= PROFIT_TARGET):
+                    table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+        elif(len(candles) > 0):
+            console.print("[red]ERROR: Symbol: %s does not contain 5 candles.[/red]" % (symbol))
         else:
             console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
 
@@ -215,9 +231,16 @@ if __name__ == "__main__":
 
         candles = getYahooFinanceWeeklyCandles(symbol)
 
-        if(len(candles) > 0):
+        if(len(candles) > 5):
             stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1W",True)
-            table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+
+            if(stratSetup is None):
+                console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
+            else:
+                if(stratSetup.profit >= PROFIT_TARGET):
+                    table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+        elif(len(candles) > 0):
+            console.print("[red]ERROR: Symbol: %s does not contain 5 candles.[/red]" % (symbol))
         else:
             console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
 
@@ -243,9 +266,15 @@ if __name__ == "__main__":
 
         candles = getYahooFinanceMonthlyCandles(symbol)
 
-        if(len(candles) > 0):
+        if(len(candles) > 5):
             stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1M",True)
-            table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+            if(stratSetup is None):
+                console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
+            else:
+                if(stratSetup.profit >= PROFIT_TARGET):
+                    table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+        elif(len(candles) > 0):
+            console.print("[red]ERROR: Symbol: %s does not contain 5 candles.[/red]" % (symbol))
         else:
             console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
 
