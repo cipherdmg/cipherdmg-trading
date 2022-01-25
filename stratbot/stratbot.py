@@ -66,12 +66,18 @@ from rich.markdown import Markdown
 
 THROTTLE_SLEEP=10
 
+today=datetime.date.today()
+friday = today + datetime.timedelta( (4-today.weekday()) % 7 )
+lastFriday = today - datetime.timedelta(days=(today.weekday() - 4) % 7)
+tomorrow = today + datetime.timedelta(days=1)
+
 def getYahooFinanceDailyCandles(symbol):
 
     candles = []
 
     period1 = int(time.mktime(datetime.datetime(2021,1,1,23,59).timetuple()))
-    period2 = int(time.mktime(datetime.datetime(2022,1,22,23,59).timetuple()))
+    #period2 = int(time.mktime(datetime.datetime(2022,1,22,23,59).timetuple()))
+    period2 = int(time.mktime(tomorrow.timetuple()))
     interval = '1d'
     query_string = f'https://query1.finance.yahoo.com/v7/finance/download/{symbol}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
 
@@ -99,7 +105,8 @@ def getYahooFinanceWeeklyCandles(symbol):
     candles = []
 
     period1 = int(time.mktime(datetime.datetime(2021,1,1,23,59).timetuple()))
-    period2 = int(time.mktime(datetime.datetime(2022,1,22,23,59).timetuple()))
+    #period2 = int(time.mktime(datetime.datetime(2022,1,22,23,59).timetuple()))
+    period2 = int(time.mktime(tomorrow.timetuple()))
     interval = '1wk'
     query_string = f'https://query1.finance.yahoo.com/v7/finance/download/{symbol}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
 
@@ -131,7 +138,8 @@ def getYahooFinanceMonthlyCandles(symbol):
     candles = []
 
     period1 = int(time.mktime(datetime.datetime(2021,1,1,23,59).timetuple()))
-    period2 = int(time.mktime(datetime.datetime(2022,1,22,23,59).timetuple()))
+    #period2 = int(time.mktime(datetime.datetime(2022,1,22,23,59).timetuple()))
+    period2 = int(time.mktime(tomorrow.timetuple()))
     interval = '1mo'
     query_string = f'https://query1.finance.yahoo.com/v7/finance/download/{symbol}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
 
@@ -208,7 +216,7 @@ if __name__ == "__main__":
         candles = getYahooFinanceWeeklyCandles(symbol)
 
         if(len(candles) > 0):
-            stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1W",False)
+            stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1W",True)
             table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
         else:
             console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
