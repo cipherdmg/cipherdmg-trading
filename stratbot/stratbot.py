@@ -59,6 +59,8 @@ import time
 import stratbotapi
 
 from rich import print
+from rich.progress import track
+from rich.progress import Progress, BarColumn, TextColumn
 from rich.console import Console
 console = Console(record=True)
 
@@ -78,7 +80,7 @@ tomorrow = today + datetime.timedelta(days=1)
 
 def getYahooFinanceDailyCandles(symbol):
 
-    logging.debug("Getting Yahoo {} Symbol: {}".format('Daily', symbol))
+    #logging.debug("Getting Yahoo {} Symbol: {}".format('Daily', symbol))
     candles = []
 
     period1 = int(time.mktime(datetime.datetime(2021,1,1,23,59).timetuple()))
@@ -86,6 +88,8 @@ def getYahooFinanceDailyCandles(symbol):
     period2 = int(time.mktime(tomorrow.timetuple()))
     interval = '1d'
     query_string = f'https://query1.finance.yahoo.com/v7/finance/download/{symbol}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
+
+    #console.print(query_string)
 
     try:
         df = pandas.read_csv(query_string)
@@ -108,7 +112,7 @@ def getYahooFinanceDailyCandles(symbol):
 
 def getYahooFinanceWeeklyCandles(symbol):
 
-    logging.debug("Getting Yahoo {} Symbol: {}".format('Weekly', symbol))
+    #logging.debug("Getting Yahoo {} Symbol: {}".format('Weekly', symbol))
 
     candles = []
 
@@ -118,7 +122,7 @@ def getYahooFinanceWeeklyCandles(symbol):
     interval = '1wk'
     query_string = f'https://query1.finance.yahoo.com/v7/finance/download/{symbol}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
 
-    #print(df)
+    #console.print(query_string)
 
     try:
         df = pandas.read_csv(query_string)
@@ -134,16 +138,21 @@ def getYahooFinanceWeeklyCandles(symbol):
 
             candle = stratbotapi.Candle(symbol,open,close,high,low,ind,volume)
             candles.append(candle)
+
+        #Daily candles don't close on yahoo until ???
+        #Take the last candle which is actually a daily candle and remove it from this list and replace the new last candle close with the candle you removed candle's close
+        candle = candles[len(candles)-1]
+        candles.pop(len(candles)-1)
+        candles[len(candles)-1].close=candle.close
     except:
         print("Unable to find symbol " + symbol)
-
 
     return candles
 
 
 def getYahooFinanceMonthlyCandles(symbol):
 
-    logging.debug("Getting Yahoo {} Symbol: {}".format('Monthly', symbol))
+    #logging.debug("Getting Yahoo {} Symbol: {}".format('Monthly', symbol))
 
     candles = []
 
@@ -153,6 +162,8 @@ def getYahooFinanceMonthlyCandles(symbol):
     interval = '1mo'
     query_string = f'https://query1.finance.yahoo.com/v7/finance/download/{symbol}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
 
+    #console.print(query_string)
+
     try:
         df = pandas.read_csv(query_string)
 
@@ -167,23 +178,29 @@ def getYahooFinanceMonthlyCandles(symbol):
 
             candle = stratbotapi.Candle(symbol,open,close,high,low,ind,volume)
             candles.append(candle)
+
+        #When doing monthly's the last candle is the daily candle and then the previous candle is the
+        #monthly candle but assume the monthy has not incoporated the last daily
+        #Take the last candle which is actually a daily candle and remove it from this list and replace the new last candle close with the candle you removed candle's close
+        candle = candles[len(candles)-1]
+        candles.pop(len(candles)-1)
+        candles[len(candles)-1].close=candle.close
     except:
         print("Unable to find symbol " + symbol)
 
-    #print(df)
     return candles
 
 
 if __name__ == "__main__":
 
-    table = Table(title="Daily")
-    table.add_column("Ticker", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Timeframe", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Setup", justify="right", style="cyan", no_wrap=True)
-    table.add_column("In forced", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Profit", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Last 5 Candles", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
+    dailyTable = Table(title="Daily")
+    dailyTable.add_column("Ticker", justify="right", style="cyan", no_wrap=True)
+    dailyTable.add_column("Timeframe", justify="right", style="cyan", no_wrap=True)
+    dailyTable.add_column("Setup", justify="right", style="cyan", no_wrap=True)
+    dailyTable.add_column("In forced", justify="right", style="cyan", no_wrap=True)
+    dailyTable.add_column("Profit", justify="right", style="cyan", no_wrap=True)
+    dailyTable.add_column("Last 5 Candles", justify="right", style="cyan", no_wrap=True)
+    dailyTable.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
 
 
     #Get the tickers
@@ -192,93 +209,171 @@ if __name__ == "__main__":
     console.print("Starting Stratbot ...")
     stratSetups = []
 
-    for symbol in symbols:
+    with Progress() as progress:
+        task = progress.add_task("Getting Daily Strat Setups", total=len(symbols))
+        for symbol in symbols:
+            progress.console.print(f"Checking symbol {symbol}")
 
-        time.sleep(THROTTLE_SLEEP) #Sleep 15 seconds betwean each api call
+            time.sleep(THROTTLE_SLEEP) #Sleep 15 seconds betwean each api call
 
-        candles = getYahooFinanceDailyCandles(symbol)
+            candles = getYahooFinanceDailyCandles(symbol)
 
-        if(len(candles) > 5):
-            stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1D",False)
-            if(stratSetup is None):
-                console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
-            else:
-                if(stratSetup.profit >= PROFIT_TARGET):
-                    table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
-        elif(len(candles) > 0):
-            console.print("[red]ERROR: Symbol: %s does not contain 5 candles.[/red]" % (symbol))
-        else:
-            console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
+            if(len(candles) > 5):
+                stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1D",False)
+                if(stratSetup is not None):
+                    if(stratSetup.profit >= PROFIT_TARGET):
+                        dailyTable.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+                # else:
+                #     console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
+            # elif(len(candles) > 0):
+            #     console.print("[red]ERROR: Symbol: %s does not contain 5 candles.[/red]" % (symbol))
+            # else:
+            #     console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
 
-    console.print(table)
+            progress.advance(task)
 
+    # #for symbol in symbols:
+    # for symbol in track(symbols, description="Getting Daily Symbol: " + symbol):
 
-    table = Table(title="Daily")
-    table.add_column("Ticker", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Timeframe", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Setup", justify="right", style="cyan", no_wrap=True)
-    table.add_column("In forced", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Profit", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Last 5 Candles", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
+    #     time.sleep(THROTTLE_SLEEP) #Sleep 15 seconds betwean each api call
 
+    #     candles = getYahooFinanceDailyCandles(symbol)
 
-    stratSetups = []
+    #     if(len(candles) > 5):
+    #         stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1D",False)
+    #         if(stratSetup is None):
+    #             console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
+    #         else:
+    #             if(stratSetup.profit >= PROFIT_TARGET):
+    #                 table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+    #     # elif(len(candles) > 0):
+    #     #     console.print("[red]ERROR: Symbol: %s does not contain 5 candles.[/red]" % (symbol))
+    #     # else:
+    #     #     console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
+    #console.print(dailyTable)
 
-    for symbol in symbols:
-
-        time.sleep(THROTTLE_SLEEP) #Sleep 15 seconds betwean each api call
-
-        candles = getYahooFinanceWeeklyCandles(symbol)
-
-        if(len(candles) > 5):
-            stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1W",True)
-
-            if(stratSetup is None):
-                console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
-            else:
-                if(stratSetup.profit >= PROFIT_TARGET):
-                    table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
-        elif(len(candles) > 0):
-            console.print("[red]ERROR: Symbol: %s does not contain 5 candles.[/red]" % (symbol))
-        else:
-            console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
-
-    console.print(table)
-
-
-
-    table = Table(title="Daily")
-    table.add_column("Ticker", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Timeframe", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Setup", justify="right", style="cyan", no_wrap=True)
-    table.add_column("In forced", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Profit", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Last 5 Candles", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
+    weeklyTable = Table(title="Weekly")
+    weeklyTable.add_column("Ticker", justify="right", style="cyan", no_wrap=True)
+    weeklyTable.add_column("Timeframe", justify="right", style="cyan", no_wrap=True)
+    weeklyTable.add_column("Setup", justify="right", style="cyan", no_wrap=True)
+    weeklyTable.add_column("In forced", justify="right", style="cyan", no_wrap=True)
+    weeklyTable.add_column("Profit", justify="right", style="cyan", no_wrap=True)
+    weeklyTable.add_column("Last 5 Candles", justify="right", style="cyan", no_wrap=True)
+    weeklyTable.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
 
 
     stratSetups = []
 
-    for symbol in symbols:
+    with Progress() as progress:
+        task = progress.add_task("Getting Weekly Strat Setups", total=len(symbols))
+        for symbol in symbols:
+            progress.console.print(f"Checking symbol {symbol}")
 
-        time.sleep(THROTTLE_SLEEP) #Sleep 15 seconds betwean each api call
+            time.sleep(THROTTLE_SLEEP) #Sleep 15 seconds betwean each api call
 
-        candles = getYahooFinanceMonthlyCandles(symbol)
+            candles = getYahooFinanceWeeklyCandles(symbol)
 
-        if(len(candles) > 5):
-            stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1M",True)
-            if(stratSetup is None):
-                console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
-            else:
-                if(stratSetup.profit >= PROFIT_TARGET):
-                    table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
-        elif(len(candles) > 0):
-            console.print("[red]ERROR: Symbol: %s does not contain 5 candles.[/red]" % (symbol))
-        else:
-            console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
+            if(len(candles) > 5):
+                stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1W",True)
+                if(stratSetup is not None):
+                    if(stratSetup.profit >= PROFIT_TARGET):
+                        weeklyTable.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+                # else:
+                #     console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
 
-    console.print(table)
+            # elif(len(candles) > 0):
+            #     console.print("[red]ERROR: Symbol: %s does not contain 5 candles.[/red]" % (symbol))
+            # else:
+            #     console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
+
+            progress.advance(task)
+
+
+    # #for symbol in symbols:
+    # for symbol in track(symbols):
+
+    #     time.sleep(THROTTLE_SLEEP) #Sleep 15 seconds betwean each api call
+
+    #     candles = getYahooFinanceWeeklyCandles(symbol)
+
+    #     if(len(candles) > 5):
+    #         stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1W",True)
+
+    #         if(stratSetup is None):
+    #             console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
+    #         else:
+    #             if(stratSetup.profit >= PROFIT_TARGET):
+    #                 table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+    #     # elif(len(candles) > 0):
+    #     #     console.print("[red]ERROR: Symbol: %s does not contain 5 candles.[/red]" % (symbol))
+    #     # else:
+    #     #     console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
+
+    #console.print(weeklyTable)
 
 
 
+    monthlyTable = Table(title="Monthly")
+    monthlyTable.add_column("Ticker", justify="right", style="cyan", no_wrap=True)
+    monthlyTable.add_column("Timeframe", justify="right", style="cyan", no_wrap=True)
+    monthlyTable.add_column("Setup", justify="right", style="cyan", no_wrap=True)
+    monthlyTable.add_column("In forced", justify="right", style="cyan", no_wrap=True)
+    monthlyTable.add_column("Profit", justify="right", style="cyan", no_wrap=True)
+    monthlyTable.add_column("Last 5 Candles", justify="right", style="cyan", no_wrap=True)
+    monthlyTable.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
+
+
+    stratSetups = []
+
+    with Progress() as progress:
+        task = progress.add_task("Getting Monthly Strat Setups", total=len(symbols))
+        for symbol in symbols:
+            progress.console.print(f"Checking symbol {symbol}")
+
+            time.sleep(THROTTLE_SLEEP) #Sleep 15 seconds betwean each api call
+
+            candles = getYahooFinanceMonthlyCandles(symbol)
+
+            if(len(candles) > 5):
+                stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1M",True)
+                if(stratSetup is not None):
+                    if(stratSetup.profit >= PROFIT_TARGET):
+                        monthlyTable.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+                # else:
+                #     console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
+
+            # elif(len(candles) > 0):
+            #     console.print("[red]ERROR: Symbol: %s does not contain 5 candles.[/red]" % (symbol))
+            # else:
+            #     console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
+
+            progress.advance(task)
+
+
+
+    # #for symbol in symbols:
+    # for symbol in track(symbols):
+
+    #     time.sleep(THROTTLE_SLEEP) #Sleep 15 seconds betwean each api call
+
+    #     candles = getYahooFinanceMonthlyCandles(symbol)
+
+    #     if(len(candles) > 5):
+    #         stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1M",True)
+    #         if(stratSetup is None):
+    #             console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
+    #         else:
+    #             if(stratSetup.profit >= PROFIT_TARGET):
+    #                 table.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+    #     # elif(len(candles) > 0):
+    #     #     console.print("[red]ERROR: Symbol: %s does not contain 5 candles.[/red]" % (symbol))
+    #     # else:
+    #     #     console.print("[red]ERROR: Symbol: %s contains no candles.[/red]" % (symbol))
+
+    #console.print(monthlyTable)
+
+
+
+    console.print(dailyTable)
+    console.print(weeklyTable)
+    console.print(monthlyTable)

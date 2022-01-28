@@ -480,7 +480,7 @@ def determineStratSetup(symbol,candles,timeframe,isLastCandleActive) -> StratSet
 
         #Calculate what this reversal would be worth based on the first pivot/target
         profitTarget = thirdLastCandleHigh - secondLastCandleHigh
-        stratPattern =  thirdLastCandle + "," + secondLastCandle + ",[green]2D[/green]"
+        stratPattern =  thirdLastCandle + "," + secondLastCandle + ",[green]2U[/green]"
         isInForce="false"
 
     # 1-2-2 Bullish Rev Strat Anticipate The Next Setup
@@ -488,15 +488,18 @@ def determineStratSetup(symbol,candles,timeframe,isLastCandleActive) -> StratSet
 
         #Calculate what this reversal would be worth based on the first pivot/target
         profitTarget = secondLastCandleHigh - lastCandleHigh
-        stratPattern =  secondLastCandle + "," + lastCandle + ",[green]2D[/green]"
+        stratPattern =  secondLastCandle + "," + lastCandle + ",[green]2U[/green]"
         isInForce="false"
 
 
 
+    #These are just 2-2 reversals left.
+    #Just ignore 2U-2U continuations
+    elif ((isLastCandleActive) and "2U" in lastCandle and "2U" in secondLastCandle):
+        profitTarget = 0.00
+        stratPattern =  None
+        isInForce=None
 
-
-
-    #These are just 2-2 reversals left
     #2-2 Bearish Reversal Enforced
     #For quick reversal on the 2s make sure that its been running for a little bit
     #elif ("2D" in lastCandle and "2U" in secondLastCandle and "2D" not in thirdLastCandle):
@@ -509,8 +512,9 @@ def determineStratSetup(symbol,candles,timeframe,isLastCandleActive) -> StratSet
 
     #2-2 Bearish Reversal Not Enforced
     #For quick reversal on the 2s make sure that its been running for a little bit
+    #Also check that we don't already have a 2U on the last candle otherwise it would go 3
     #elif ("2U" in secondLastCandle and "2D" not in thirdLastCandle):
-    elif ((isLastCandleActive) and "2U" in secondLastCandle):
+    elif ((isLastCandleActive) and "2U" in secondLastCandle and "2U" not in lastCandle):
 
         #Calculate what this reversal would be worth based on the first pivot/target
         profitTarget = secondLastCandleLow - thirdLastCandleLow
@@ -530,8 +534,12 @@ def determineStratSetup(symbol,candles,timeframe,isLastCandleActive) -> StratSet
 
 
 
-
-
+    # 2-2 Bullish Reversal Enforced
+    #Just ignore 2D-2D continuations
+    elif ((isLastCandleActive) and "2D" in lastCandle and "2D" in secondLastCandle):
+        profitTarget = 0.00
+        stratPattern =  None
+        isInForce=None
 
     # 2-2 Bullish Reversal Enforced
     #elif ("2U" in lastCandle and "2D" in secondLastCandle and "2U" not in thirdLastCandle):
@@ -545,7 +553,8 @@ def determineStratSetup(symbol,candles,timeframe,isLastCandleActive) -> StratSet
 
     # 2-2 Bullish Reversal Not Enforced
     #elif ("2D" in secondLastCandle and "2U" not in thirdLastCandle):
-    elif ((isLastCandleActive) and "2D" in secondLastCandle):
+    #Also check that we don't already have a 2D on the last candle otherwise it would go 3
+    elif ((isLastCandleActive) and "2D" in secondLastCandle and lastCandle not in "2D"):
         #print("2-2 Bullish Reversal has entry high[1] and target high[2] (Next Candle Needs to be 2 Up)")
 
         #Calculate what this reversal would be worth based on the first pivot/target

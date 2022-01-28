@@ -1,0 +1,677 @@
+//@version=5
+// ||###################################################################################||
+// ||                                                                                   ||
+// || The Strat                                                                         ||
+// || What are the 1s, 2s, & 3s                                                         ||
+// ||                                                                                   ||
+// || 1.  Labeled as 1) An inside bar which is defined as consolidation, there has not  ||
+// ||     been a new high or low                                                        ||
+// ||                                                                                   ||
+// || 2. Labeled as 2) A bar that took out a previous high or low this is the bar we    ||
+// ||    look to be trading as it is a directional move                                 ||
+// ||                                                                                   ||
+// || 3. Labeled as 3) A bar that took out the previous bars high AND previous bars low.||
+// ||                                                                                   ||
+// ||                                                                                   ||
+// ||                                                                                   ||
+// || 1. Inside Bar Reversals                                                           ||
+// ||    Inside bar reversals are one of the easiest to trade.   This is because they   ||
+// ||    are simple to scan for and recongnize.                                         ||
+// ||    When looking to trade inside bar reverssal all you have to do is scan for an   ||
+// ||    inside bar!                                                                    ||
+// ||                                                                                   ||
+// || 2. 2-2 Reversal                                                                   ||
+// ||    A normal 2-2 reversal is going to be harder to find and trade solely because   ||
+// ||    it is a 2 candle pattern.  When looking to trade 2-2 reversals you want to look||
+// ||    for candles that are 2 U (took previous high) and red or 2D (took previous low)||
+// ||    and green.                                                                     ||
+// ||    This is the case because we know an enry into a 2-2 reversal to the upside is  ||
+// ||    the previous bars high, so if we close green we will be more likely to reverse ||
+// ||    as we are closer to that candle's high and visa versa for a 2-2 reversal to the||
+// ||    downside.                                                                      ||
+// ||                                                                                   ||
+// ||                                                                                   ||
+// ||  3-2-2 Reversals
+// ||  A 3-2-2 reversal is going to be easier to scan for as it is a 3 candle pattern   ||
+// ||  meaning we can scan for the first 2 and trade the 3rd.  When looking to trade    ||
+// ||  3-2-2 reversals you want to trade them the exact same way as a normal 2-2!       ||
+// ||                                                                                   ||
+// ||                                                                                   ||
+// || https://www.tradingview.com/pine-script-docs/en/v5/essential/Colors.html
+// || https://www.tradingview.com/script/PWJRC2Nt-Strat-Assistant/
+// || Pine Tips:
+// || Colors:
+// ||       color.aqua, color.black, color.blue, color.fuchsia, color.gray, color.green ||
+// ||       color.lime, color.maroon, color.navy, color.olive, color.orange             ||
+// ||       color.purple, color.red, color.silver, color.teal, color.white, color.yellow||
+// ||                                                                                   ||
+// ||                                                                                   ||
+// ||                                                                                   ||
+// ||Pivit Machine Gun: Best time to play is at exhaustion risk when you are at all time
+// ||hights and all time lows                                                                          ||
+// ||                                                                                   ||
+
+// ||###################################################################################||
+
+//strategy(title="The Strat", shorttitle="The Strat", max_labels_count = 500, overlay=true, initial_capital=100000,currency =currency.USD, default_qty_type=strategy.fixed, default_qty_value=1,commission_type=strategy.commission.cash_per_order,  pyramiding=1, commission_value=5.50, slippage =5, margin_long=100, margin_short=100)
+indicator(title="The Strat with Continuity", shorttitle="The Strat with Continuity", max_labels_count = 500, overlay=true)
+
+//##################################################################################################
+//User Inputs
+//##################################################################################################
+
+DojiSize = input.float(0.05, minval=0.01, title='Doji size')
+// maLength = input.int(5, minval=1, title="Moving Average Length",defval=false)
+
+bullishColor = input.color(color.new(color.green, 0), title='Bullish Candle color', group='Colors')
+bearishColor = input.color(color.new(color.red, 0), title='Bearish Candle color', group='Colors')
+insideColor = input.color(color.new(color.yellow, 0), title='Inside Candle color', group='Colors')
+outsideColor = input.color(color.new(color.fuchsia, 0), title='Outside Candle color', group='Colors')
+tfTableOpacity = input.int(80, title='Multi time frame table opacity', group='Colors')
+isTfEnabled = input.bool(true, title='Time Frame Continuity Panel Enabled', group='Time Frame Continuation')
+usePreviousClose = input.bool(false, title='Use Previous Close', group='Time Frame Continuation')
+
+tf15M = input.timeframe('15', title='Time Frame 1', group='Time Frame Continuation')
+tf30M = input.timeframe('30', title='Time Frame 2', group='Time Frame Continuation')
+tf60M = input.timeframe('60', title='Time Frame 3', group='Time Frame Continuation')
+tf1D = input.timeframe('D', title='Time Frame 4', group='Time Frame Continuation')
+tf1W = input.timeframe('W', title='Time Frame 5', group='Time Frame Continuation')
+tf1M = input.timeframe('1M', title='Time Frame 6', group='Time Frame Continuation')
+tf3M = input.timeframe('3M', title='Time Frame 7', group='Time Frame Continuation')
+
+///////////////////////////////////////////////
+// END: user input
+///////////////////////////////////////////////
+
+//##################################################################################################
+//Functions
+//##################################################################################################
+
+
+// @function Calculates the all-time high of a series.
+// @param val Series to use (`high` is used if no argument is supplied).
+// @return The all-time high for the series.
+allTimeHi(float val = high) =>
+    var float ath = val
+    ath := math.max(ath, val)
+
+// @function Calculates the all-time low of a series.
+// @param val Series to use (`low` is used if no argument is supplied).
+// @return The all-time low for the series.
+allTimeLow(float val = low) =>
+    var float atl = val
+    atl := math.min(atl, val)
+
+// @function The given candle is up where the open is less then the close for the given index
+// @param idx index to use
+// @return true if the indexed candle is Green
+isGreenCandle(int idx) =>
+    open[idx] < close[idx]
+
+// @function The given candle is up where the open is greater then or equal to the close for the given index
+// @param idx index to use
+// @return true if the indexed candle is Red
+isRedCandle(int idx) =>
+    open[idx] >= close[idx]
+
+// @function Entire Candle wick to wick is inside the previous candle.  This is considered a Scenario 1.
+// It means its consolidation on a smaller timeframe  We do not want to trade things on a 1 because it has Not picked its direction.
+// @param idx index to use
+// @returns
+isInsideCandle(int idx) =>
+    high[idx] <= high[idx + 1] and low[idx] >= low[idx + 1]
+
+//@function Candle engulfs the previous candle and is typically the larges bar.  This is considered a Scenario 3
+//Most commonly 3s occur after 1
+//@return
+isOutsideCandle(int idx) =>
+    high[idx] > high[idx + 1] and low[idx] < low[idx + 1]
+
+
+//2
+//@function  Down Directional Candle which broke the previous candle's low
+isTwoDownCandle(int idx) =>
+    low[idx] < low[idx + 1] and not (high[idx] > high[idx + 1])
+
+
+//2
+//@function Up Directional Candle which broke the previous candle's low
+isTwoUpCandle(int idx) =>
+    high[idx] > high[idx + 1] and not (low[idx] < low[idx + 1])
+
+
+// reusable bar identifier functions for series
+isInsideCandleSeries(highSeries, lowSeries) =>
+    highSeries[0] <= highSeries[1] and lowSeries[0] >= lowSeries[1]
+
+isOutsideCandleSeries(highSeries, lowSeries) =>
+    highSeries[0] > highSeries[1] and lowSeries[0] < lowSeries[1]
+
+
+
+//https://commodity.com/technical-analysis/doji/
+//The doji is a transitional candlestick formation, signifying equality or indecision between bulls and bears.
+// @function Determine if the given candle is a Doji Candle
+// @param index
+// @returns if the given candle is a DOJI candle
+isDojiCandle(int idx) =>
+    math.abs(open[idx] - close[idx]) <= (high[idx] - low[idx]) * DojiSize
+
+
+//https://commodity.com/technical-analysis/evening-star
+//The Evening Star pattern is viewed as a bearish reversal pattern in technical analysis. It usually occurs at the top of an uptrend.
+//The first part of an Evening Star reversal pattern is a large bullish green candle. On the first day, bulls are in charge – new highs are usually made.
+//The second day begins with a bullish gap up.
+//The most significant candlestick occurs on Day 3. It begins with a gap down (a bearish signal) and bears are able to press prices even further downward, often eliminating the gains seen on Day 1.
+isEveningStar(int idx) =>
+    close[idx + 2] > open[idx + 2] and math.min(open[idx + 1], close[idx + 1]) > close[idx + 2] and open[idx] < math.min(open[idx + 1], close[idx + 1]) and close[idx] < open[idx]
+
+
+//https://commodity.com/technical-analysis/morning-star
+//The Morning Star Pattern is viewed as a bullish reversal pattern, usually occurring at the bottom of a downtrend. The pattern consists of three candlesticks:
+//morning star candlestick chart pattern Large Bearish Candle (Day 1) Small Bullish or Bearish Candle (Day 2) Large Bullish Candle (Day 3)
+isMorningStar(int idx) =>
+    close[idx + 2] < open[idx + 2] and math.max(open[idx + 1], close[idx + 1]) < close[idx + 2] and open[idx] > math.max(open[idx + 1], close[idx + 1]) and close[idx] > open[idx]
+
+
+//https://commodity.com/technical-analysis/shooting-star/
+//The Shooting Star candlestick formation is viewed as a bearish reversal candlestick pattern that typically occurs at the top of uptrends.
+//The Shooting formation is created when the open, low, and close are roughly the same price.
+shootingStar(int idx) =>
+    open[idx + 1] < close[idx + 1] and open[idx] > close[idx + 1] and high[idx] - math.max(open[idx], close[idx]) >= math.abs(open[idx] - close[idx]) * 3 and math.min(close[idx], open[idx]) - low[idx] <= math.abs(open[idx] - close[idx])
+
+//Hanging Man vs Hammer Candlestick Patterns The primary difference between the Hanging Man pattern and the Hammer Candlestick pattern is that the former is bullish and the latter is bearish. That’s because the Hanging Man appears at the top of uptrends while the Hammer appears at the bottom of downtrends.
+
+//https://commodity.com/technical-analysis/hammer/
+//The Hammer candlestick formation is viewed as a bullish reversal candlestick pattern that mainly occurs at the bottom of downtrends.
+//The Hammer formation is created when the open, high, and close prices are roughly the same. Also, there is a long lower shadow that’s twice the length as the real body.
+hammer(int idx) =>
+    high[idx] - low[idx] > 3 * (open[idx] - close[idx]) and (close[idx] - low[idx]) / (.001 + high[idx] - low[idx]) > 0.6 and (open[idx] - low[idx]) / (.001 + high[idx] - low[idx]) > 0.6
+
+
+//https://commodity.com/technical-analysis/inverted-hammer/
+//The Inverted Hammer candlestick formation occurs mainly at the bottom of downtrends and can act as a warning of a potential bullish reversal pattern.
+//The Inverted Hammer formation is created when the open, low, and close are roughly the same price. Also, there is a long upper shadow which should be at least twice the length of the real body.
+invertedHammer(int idx) =>
+    high[idx] - low[idx] > 3 * (open[idx] - close[idx]) and (high[idx] - close[idx]) / (.001 + high[idx] - low[idx]) > 0.6 and (high[idx] - open[idx]) / (.001 + high[idx] - low[idx]) > 0.6
+
+//https://commodity.com/technical-analysis/hanging-man/
+//The Hanging Man candlestick pattern, as one could predict from the name, is viewed as a bearish reversal pattern and appears at the top of up trends
+hangingMan(int idx) =>
+    high[idx] - low[idx] > 4 * (open[idx] - close[idx]) and (close[idx] - low[idx]) / (.001 + high[idx] - low[idx]) >= 0.75 and (open[idx] - low[idx]) / (.001 + high[idx] - low[idx]) >= 0.75 and high[idx + 1] < open[idx] and high[idx + 2] < open[idx]
+
+
+//https://commodity.com/technical-analysis/harami/
+//The Harami Candlestick Pattern is considered a trend reversal pattern that can either be bullish or bearish, depending on the direction of the price action.
+//A Harami pattern can be either bullish or bearish, depending on the color of its candles
+bearishHarami(int idx) =>
+    close[idx + 1] > open[idx + 1] and open[idx] > close[idx] and open[idx] <= close[idx + 1] and open[idx + 1] <= close[idx] and open[idx] - close[idx] < close[idx + 1] - open[idx + 1]
+
+bullishHarami(int idx) =>
+    open[idx + 1] > close[idx + 1] and close[idx] > open[idx] and close[idx] <= open[idx + 1] and close[idx + 1] <= open[idx] and close[idx] - open[idx] < open[idx + 1] - close[idx + 1]
+
+
+//https://commodity.com/technical-analysis/bearish-engulfing/
+//The Bearish Engulfing Candlestick Pattern is considered to be a bearish reversal pattern, usually occurring at the top of an uptrend.
+bearishEngulfing(int idx) =>
+    close[idx + 1] > open[idx + 1] and open[idx] > close[idx] and open[idx] >= close[idx + 1] and open[idx + 1] >= close[idx] and open[idx] - close[idx] > close[idx + 1] - open[idx + 1]
+
+//https://commodity.com/technical-analysis/bullish-engulfing/
+//The Bullish Engulfing Candlestick Pattern is a bullish reversal pattern, usually occurring at the bottom of a downtrend.
+bullishEngulfing(int idx) =>
+    open[idx + 1] > close[idx + 1] and close[idx] > open[idx] and close[idx] >= open[idx + 1] and close[idx + 1] >= open[idx] and close[idx] - open[idx] > open[idx + 1] - close[idx + 1]
+
+//https://commodity.com/technical-analysis/piercing-pattern/
+//The Piercing Pattern is viewed as a bullish candlestick reversal pattern, similar to the Bullish Engulfing Pattern.
+piercingLine(int idx) =>
+    close[idx + 1] < open[idx + 1] and open[idx] < low[idx + 1] and close[idx] > close[idx + 1] + (open[idx + 1] - close[idx + 1]) / 2 and close[idx] < open[idx + 1]
+
+//https://www.tradingsetupsreview.com/belt-hold-candlestick-pattern-trading-strategies-guide/
+bullishBelt(int idx) =>
+    lower = ta.lowest(10)[idx + 1]
+    low[idx] == open[idx] and open[idx] < lower and open[idx] < close[idx] and close[idx] > (high[idx + 1] - low[idx + 1]) / 2 + low[idx + 1]
+
+//The Bullish Kicker signal often occurs after a major surprise in the news that is announced before or after market hours. Something drastic has happened,
+//causing a great shift in investor sentiment, and a reversal will inevitably follow. The larger the gap between the two candles, the more significant the signal.
+bullisnKicker(int idx) =>
+    open[idx + 1] > close[idx + 1] and open[idx] >= open[idx + 1] and close[idx] > open[idx]
+
+
+//Bearish Kickers often appear after a startling news event that causes an abrupt change in investor sentiment before or after market hours
+bearishKicker(int idx) =>
+    open[idx + 1] < close[idx + 1] and open[idx] <= open[idx + 1] and close[idx] <= open[idx]
+
+
+//https://commodity.com/technical-analysis/dark-cloud-cover/
+//Dark Cloud Cover is a bearish candlestick reversal pattern, similar to the Bearish Engulfing Pattern.
+darknCloudCover(int idx) =>
+    close[idx + 1] > open[idx + 1] and (close[idx + 1] + open[idx + 1]) / 2 > close[idx] and open[idx] > close[idx] and open[idx] > close[idx + 1] and close[idx] > open[idx + 1] and (open[idx] - close[idx]) / (.001 + high[idx] - low[idx]) > 0.6
+
+
+
+// FULL TIME FRAME CONTINUITY CODE:
+//reusable function for getting detail on the security
+getSecurityByTimeFrame(timeFrame) =>
+    [openValue, closeValue, highValue, lowValue, timeValue] = request.security(symbol = syminfo.tickerid, timeframe = timeFrame, expression = [open, close, high, low, time], gaps = barmerge.gaps_off)
+    [openValue, closeValue, highValue, lowValue, timeValue]
+
+
+//getPercentChange
+getPercentChange(openPrice,closePrice) =>
+    percentChange = (closePrice - openPrice) / openPrice * 100.0
+    resultColor = openPrice >= closePrice ? bearishColor : bullishColor
+    [percentChange,resultColor]
+
+
+///////////////////////////////////////////////
+// END: Functions & Logic
+///////////////////////////////////////////////
+
+
+//##################################################################################################
+//MACD
+//##################################################################################################
+//Standard MACD
+fast = 12, slow = 26
+fastMA = ta.ema(close, fast)
+slowMA = ta.ema(close, slow)
+
+macd = fastMA - slowMA
+signal = ta.sma(macd, 9)
+
+percentage_macd =  (macd / slowMA) * 100
+percentage_hist = percentage_macd - signal
+//macd := 100*(fastMA - slowMA)/slowMA
+
+//plot(percentage_hist, color = color.lime)
+// plot(signal, color = color.orange)
+
+
+
+// //##################################################################################################
+// //Candlestick Patterns for debugging
+// //##################################################################################################
+// //Neutral
+// plotchar(series=isDojiCandle(0), title='Doji', location=location.abovebar, color=color.new(color.white, 0), text='Doji')
+
+// //Neutral
+// plotshape(series=isInsideCandle(0), title='Inside', location=location.abovebar, color=color.new(color.white, 0), style=shape.arrowdown, text='Inside')
+
+
+// //Bearish
+// plotshape(series=isEveningStar(0), title='Evening Star', color=color.new(color.red, 0), style=shape.arrowdown, text='Evening\nStar')
+
+// //Bearish
+// plotshape(series=shootingStar(0), title='Shooting Star', color=color.new(color.red, 0), style=shape.arrowdown, text='Shooting\nStar')
+
+// //bearish reversal pattern and appears at the top of up trends
+// plotshape(series=hangingMan(0), title='Hanging Man', color=color.new(color.red, 0), style=shape.arrowdown, text='Hanging\nMan')
+
+// //Bearish typically occurred at the top of a up trend
+// plotshape(series=bearishHarami(0), title='Bearish Harami', color=color.new(color.red, 0), style=shape.arrowdown, text='Bearish\nHarami')
+
+// //bearish reversal pattern, usually occurring at the top of an uptrend.
+// plotshape(series=bearishEngulfing(0), title='Bearish Engulfing', color=color.new(color.red, 0), style=shape.arrowdown, text='Bearish\nEngulfing')
+
+// //bearish reversal gap
+// plotshape(series=bearishKicker(0), title='Bearish Kicker', color=color.new(color.red, 0), style=shape.arrowdown, text='Bearish\nKicker')
+
+// //bearish candlestick reversal pattern
+// plotshape(series=darknCloudCover(0), title='Dark Cloud Cover', color=color.new(color.red, 0), style=shape.arrowdown, text='Dark\nCloudCover')
+
+
+// //Bullish
+// plotshape(series=isMorningStar(0), title='Morning Star', location=location.belowbar, color=color.new(color.lime, 0), style=shape.arrowup, text='Morning\nStar')
+
+// //Bullish typically occurred at the bottom of a down trend
+// plotshape(series=hammer(0), title='Hammer', location=location.belowbar, color=color.new(color.white, 0), style=shape.diamond, text='H')
+
+// //Bullish typically occurred at the bottom of a down trend
+// plotshape(series=invertedHamme(0), title='Inverted Hammer', location=location.belowbar, color=color.new(color.white, 0), style=shape.diamond, text='IH')
+
+// //Bullish typically occurred at the bottom of a down trend
+// plotshape(series=bullishHarami(0), title='Bullish Harami', location=location.belowbar, color=color.new(color.lime, 0), style=shape.arrowup, text='Bullish\nHarami')
+
+// //bullish reversal pattern, usually occurring at the bottom of a downtrend.
+// plotshape(series=bullishEngulfing(0), title='Bullish Engulfing', location=location.belowbar, color=color.new(color.lime, 0), style=shape.arrowup, text='Bullish\nEngulfling')
+
+// //bullish candlestick reversal pattern, similar to the Bullish Engulfing Pattern.
+// plotshape(series=piercingLine(0), title='Piercing Line', location=location.belowbar, color=color.new(color.lime, 0), style=shape.arrowup, text='Piercing\nLine')
+
+// //bullish
+// plotshape(series=bullishBelt(0), title='Bullish Belt', location=location.belowbar, color=color.new(color.lime, 0), style=shape.arrowup, text='Bullish\nBelt')
+
+// //bullish reversal gap
+// plotshape(series=bullisnKicker(0), title='Bullish Kicker', location=location.belowbar, color=color.new(color.lime, 0), style=shape.arrowup, text='Bullish\nKicker')
+
+
+
+
+
+
+
+
+//##################################################################################################
+//Plot the Moving Average
+//##################################################################################################
+//5 tick moving average to smooth the events
+//TODO: Uncomment to see a 5 day smooth moving average
+//smooth_moving_average = (open + high + low + close) / 4
+
+//smma = ta.sma(smooth_moving_average, maLength)
+//plot(series=smma, title="Moving Average", color=color.yellow, linewidth=2, style=plot.style_line)
+
+//##################################################################################################
+//Highlight background with transparent red and green to represent overbought and oversold
+//##################################################################################################
+//Plot the Relative Strength Index (RSI) when its over 70 and under 30
+rsi_len = input.int(14, minval=1, title="RSI Length")
+rsi_src = input(close, "RSI Source")
+rsi_min = input.int(30, minval=1, title="RSI Minimum Threshold")
+rsi_max = input.int(70, minval=1, title="RSI Maximum Threshold")
+
+rsi = ta.rsi(rsi_src, rsi_len)
+rsi_color = rsi > rsi_max ? color.new(color.red,80)  : rsi < rsi_min ? color.new(color.green, 80) : na
+//rsi_color = rsi > rsi_max ? color.rgb(183, 28, 28)  : rsi < rsi_min ? color.rgb(0, 77, 64) : na
+
+//TODO: Uncomment if you would like to see RSI on the background of the chart
+//bgcolor(color=rsi_color, offset=0, editable=true, title="RSI")
+
+//##################################################################################################
+//Lable Debugging
+//##################################################################################################
+//Check if we are live or if its the end of the day
+// isLive = time(timeframe.period, "0930-1600")
+
+stateText() =>
+    string txt = ""
+    txt += barstate.isfirst     ? "isfirst\n"     : ""
+    txt += barstate.islast      ? "islast\n"      : ""
+    txt += barstate.ishistory   ? "ishistory\n"   : ""
+    txt += barstate.isrealtime  ? "isrealtime\n"  : ""
+    txt += barstate.isnew       ? "isnew\n"       : ""
+    txt += barstate.isconfirmed ? "isconfirmed\n" : ""
+    txt += barstate.islastconfirmedhistory ? "islastconfirmedhistory\n" : ""
+
+
+labelColor = switch
+    barstate.isfirst                => color.fuchsia
+    barstate.islastconfirmedhistory => color.gray
+    barstate.ishistory              => color.silver
+    barstate.isconfirmed            => color.orange
+    barstate.isnew                  => color.red
+    => color.yellow
+
+//label.new(bar_index, na, stateText(), yloc = yloc.abovebar, color = labelColor)
+
+
+//##################################################################################################
+//The Strat Combinations
+//
+
+
+//##################################################################################################
+//Plot the 1, 2U, 2D, 3 Strat Numbering System
+//##################################################################################################
+
+// identify 1 candles with identifier below
+plotchar(isInsideCandle(0), title='One Bar', char='1', location=location.belowbar, color=insideColor)
+
+// identify 2 up candle with identifier below and indicator above
+plotshape(isTwoUpCandle(0), style=shape.arrowup, title='Two Up Bar Shape', location=location.abovebar, color=bullishColor)
+plotchar(isTwoUpCandle(0), title='Two Up Bar', char='2', location=location.belowbar, color=bullishColor)
+
+// identify 2 down candle with identifier below and indicator above
+plotshape(isTwoDownCandle(0), style=shape.arrowdown, title='Two Bar Shape', location=location.abovebar, color=bearishColor)
+plotchar(isTwoDownCandle(0), title='Two Down Bar', char='2', location=location.belowbar, color=bearishColor)
+
+// identify 3 candle with indentifier below
+plotchar(isOutsideCandle(0), title='Three Bar', char='3', location=location.belowbar, color=outsideColor)
+
+//##################################################################################################
+// Change Bar Color
+//##################################################################################################
+// barcolor(color=getBarColor())
+_isInsideCandle = isInsideCandle(0)
+_isOutsideCandle = isOutsideCandle(0)
+_isGreenCandle = isGreenCandle(0)
+_isRedCandle = isRedCandle(0)
+
+barcolor(color=_isInsideCandle? insideColor : _isOutsideCandle? outsideColor : _isGreenCandle? bullishColor : _isRedCandle? bearishColor : na,offset=0,editable=true)
+
+//##################################################################################################
+//STRATEGY CODE: displays at the top, strategies/combos... these generally work left to right - the far right bar is index 0, add one to go back each time
+//TODO: Use this Later if we want to identify potential reversals ahead of time
+//##################################################################################################
+
+//##################################################################################################
+//Anticipate the next Reversal
+//This section will search for the next reversal that could occur based on the current candles
+//##################################################################################################
+
+//Check to see if we are on a realtime bar or not.
+//if barstate.isrealtime
+
+var nextPattern = ''
+var nextPatternColor=bullishColor
+var nextPatternProfit=0.00
+var inForce=false
+
+//##################################################################################################
+//FTFC
+//##################################################################################################
+cdayhigh = request.security(syminfo.tickerid, 'D', high)
+cdaylow = request.security(syminfo.tickerid, 'D', low)
+dAtr = request.security(syminfo.tickerid, 'D', ta.atr(14), lookahead=barmerge.lookahead_on)
+
+
+// get open, close, high, and low series for various time frames
+
+[open15Value, close15Value, high15Value, low15Value, time15Value] = getSecurityByTimeFrame(tf15M)
+[open30Value, close30Value, high30Value, low30Value, time30Value] = getSecurityByTimeFrame(tf30M)
+[open60Value, close60Value, highHourValue, lowHourValue, timeHourValue] = getSecurityByTimeFrame(tf60M)
+[openDayValue, closeDayValue, highDayValue, lowDayValue, timeDayValue] = getSecurityByTimeFrame(tf1D)
+[openWeekValue, closeWeekValue, highWeekValue, lowWeekValue, timeWeekValue] = getSecurityByTimeFrame(tf1W)
+[openMonthValue, closeMonthValue, highMonthValue, lowMonthValue, timeMonthValue] = getSecurityByTimeFrame(tf1M)
+[openQuarterValue, closeQuarterValue, highQuarterValue, lowQuarterValue, timeQuarterValue] = getSecurityByTimeFrame(tf3M)
+
+
+//There is a bug, if you select a week it will show the first day of the weeks data, if you show the Month it will show the first week of the months data ... not sure why
+//but this is the same bug as the strat assistant.
+//do not show timeframes that are less than the time frame selected (it will be inaccurate)
+is15ValidTimeFrame = timeframe.period == '1' or timeframe.period == '3' or timeframe.period == '5' or timeframe.period == '10' or timeframe.period == '15'
+is30ValidTimeFrame = timeframe.period == '30'
+isHourValidTimeFrame = timeframe.period == '60'
+isDayValidTimeFrame = timeframe.isdaily
+isWeekValidTimeFrame = timeframe.period == 'W' or timeframe.isintraday
+isMonthValidTimeFrame = timeframe.period == 'M'
+isQuarterValidTimeFrame = timeframe.period == '3M'
+
+
+//https://www.tradingview.com/script/UFTT8ROh-RedK-Portfolio-Tracker-Table-Version/
+
+// do not show timeframes that are less than the time frame selected (it will be inaccurate)
+if barstate.islast and isTfEnabled
+
+    [tf15MChg,tf15MColor] = getPercentChange(open15Value,close15Value)
+    [tf30MChg,tf30MColor] = getPercentChange(open30Value,close30Value)
+    [tf60MChg,tf60MColor] = getPercentChange(open60Value,close60Value)
+    [tf1DChg,tf1DColor] = getPercentChange(openDayValue,closeDayValue)
+    [tf1WChg,tf1WColor] = getPercentChange(openWeekValue,closeWeekValue)
+    [tf1MChg,tf1MColor] = getPercentChange(openMonthValue,closeMonthValue)
+    [tf3MChg,tf3MColor] = getPercentChange(openQuarterValue,closeQuarterValue)
+
+    if is15ValidTimeFrame
+        var table tcTable = table.new(position=position.top_right, columns = 9, rows = 2, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 0, row = 1, text = tf15M + '\n' + str.tostring(tf15MChg, '#.##') + '%', bgcolor=color.new(tf15MColor, tfTableOpacity), text_color=tf15MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 1, row = 1, text = tf30M + '\n' + str.tostring(tf30MChg, '#.##') + '%', bgcolor=color.new(tf30MColor, tfTableOpacity), text_color=tf30MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 2, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 2, row = 1, text = tf60M + '\n' + str.tostring(tf60MChg, '#.##') + '%', bgcolor=color.new(tf60MColor, tfTableOpacity), text_color=tf60MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 3, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 3, row = 1, text = tf1D + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 4, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 4, row = 1, text = tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 5, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 5, row = 1, text = tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 6, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 6, row = 1, text = tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 7, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 7, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 8, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 8, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+
+
+    else if is30ValidTimeFrame
+        var table tcTable = table.new(position=position.top_right, columns = 8, rows = 2, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 0, row = 1, text = tf30M + '\n' + str.tostring(tf30MChg, '#.##') + '%', bgcolor=color.new(tf30MColor, tfTableOpacity), text_color=tf30MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 1, row = 1, text = tf60M + '\n' + str.tostring(tf60MChg, '#.##') + '%', bgcolor=color.new(tf60MColor, tfTableOpacity), text_color=tf60MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 2, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 2, row = 1, text = tf1D + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 3, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 3, row = 1, text = tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 4, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 4, row = 1, text = tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 5, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 5, row = 1, text = tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 6, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 6, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 7, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 7, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+
+    else if isHourValidTimeFrame
+        var table tcTable = table.new(position=position.top_right, columns = 7, rows = 2, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 0, row = 1, text = tf60M + '\n' + str.tostring(tf60MChg, '#.##') + '%', bgcolor=color.new(tf60MColor, tfTableOpacity), text_color=tf60MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 1, row = 1, text = tf1D + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 2, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 2, row = 1, text = tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 3, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 3, row = 1, text = tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 4, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 4, row = 1, text = tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 5, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 5, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 6, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 6, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+
+
+    else if isDayValidTimeFrame
+        var table tcTable = table.new(position=position.top_right, columns = 6, rows = 2, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 0, row = 1, text = tf1D + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 1, row = 1, text = tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 2, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 2, row = 1, text = tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 3, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 3, row = 1, text = tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 4, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 4, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 5, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 5, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+
+
+    else if isWeekValidTimeFrame
+        var table tcTable = table.new(position=position.top_right, columns = 5, rows = 2, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 0, row = 1, text = tf1W + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 1, row = 1, text = tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 2, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 2, row = 1, text = tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 3, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 3, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 4, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 4, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+
+
+    else if isMonthValidTimeFrame
+        var table tcTable = table.new(position=position.top_right, columns = 4, rows = 2, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 0, row = 1, text = tf1M + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 1, row = 1, text = tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 2, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 2, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 3, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 3, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+
+    else if isQuarterValidTimeFrame
+        // var table tcTable = table.new(position=position.top_right, columns = 3, rows = 2, border_width=3)
+
+        // table.cell(tcTable, 0, 0, '')
+        // table.cell(tcTable, 0, 1, tf3M + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+        // table.cell(tcTable, 1, 0, '')
+        // table.cell(tcTable, 1, 1, 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+        // table.cell(tcTable, 2, 0, '')
+        // table.cell(tcTable, 2, 1, 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=color.white, text_size=size.auto, width=0)
+
+        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 1, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+
+
+// // previous high low lines
+// if (timeframe.isintraday or timeframe.isdaily)
+//     highDayLine = line.new(x1=timeDayValue[1], y1=highDayValue[1], x2=time, xloc=xloc.bar_time, y2=highDayValue[1], extend=extend.right, color=color.green, style=line.style_dashed, width=1)
+//     line.delete(highDayLine[1])
+
+// if (timeframe.isintraday or timeframe.isdaily)
+//     lowDayLine = line.new(x1=timeDayValue[1], y1=lowDayValue[1], x2=time, xloc=xloc.bar_time, y2=lowDayValue[1], extend=extend.right, color=color.red, style=line.style_dashed, width=1)
+//     line.delete(lowDayLine[1])
+
+// if (timeframe.isintraday or timeframe.isdaily or timeframe.isweekly)
+//     highWeekLine = line.new(x1=timeDayValue[1], y1=highWeekValue[1], x2=time, xloc=xloc.bar_time, y2=highWeekValue[1], extend=extend.right, color=color.green, style=line.style_dashed, width=1)
+//     line.delete(highWeekLine[1])
+
+// if (timeframe.isintraday or timeframe.isdaily or timeframe.isweekly)
+//     lowWeekLine = line.new(x1=timeDayValue[1], y1=lowWeekValue[1], x2=time, xloc=xloc.bar_time, y2=lowWeekValue[1], extend=extend.right, color=color.red, style=line.style_dashed, width=1)
+//     line.delete(lowWeekLine[1])
+
+
