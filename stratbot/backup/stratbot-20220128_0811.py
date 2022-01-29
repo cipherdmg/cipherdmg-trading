@@ -89,7 +89,7 @@ def getYahooFinanceDailyCandles(symbol):
     interval = '1d'
     query_string = f'https://query1.finance.yahoo.com/v7/finance/download/{symbol}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
 
-    logging.debug("Query String {}".format(query_string))
+    #console.print(query_string)
 
     try:
         df = pandas.read_csv(query_string)
@@ -122,7 +122,7 @@ def getYahooFinanceWeeklyCandles(symbol):
     interval = '1wk'
     query_string = f'https://query1.finance.yahoo.com/v7/finance/download/{symbol}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
 
-    logging.debug("Query String {}".format(query_string))
+    #console.print(query_string)
 
     try:
         df = pandas.read_csv(query_string)
@@ -162,7 +162,7 @@ def getYahooFinanceMonthlyCandles(symbol):
     interval = '1mo'
     query_string = f'https://query1.finance.yahoo.com/v7/finance/download/{symbol}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
 
-    logging.debug("Query String {}".format(query_string))
+    #console.print(query_string)
 
     try:
         df = pandas.read_csv(query_string)

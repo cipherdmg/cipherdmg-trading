@@ -66,7 +66,7 @@ def getTickers():
     tickers_Consumer_Staples=["XLP","PG","COST","PEP","KO","PM","MDLZ","WMT","MO","EL","CL"]
     tickers_Energy = ["AMRC", "ARVL", "BEP", "BEPC", "BLNK", "DQ", "DUK", "ENPH", "EVGO", "FSLR", "FCEL", "HPK", "IVAN", "ISUN", "JKS", "MAXN", "NEE", "NEP", "PPSI", "QCLN", "QS", "RUN", "RIVN", "SEDG", "SO", "SOLO", "SPWR", "SU", "VST", "VLO"  ]
     tickers_Financial = ["JPM", "MS", "BAC", "WFC", "SQ", "C", "HIG", "AXP", "DFS", "COF", "MA", "V" ]
-    tickers_XLE=["XLE","APA","BKR","BEP","CHPT","CVI", "CRL", "COP","COO","CVX","DVN","DUK","EOG","FAN","FTI","FCEL","FSLR","HAL","HES","HFC","HP","KMB","KMI","MPC","MAXN","NEE","NOV","OKE","OXY","PSX","PXD","PLUG","SLB","SPWR","SOLO","SU","VLCN","VLO","XOM","WMB","WM"]
+    tickers_XLE=["XLE","APA","BKR","BEP","CHPT","CVI", "CRL", "COP","COO","CVX","DVN","DUK","EOG","FAN","FTI","FCEL","FSLR","HAL","HES","HFC","HP","KMB","KMI","MCP","MAXN","NEE","NOV","OKE","OXY","PSX","PXD","PLUG","SLB","SPWR","SOLO","SU","VLCN","VLO","XOM","WMB","WM"]
     tickers_Oil=["XOP","AR","CPE","CLR","EQT","FTXN","LBRT","MGY","MUR","MRO","NRT","ROCC","SOI"]
     tickers_Gamming = ["CZR", "DKNG", "EA", "FUBO", "GENI", "GNOG", "SEAH", "LVS", "MGM", "PENN"]
     tickers_Insurance = ["AIG", "ALL"]
@@ -77,7 +77,7 @@ def getTickers():
     tickers = tickers_ETFs + tickers_Auto + tickers_Airlines + tickers_Biotech + tickers_Cannabis + tickers_Consumer_Staples + tickers_Energy + tickers_Financial + tickers_XLE + tickers_Oil + tickers_Gamming + tickers_Insurance + tickers_Materials + tickers_Retail + tickers_Tech
 
 
-    #tickers = tickers_TEST
+    tickers = tickers_TEST
     # tickers=[random.choice (tickers)]
     # tickers=['WMG']
     # tickers = tickers_TEST
@@ -114,121 +114,6 @@ class Candle:
         return self.open >= self.close
     # end of isRedCandle()
 
-    def getStratNumber(self,candles):
-
-        candleColor = self.getCandleColor()
-
-        if(self.isInsideCandle(candles)):
-            return "[" + candleColor + "]" + "1" + "[/" + candleColor + "]"
-
-        elif(self.isOutsideCandle(candles)):
-            return "[" + candleColor + "]" + "3" + "[/" + candleColor + "]"
-
-        elif(self.isTwoDownCandle(candles)):
-            return "[" + candleColor + "]" + "2D" + "[/" + candleColor + "]"
-
-        elif(self.isTwoUpCandle(candles)):
-            return "[" + candleColor + "]" + "2U" + "[/" + candleColor + "]"
-
-        else:
-            return "Not Possible"
-    # end of getStratNumber()
-
-    def isInsideCandle(self,candles):
-
-        idx=candles.index(self)
-        previousHigh=candles[idx-1].high
-        high=self.high
-        previousLow=candles[idx-1].low
-        low=self.low
-        return high <= previousHigh and low >= previousLow
-    # end of isInsideCandle()
-
-    def isOutsideCandle(self,candles):
-        idx=candles.index(self)
-        previousHigh=candles[idx-1].high
-        high=self.high
-        previousLow=candles[idx-1].low
-        low=self.low
-        return high > previousHigh and low < previousLow
-    # end of isOutsideCandle()
-
-    def isTwoDownCandle(self,candles):
-        idx=candles.index(self)
-        previousHigh=candles[idx-1].high
-        high=self.high
-        previousLow=candles[idx-1].low
-        low=self.low
-        return low < previousLow and not (high > previousHigh)
-    # end of isTwoDownCandle()
-
-    def isTwoUpCandle(self,candles):
-        idx=candles.index(self)
-        previousHigh=candles[idx-1].high
-        high=self.high
-        previousLow=candles[idx-1].low
-        low=self.low
-        return high > previousHigh and not (low < previousLow)
-    # end of isTwoUpCandle()
-
-
-
-    def isShootingStar(self):
-        openPrice=self.open
-        closePrice=self.close
-        highPrice=self.high
-        lowPrice=self.low
-
-        hc=highPrice-closePrice
-        hl=highPrice-lowPrice
-
-        if(self.isRedCandle()):
-            try:
-                ratio = (highPrice - openPrice) / (openPrice-closePrice) #This will give you a ratio of the top wick compared to the body which should be
-                ratioTail = (closePrice - lowPrice) / (highPrice - openPrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
-                return ((ratio > 2) and (ratioTail < 0.30))
-            except:
-                False
-
-        else:
-            try:
-                ratio = (highPrice - closePrice) / (closePrice - openPrice) #This will give you a ratio of the top wick compared to the body which should be
-                ratioTail = (openPrice - lowPrice)/ (highPrice - closePrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
-                return ((ratio > 2) and (ratioTail < 0.30))
-            except:
-                False
-
-
-    # end of isShootingStar()
-
-
-    #Hanging Man vs Hammer Candlestick Patterns The primary difference between the Hanging Man pattern and the Hammer Candlestick pattern is that the former is bullish and the latter is bearish. That’s because the Hanging Man appears at the top of uptrends while the Hammer appears at the bottom of downtrends.
-
-    # https://commodity.com/technical-analysis/hammer/
-    # The Hammer candlestick formation is viewed as a bullish reversal candlestick pattern that mainly occurs at the bottom of downtrends.
-    # The Hammer formation is created when the open, high, and close prices are roughly the same. Also, there is a long lower shadow that’s twice the length as the real body.
-    def isHammer(self):
-        openPrice=self.open
-        closePrice=self.close
-        highPrice=self.high
-        lowPrice=self.low
-        #return (highPrice - lowPrice > 3 * (openPrice - closePrice) and (closePrice - lowPrice) / (.001 +highPrice - lowPrice) > 0.6 and (openPrice - lowPrice) / (.001 + highPrice - lowPrice) > 0.6)
-        if(self.isGreenCandle()):
-            try:
-                ratio = (closePrice - lowPrice) / (closePrice-openPrice) #This will give you a ratio of the bottom wick compared to the body which should be
-                ratioTip = (highPrice - closePrice)/ (openPrice - lowPrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
-                return ((ratio > 2) and (ratioTip < 0.30))
-            except ZeroDivisionError:
-                False
-        else:
-            try:
-                ratio = (openPrice - lowPrice) / (openPrice - closePrice) #This will give you a ratio of the bottom wick compared to the body which should be
-                ratioTip = (highPrice - openPrice)/ (closePrice - lowPrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
-                return ((ratio > 2) and (ratioTip < 0.30))
-            except ZeroDivisionError:
-                False
-
-    # end of isHammer()
 
 #     def __str__(self):
 #         return "
@@ -255,16 +140,129 @@ class StratSetup:
 
 # end of StratSetup
 
+
+def getStratNumber(candles,idx):
+
+    candleColor = candles[idx].getCandleColor()
+
+    if(isInsideCandle(candles,idx)):
+        return "[" + candleColor + "]" + "1" + "[/" + candleColor + "]"
+
+    elif(isOutsideCandle(candles,idx)):
+        return "[" + candleColor + "]" + "3" + "[/" + candleColor + "]"
+
+    elif(isTwoDownCandle(candles,idx)):
+        return "[" + candleColor + "]" + "2D" + "[/" + candleColor + "]"
+
+    elif(isTwoUpCandle(candles,idx)):
+        return "[" + candleColor + "]" + "2U" + "[/" + candleColor + "]"
+
+    else:
+        return "Not Possible"
+# end of getStratNumber()
+
+def isInsideCandle(candles,idx):
+
+    previousHigh=candles[idx-1].high
+    high=candles[idx].high
+    previousLow=candles[idx-1].low
+    low=candles[idx].low
+    return high <= previousHigh and low >= previousLow
+# end of isInsideCandle()
+
+def isOutsideCandle(candles,idx):
+    previousHigh=candles[idx-1].high
+    high=candles[idx].high
+    previousLow=candles[idx-1].low
+    low=candles[idx].low
+    return high > previousHigh and low < previousLow
+# end of isOutsideCandle()
+
+def isTwoDownCandle(candles,idx):
+    previousHigh=candles[idx-1].high
+    high=candles[idx].high
+    previousLow=candles[idx-1].low
+    low=candles[idx].low
+    return low < previousLow and not (high > previousHigh)
+# end of isTwoDownCandle()
+
+def isTwoUpCandle(candles,idx):
+    previousHigh=candles[idx-1].high
+    high=candles[idx].high
+    previousLow=candles[idx-1].low
+    low=candles[idx].low
+    return high > previousHigh and not (low < previousLow)
+# end of isTwoUpCandle()
+
+
+def isShootingStar(candle):
+    openPrice=candle.open
+    closePrice=candle.close
+    highPrice=candle.high
+    lowPrice=candle.low
+
+    hc=highPrice-closePrice
+    hl=highPrice-lowPrice
+
+    if(candle.isRedCandle()):
+        try:
+            ratio = (highPrice - openPrice) / (openPrice-closePrice) #This will give you a ratio of the top wick compared to the body which should be
+            ratioTail = (closePrice - lowPrice) / (highPrice - openPrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
+            return ((ratio > 2) and (ratioTail < 0.30))
+        except:
+            False
+
+    else:
+        try:
+            ratio = (highPrice - closePrice) / (closePrice - openPrice) #This will give you a ratio of the top wick compared to the body which should be
+            ratioTail = (openPrice - lowPrice)/ (highPrice - closePrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
+            return ((ratio > 2) and (ratioTail < 0.30))
+        except:
+            False
+
+
+# end of isShootingStar()
+
+
+#Hanging Man vs Hammer Candlestick Patterns The primary difference between the Hanging Man pattern and the Hammer Candlestick pattern is that the former is bullish and the latter is bearish. That’s because the Hanging Man appears at the top of uptrends while the Hammer appears at the bottom of downtrends.
+
+# https://commodity.com/technical-analysis/hammer/
+# The Hammer candlestick formation is viewed as a bullish reversal candlestick pattern that mainly occurs at the bottom of downtrends.
+# The Hammer formation is created when the open, high, and close prices are roughly the same. Also, there is a long lower shadow that’s twice the length as the real body.
+def isHammer(candle):
+    openPrice=candle.open
+    closePrice=candle.close
+    highPrice=candle.high
+    lowPrice=candle.low
+    #return (highPrice - lowPrice > 3 * (openPrice - closePrice) and (closePrice - lowPrice) / (.001 +highPrice - lowPrice) > 0.6 and (openPrice - lowPrice) / (.001 + highPrice - lowPrice) > 0.6)
+    if(candle.isGreenCandle()):
+        try:
+            ratio = (closePrice - lowPrice) / (closePrice-openPrice) #This will give you a ratio of the bottom wick compared to the body which should be
+            ratioTip = (highPrice - closePrice)/ (openPrice - lowPrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
+            return ((ratio > 2) and (ratioTip < 0.30))
+        except ZeroDivisionError:
+            False
+    else:
+        try:
+            ratio = (openPrice - lowPrice) / (openPrice - closePrice) #This will give you a ratio of the bottom wick compared to the body which should be
+            ratioTip = (highPrice - openPrice)/ (closePrice - lowPrice) #This will compare the upper wick to the lower wick and the comparison should be less then .25 or even .15
+            return ((ratio > 2) and (ratioTip < 0.30))
+        except ZeroDivisionError:
+            False
+
+# end of isHammer()
+
+
 def determineStratSetup(symbol,candles,timeframe,isLastCandleActive) -> StratSetup:
 
     #We need to determine if we are doing realtime scans or anticipation scans
 
     #Determine if the next candle came out then would a reversal occur
-    fithLastCandle = candles[len(candles)-5].getStratNumber(candles)
-    fourthLastCandle = candles[len(candles)-4].getStratNumber(candles)
-    thirdLastCandle = candles[len(candles)-3].getStratNumber(candles)
-    secondLastCandle = candles[len(candles)-2].getStratNumber(candles)
-    lastCandle = candles[len(candles)-1].getStratNumber(candles)
+    fithLastCandle = getStratNumber(candles,len(candles)-5)
+    fourthLastCandle = getStratNumber(candles,len(candles)-4)
+    thirdLastCandle = getStratNumber(candles,len(candles)-3)
+    secondLastCandle = getStratNumber(candles,len(candles)-2)
+    lastCandle = getStratNumber(candles,len(candles)-1)
     lastCandlePattern="[bold][/bold]"
 
     thirdLastCandleLow = candles[len(candles)-3].low
@@ -275,10 +273,10 @@ def determineStratSetup(symbol,candles,timeframe,isLastCandleActive) -> StratSet
     secondLastCandleHigh = candles[len(candles)-2].high
     lastCandleHigh = candles[len(candles)-1].high
 
-    if(candles[len(candles)-1].isHammer()):
+    if(isHammer(candles[len(candles)-1])):
         lastCandlePattern="[bold]hammer[/bold]"
 
-    elif(candles[len(candles)-1].isShootingStar()):
+    elif(isShootingStar(candles[len(candles)-1])):
         lastCandlePattern="[bold]shooter[/bold]"
 
     candlePattern = fithLastCandle + "," + fourthLastCandle + "," + thirdLastCandle + "," + secondLastCandle + "," + lastCandle
