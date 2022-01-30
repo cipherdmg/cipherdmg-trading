@@ -73,17 +73,34 @@ PROFIT_TARGET=5.00
 
 logging.basicConfig(level=logging.DEBUG)
 
+YEAR_BEGINNING=datetime.datetime(2021,1,1,23,59)
+FIRST_MONDAY_OF_YEAR= YEAR_BEGINNING + datetime.timedelta( (0-YEAR_BEGINNING.weekday()) % 7 ) #Used for Weeklys
+
 today=datetime.date.today()
+#today=datetime.datetime(2022,1,26,23,00)
+weekday=today.weekday()
+
+monday = today + datetime.timedelta( (0-today.weekday()) % 7 )
+tuesday = today + datetime.timedelta( (1-today.weekday()) % 7 )
+wednesday = today + datetime.timedelta( (2-today.weekday()) % 7 )
 friday = today + datetime.timedelta( (4-today.weekday()) % 7 )
+
+lastMonday = today - datetime.timedelta(days=(today.weekday()))
+lastTuesday = today - datetime.timedelta(days=(today.weekday() - 1) % 7)
+lastWednesday = today - datetime.timedelta(days=(today.weekday() - 2) % 7)
 lastFriday = today - datetime.timedelta(days=(today.weekday() - 4) % 7)
+
+yesterday = today - datetime.timedelta(days=1)
 tomorrow = today + datetime.timedelta(days=1)
+
+
 
 def getYahooFinanceDailyCandles(symbol):
 
     #logging.debug("Getting Yahoo {} Symbol: {}".format('Daily', symbol))
     candles = []
 
-    period1 = int(time.mktime(datetime.datetime(2021,1,1,23,59).timetuple()))
+    period1 = int(time.mktime(YEAR_BEGINNING.timetuple()))
     #period2 = int(time.mktime(datetime.datetime(2022,1,22,23,59).timetuple()))
     period2 = int(time.mktime(tomorrow.timetuple()))
     interval = '1d'
@@ -114,9 +131,11 @@ def getYahooFinanceWeeklyCandles(symbol):
 
     #logging.debug("Getting Yahoo {} Symbol: {}".format('Weekly', symbol))
 
+    #Yahoo Historical Data Should Start on a Monday for Weekly Candles.
+
     candles = []
 
-    period1 = int(time.mktime(datetime.datetime(2021,1,1,23,59).timetuple()))
+    period1 = int(time.mktime(FIRST_MONDAY_OF_YEAR.timetuple()))
     #period2 = int(time.mktime(datetime.datetime(2022,1,22,23,59).timetuple()))
     period2 = int(time.mktime(tomorrow.timetuple()))
     interval = '1wk'
@@ -156,7 +175,7 @@ def getYahooFinanceMonthlyCandles(symbol):
 
     candles = []
 
-    period1 = int(time.mktime(datetime.datetime(2021,1,1,23,59).timetuple()))
+    period1 = int(time.mktime(YEAR_BEGINNING.timetuple()))
     #period2 = int(time.mktime(datetime.datetime(2022,1,22,23,59).timetuple()))
     period2 = int(time.mktime(tomorrow.timetuple()))
     interval = '1mo'

@@ -77,7 +77,7 @@ def getTickers():
     tickers = tickers_ETFs + tickers_Auto + tickers_Airlines + tickers_Biotech + tickers_Cannabis + tickers_Consumer_Staples + tickers_Energy + tickers_Financial + tickers_XLE + tickers_Oil + tickers_Gamming + tickers_Insurance + tickers_Materials + tickers_Retail + tickers_Tech
 
 
-    #tickers = tickers_TEST
+    tickers = tickers_TEST
     # tickers=[random.choice (tickers)]
     # tickers=['WMG']
     # tickers = tickers_TEST
