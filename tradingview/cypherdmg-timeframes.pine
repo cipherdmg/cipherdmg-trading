@@ -50,9 +50,9 @@ var inForce=false
 //##################################################################################################
 //FTFC
 //##################################################################################################
-cdayhigh = request.security(syminfo.tickerid, 'D', high)
-cdaylow = request.security(syminfo.tickerid, 'D', low)
-dAtr = request.security(syminfo.tickerid, 'D', ta.atr(14), lookahead=barmerge.lookahead_on)
+cdayhigh = request.security(syminfo.tickerid, '1D', high)
+cdaylow = request.security(syminfo.tickerid, '1D', low)
+dAtr = request.security(syminfo.tickerid, '1D', ta.atr(14), lookahead=barmerge.lookahead_on)
 
 
 
@@ -61,8 +61,8 @@ dAtr = request.security(syminfo.tickerid, 'D', ta.atr(14), lookahead=barmerge.lo
 [open15Value, close15Value, high15Value, low15Value, time15Value] = getSecurityByTimeFrame('15')
 [open30Value, close30Value, high30Value, low30Value, time30Value] = getSecurityByTimeFrame('30')
 [open60Value, close60Value, highHourValue, lowHourValue, timeHourValue] = getSecurityByTimeFrame('60')
-[openDayValue, closeDayValue, highDayValue, lowDayValue, timeDayValue] = getSecurityByTimeFrame('D')
-[openWeekValue, closeWeekValue, highWeekValue, lowWeekValue, timeWeekValue] = getSecurityByTimeFrame('W')
+[openDayValue, closeDayValue, highDayValue, lowDayValue, timeDayValue] = getSecurityByTimeFrame('1D')
+[openWeekValue, closeWeekValue, highWeekValue, lowWeekValue, timeWeekValue] = getSecurityByTimeFrame('1W')
 [openMonthValue, closeMonthValue, highMonthValue, lowMonthValue, timeMonthValue] = getSecurityByTimeFrame('1M')
 [openQuarterValue, closeQuarterValue, highQuarterValue, lowQuarterValue, timeQuarterValue] = getSecurityByTimeFrame('3M')
 
@@ -113,7 +113,7 @@ if barstate.islast and isTfEnabled
             table.cell(table_id = tcTable, column = 4, row = 1, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 5, row = 0, text = '')
-            table.cell(table_id = tcTable, column = 5, row = 1, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+            table.cell(table_id = tcTable, column = 5, row = 1, text = 'M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 6, row = 0, text = '')
             table.cell(table_id = tcTable, column = 6, row = 1, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
@@ -138,7 +138,7 @@ if barstate.islast and isTfEnabled
 
             table.cell(table_id = tcTable, column = 4, row = 0, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
 
-            table.cell(table_id = tcTable, column = 5, row = 0, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+            table.cell(table_id = tcTable, column = 5, row = 0, text = 'M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 6, row = 0, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
 
@@ -164,7 +164,7 @@ if barstate.islast and isTfEnabled
             table.cell(table_id = tcTable, column = 3, row = 1, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 4, row = 0, text = '')
-            table.cell(table_id = tcTable, column = 4, row = 1, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+            table.cell(table_id = tcTable, column = 4, row = 1, text = 'M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 5, row = 0, text = '')
             table.cell(table_id = tcTable, column = 5, row = 1, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
@@ -187,7 +187,7 @@ if barstate.islast and isTfEnabled
 
             table.cell(table_id = tcTable, column = 3, row = 0, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
 
-            table.cell(table_id = tcTable, column = 4, row = 0, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+            table.cell(table_id = tcTable, column = 4, row = 0, text = 'M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 5, row = 0, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
 
@@ -211,7 +211,7 @@ if barstate.islast and isTfEnabled
             table.cell(table_id = tcTable, column = 2, row = 1, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 3, row = 0, text = '')
-            table.cell(table_id = tcTable, column = 3, row = 1, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+            table.cell(table_id = tcTable, column = 3, row = 1, text = 'M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 4, row = 0, text = '')
             table.cell(table_id = tcTable, column = 4, row = 1, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
@@ -232,7 +232,7 @@ if barstate.islast and isTfEnabled
 
             table.cell(table_id = tcTable, column = 2, row = 0, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
 
-            table.cell(table_id = tcTable, column = 3, row = 0, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+            table.cell(table_id = tcTable, column = 3, row = 0, text = 'M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 4, row = 0, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
 
@@ -253,7 +253,7 @@ if barstate.islast and isTfEnabled
             table.cell(table_id = tcTable, column = 1, row = 1, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 2, row = 0, text = '')
-            table.cell(table_id = tcTable, column = 2, row = 1, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+            table.cell(table_id = tcTable, column = 2, row = 1, text = 'M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 3, row = 0, text = '')
             table.cell(table_id = tcTable, column = 3, row = 1, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
@@ -272,7 +272,7 @@ if barstate.islast and isTfEnabled
 
             table.cell(table_id = tcTable, column = 1, row = 0, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
 
-            table.cell(table_id = tcTable, column = 2, row = 0, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+            table.cell(table_id = tcTable, column = 2, row = 0, text = 'M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 3, row = 0, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
 
@@ -290,7 +290,7 @@ if barstate.islast and isTfEnabled
             table.cell(table_id = tcTable, column = 0, row = 1, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 1, row = 0, text = '')
-            table.cell(table_id = tcTable, column = 1, row = 1, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+            table.cell(table_id = tcTable, column = 1, row = 1, text = 'M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 2, row = 0, text = '')
             table.cell(table_id = tcTable, column = 2, row = 1, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
@@ -307,7 +307,7 @@ if barstate.islast and isTfEnabled
 
             table.cell(table_id = tcTable, column = 0, row = 0, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
 
-            table.cell(table_id = tcTable, column = 1, row = 0, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+            table.cell(table_id = tcTable, column = 1, row = 0, text = 'M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 2, row = 0, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
 
@@ -322,7 +322,7 @@ if barstate.islast and isTfEnabled
             var table tcTable = table.new(position=position.top_right, columns = 4, rows = 2, border_width=3)
 
             table.cell(table_id = tcTable, column = 0, row = 0, text = '')
-            table.cell(table_id = tcTable, column = 0, row = 1, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+            table.cell(table_id = tcTable, column = 0, row = 1, text = 'M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 1, row = 0, text = '')
             table.cell(table_id = tcTable, column = 1, row = 1, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
@@ -337,7 +337,7 @@ if barstate.islast and isTfEnabled
         else
             var table tcTable = table.new(position=position.top_right, columns = 4, rows = 1, border_width=3)
 
-            table.cell(table_id = tcTable, column = 0, row = 0, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+            table.cell(table_id = tcTable, column = 0, row = 0, text = 'M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
 
             table.cell(table_id = tcTable, column = 1, row = 0, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
 
