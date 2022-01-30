@@ -1,0 +1,193 @@
+//@version=5
+// ||###################################################################################||
+// ||                                                                                   ||
+// || The Strat Time Frame Continuity                                                   ||
+// ||                                                                                   ||
+// ||                                                                                   ||
+// ||###################################################################################||
+
+indicator(title="The Strat TimeFrames", shorttitle="The Strat TimeFrames", max_labels_count = 500, overlay=true)
+
+//##################################################################################################
+//User Inputs
+//##################################################################################################
+
+bullishColor = input.color(color.new(color.green, 0), title='Bullish Candle color', group='Colors')
+bearishColor = input.color(color.new(color.red, 0), title='Bearish Candle color', group='Colors')
+tfTableOpacity = input.int(80, title='Multi time frame table opacity', group='Colors')
+isTfEnabled = input.bool(true, title='Time Frame Continuity Panel Enabled', group='Time Frame Continuation')
+
+// FULL TIME FRAME CONTINUITY CODE:
+//reusable function for getting detail on the security
+getSecurityByTimeFrame(timeFrame) =>
+    [openValue, closeValue, highValue, lowValue, timeValue] = request.security(symbol = syminfo.tickerid, timeframe = timeFrame, expression = [open, close, high, low, time], gaps = barmerge.gaps_off)
+    [openValue, closeValue, highValue, lowValue, timeValue]
+
+
+//getPercentChange
+getPercentChange(openPrice,closePrice) =>
+    percentChange = (closePrice - openPrice) / openPrice * 100.0
+    resultColor = openPrice >= closePrice ? bearishColor : bullishColor
+    [percentChange,resultColor]
+
+
+//##################################################################################################
+//Anticipate the next Reversal
+//This section will search for the next reversal that could occur based on the current candles
+//##################################################################################################
+
+//Check to see if we are on a realtime bar or not.
+//if barstate.isrealtime
+
+var nextPattern = ''
+var nextPatternColor=bullishColor
+var nextPatternProfit=0.00
+var inForce=false
+
+// get open, close, high, and low series for various time frames
+
+[open15Value, close15Value, high15Value, low15Value, time15Value] = getSecurityByTimeFrame('15')
+[open30Value, close30Value, high30Value, low30Value, time30Value] = getSecurityByTimeFrame('30')
+[open60Value, close60Value, highHourValue, lowHourValue, timeHourValue] = getSecurityByTimeFrame('60')
+[openDayValue, closeDayValue, highDayValue, lowDayValue, timeDayValue] = getSecurityByTimeFrame('D')
+[openWeekValue, closeWeekValue, highWeekValue, lowWeekValue, timeWeekValue] = getSecurityByTimeFrame('W')
+[openMonthValue, closeMonthValue, highMonthValue, lowMonthValue, timeMonthValue] = getSecurityByTimeFrame('1M')
+[openQuarterValue, closeQuarterValue, highQuarterValue, lowQuarterValue, timeQuarterValue] = getSecurityByTimeFrame('3M')
+
+
+//There is a bug, if you select a week it will show the first day of the weeks data, if you show the Month it will show the first week of the months data ... not sure why
+//but this is the same bug as the strat assistant.
+//do not show timeframes that are less than the time frame selected (it will be inaccurate)
+is15ValidTimeFrame = timeframe.period == '1' or timeframe.period == '3' or timeframe.period == '5' or timeframe.period == '10' or timeframe.period == '15'
+is30ValidTimeFrame = timeframe.period == '30'
+isHourValidTimeFrame = timeframe.period == '60'
+isDayValidTimeFrame = timeframe.isdaily
+isWeekValidTimeFrame = timeframe.period == 'W' or timeframe.isintraday
+isMonthValidTimeFrame = timeframe.period == 'M'
+isQuarterValidTimeFrame = timeframe.period == '3M'
+
+
+//https://www.tradingview.com/script/UFTT8ROh-RedK-Portfolio-Tracker-Table-Version/
+
+// do not show timeframes that are less than the time frame selected (it will be inaccurate)
+if barstate.islast and isTfEnabled
+
+    [tf15MChg,tf15MColor] = getPercentChange(open15Value,close15Value)
+    [tf30MChg,tf30MColor] = getPercentChange(open30Value,close30Value)
+    [tf60MChg,tf60MColor] = getPercentChange(open60Value,close60Value)
+    [tf1DChg,tf1DColor] = getPercentChange(openDayValue,closeDayValue)
+    [tf1WChg,tf1WColor] = getPercentChange(openWeekValue,closeWeekValue)
+    [tf1MChg,tf1MColor] = getPercentChange(openMonthValue,closeMonthValue)
+    [tf3MChg,tf3MColor] = getPercentChange(openQuarterValue,closeQuarterValue)
+
+    if is15ValidTimeFrame
+        var table tcTable = table.new(position=position.top_right, columns = 7, rows = 2, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 0, row = 1, text = '15' + '\n' + str.tostring(tf15MChg, '#.##') + '%', bgcolor=color.new(tf15MColor, tfTableOpacity), text_color=tf15MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 1, row = 1, text = '30' + '\n' + str.tostring(tf30MChg, '#.##') + '%', bgcolor=color.new(tf30MColor, tfTableOpacity), text_color=tf30MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 2, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 2, row = 1, text = '60' + '\n' + str.tostring(tf60MChg, '#.##') + '%', bgcolor=color.new(tf60MColor, tfTableOpacity), text_color=tf60MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 3, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 3, row = 1, text = 'D' + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 4, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 4, row = 1, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 5, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 5, row = 1, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 6, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 6, row = 1, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+
+    else if is30ValidTimeFrame
+        var table tcTable = table.new(position=position.top_right, columns = 6, rows = 2, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 0, row = 1, text = '30' + '\n' + str.tostring(tf30MChg, '#.##') + '%', bgcolor=color.new(tf30MColor, tfTableOpacity), text_color=tf30MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 1, row = 1, text = '60' + '\n' + str.tostring(tf60MChg, '#.##') + '%', bgcolor=color.new(tf60MColor, tfTableOpacity), text_color=tf60MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 2, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 2, row = 1, text = 'D' + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 3, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 3, row = 1, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 4, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 4, row = 1, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 5, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 5, row = 1, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+
+    else if isHourValidTimeFrame
+        var table tcTable = table.new(position=position.top_right, columns = 5, rows = 2, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 0, row = 1, text = '60' + '\n' + str.tostring(tf60MChg, '#.##') + '%', bgcolor=color.new(tf60MColor, tfTableOpacity), text_color=tf60MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 1, row = 1, text = 'D' + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 2, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 2, row = 1, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 3, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 3, row = 1, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 4, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 4, row = 1, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+
+
+    else if isDayValidTimeFrame
+        var table tcTable = table.new(position=position.top_right, columns = 4, rows = 2, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 0, row = 1, text = 'D' + '\n' + str.tostring(tf1DChg, '#.##') + '%', bgcolor=color.new(tf1DColor, tfTableOpacity), text_color=tf1DColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 1, row = 1, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 2, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 2, row = 1, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 3, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 3, row = 1, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+
+
+
+    else if isWeekValidTimeFrame
+        var table tcTable = table.new(position=position.top_right, columns = 3, rows = 2, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 0, row = 1, text = 'W' + '\n' + str.tostring(tf1WChg, '#.##') + '%', bgcolor=color.new(tf1WColor, tfTableOpacity), text_color=tf1WColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 1, row = 1, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 2, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 2, row = 1, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+
+
+    else if isMonthValidTimeFrame
+        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 2, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 0, row = 1, text = '1M' + '\n' + str.tostring(tf1MChg, '#.##') + '%', bgcolor=color.new(tf1MColor, tfTableOpacity), text_color=tf1MColor, text_size=size.auto, width=0)
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+        table.cell(table_id = tcTable, column = 1, row = 1, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MColor, text_size=size.auto, width=0)
+
+    else if isQuarterValidTimeFrame
+
+        var table tcTable = table.new(position=position.top_right, columns = 2, rows = 1, border_width=3)
+
+        table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+
+        table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+

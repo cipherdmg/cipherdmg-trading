@@ -1,0 +1,152 @@
+//@version=5
+
+// ||###################################################################################||
+// ||                                                                                   ||
+// || Cipher DMG                                                                        ||
+// || The Strat                                                                         ||
+// ||     https://www.tradingview.com/script/0drMdHsO-TTM-Squeeze-Pro                   ||
+// ||                                                                                   ||
+// ||                                                                                   ||
+// ||###################################################################################||
+
+indicator(title="The Strat Sector Performance", shorttitle="The Strat Sector Performance", max_labels_count = 500, overlay=true)
+
+LIGHTTRANSP = 90
+AVGTRANSP = 80
+HEAVYTRANSP = 70
+
+var string _gp1 = 'Time Interval'
+string i_time_interval = input.string('1D', '', inline='11', options=['1', '5', '15', '30', '60', '1D', '1W', '1M', '3M', '12M'], group=_gp1)
+
+var string _gp2 = 'Display'
+// i_posColor = input.color(color.rgb(38, 166, 154), title='Bullish Color', group=_gp2)
+// i_negColor = input.color(color.rgb(240, 83, 80), title='Bearish Color', group=_gp2)
+i_posColor = input.color(color.new(color.green, 0), title='Bullish Color', group=_gp2)
+i_negColor = input.color(color.new(color.red, 0), title='Bearish Color', group=_gp2)
+i_inside_color = input.color(color.new(color.white, 0), 'Inside Bar', inline='12', group=_gp2)
+i_outside_color = input.color(color.new(color.yellow, 0), 'Outside Bar', inline='12', group=_gp2)
+i_tableYpos = input.string('top', 'Panel position', inline='11', options=['top', 'middle', 'bottom'], group=_gp2)
+i_tableXpos = input.string('right', '', inline='11', options=['left', 'center', 'right'], group=_gp2)
+i_position = input.string('horizontal', 'Direction', options=['horizontal', 'vertical'], group=_gp2)
+i_textSize = input.string('normal', 'Text Size', options=['tiny', 'small', 'normal', 'large', 'huge'], group=_gp2)
+
+var string _gp3 = 'Symbols'
+symbol1 = input.symbol('SPY', group=_gp3)
+symbol2 = input.symbol('XLK', group=_gp3)
+symbol3 = input.symbol('XLF', group=_gp3)
+symbol4 = input.symbol('XLC', group=_gp3)
+symbol5 = input.symbol('XLE', group=_gp3)
+symbol6 = input.symbol('XLRE', group=_gp3)
+symbol7 = input.symbol('XLY', group=_gp3)
+symbol8 = input.symbol('XLU', group=_gp3)
+symbol9 = input.symbol('XLP', group=_gp3)
+symbol10 = input.symbol('XLI', group=_gp3)
+symbol11 = input.symbol('XLV', group=_gp3)
+symbol12 = input.symbol('XLB', group=_gp3)
+symbol13 = input.symbol('VXX', group=_gp3)
+symbol14 = input.symbol('SMH', group=_gp3)
+
+
+var table perfTable = table.new(i_tableYpos + '_' + i_tableXpos, 7, 7, border_width=3)
+
+f_candle_type(_high, _high1, _low, _low1) =>
+    _candle_type = 0
+    if _high > _high1 and _low < _low1
+        _candle_type := 3
+        _candle_type
+    else
+        if _high <= _high1 and _low >= _low1
+            _candle_type := 1
+            _candle_type
+        else
+            _candle_type := 2
+            _candle_type
+    _candle_type
+
+f_rateOfreturn(_v1, _v2, _high, _high1, _low, _low1) =>
+    _performance = (_v1 - _v2) * 100 / math.abs(_v2)
+    _candle_type = f_candle_type(_high, _high1, _low, _low1)
+    [_performance, _candle_type]
+
+f_performance(_symbol) =>
+    [_performance, _candle_type] = request.security(_symbol, i_time_interval, f_rateOfreturn(close, close[1], high, high[1], low, low[1]))
+    [_performance, _candle_type]
+
+f_fillCell(_table, _column, _row, _performance, _candle_type, _symbol) =>
+    _c_color = _performance >= 0 ? i_posColor : i_negColor
+    _transp = math.abs(_performance) > 2 ? HEAVYTRANSP : math.abs(_performance) > 1 ? AVGTRANSP : LIGHTTRANSP
+    _cellText = str.tostring(_performance, '0.00') + '%\n' + _symbol
+    color _text_color = na
+    if _candle_type == 1
+        _text_color := i_inside_color
+        _text_color
+    else
+        if _candle_type == 3
+            _text_color := i_outside_color
+            _text_color
+        else
+            _text_color := _c_color
+            _text_color
+    table.cell(_table, _column, _row, _cellText, bgcolor=color.new(_c_color, _transp), text_color=_text_color, text_size=i_textSize)
+
+if barstate.islast
+    if i_position == 'horizontal'
+        [_performanceh1, _candle_typeh1] = f_performance(symbol1)
+        f_fillCell(perfTable, 0, 0, _performanceh1, _candle_typeh1, array.get(str.split(symbol1, ':'), 1))
+        [_performanceh2, _candle_typeh2] = f_performance(symbol2)
+        f_fillCell(perfTable, 1, 0, _performanceh2, _candle_typeh2, array.get(str.split(symbol2, ':'), 1))
+        [_performanceh3, _candle_typeh3] = f_performance(symbol3)
+        f_fillCell(perfTable, 2, 0, _performanceh3, _candle_typeh3, array.get(str.split(symbol3, ':'), 1))
+        [_performanceh4, _candle_typeh4] = f_performance(symbol4)
+        f_fillCell(perfTable, 3, 0, _performanceh4, _candle_typeh4, array.get(str.split(symbol4, ':'), 1))
+        [_performanceh5, _candle_typeh5] = f_performance(symbol5)
+        f_fillCell(perfTable, 4, 0, _performanceh5, _candle_typeh5, array.get(str.split(symbol5, ':'), 1))
+        [_performanceh6, _candle_typeh6] = f_performance(symbol6)
+        f_fillCell(perfTable, 5, 0, _performanceh6, _candle_typeh6, array.get(str.split(symbol6, ':'), 1))
+        [_performanceh7, _candle_typeh7] = f_performance(symbol7)
+        f_fillCell(perfTable, 6, 0, _performanceh7, _candle_typeh7, array.get(str.split(symbol7, ':'), 1))
+        [_performanceh8, _candle_typeh8] = f_performance(symbol8)
+        f_fillCell(perfTable, 0, 1, _performanceh8, _candle_typeh8, array.get(str.split(symbol8, ':'), 1))
+        [_performanceh9, _candle_typeh9] = f_performance(symbol9)
+        f_fillCell(perfTable, 1, 1, _performanceh9, _candle_typeh9, array.get(str.split(symbol9, ':'), 1))
+        [_performanceh10, _candle_typeh10] = f_performance(symbol10)
+        f_fillCell(perfTable, 2, 1, _performanceh10, _candle_typeh10, array.get(str.split(symbol10, ':'), 1))
+        [_performanceh11, _candle_typeh11] = f_performance(symbol11)
+        f_fillCell(perfTable, 3, 1, _performanceh11, _candle_typeh11, array.get(str.split(symbol11, ':'), 1))
+        [_performanceh12, _candle_typeh12] = f_performance(symbol12)
+        f_fillCell(perfTable, 4, 1, _performanceh12, _candle_typeh12, array.get(str.split(symbol12, ':'), 1))
+        [_performanceh13, _candle_typeh13] = f_performance(symbol13)
+        f_fillCell(perfTable, 5, 1, _performanceh13, _candle_typeh13, array.get(str.split(symbol13, ':'), 1))
+        [_performanceh14, _candle_typeh14] = f_performance(symbol14)
+        f_fillCell(perfTable, 6, 1, _performanceh14, _candle_typeh14, array.get(str.split(symbol14, ':'), 1))
+    else if i_position == 'vertical'
+        [_performancev1, _candle_typev1] = f_performance(symbol1)
+        f_fillCell(perfTable, 0, 0, _performancev1, _candle_typev1, array.get(str.split(symbol1, ':'), 1))
+        [_performancev2, _candle_typev2] = f_performance(symbol2)
+        f_fillCell(perfTable, 1, 0, _performancev2, _candle_typev2, array.get(str.split(symbol2, ':'), 1))
+        [_performancev3, _candle_typev3] = f_performance(symbol3)
+        f_fillCell(perfTable, 0, 1, _performancev3, _candle_typev3, array.get(str.split(symbol3, ':'), 1))
+        [_performancev4, _candle_typev4] = f_performance(symbol4)
+        f_fillCell(perfTable, 1, 1, _performancev4, _candle_typev4, array.get(str.split(symbol4, ':'), 1))
+        [_performancev5, _candle_typev5] = f_performance(symbol5)
+        f_fillCell(perfTable, 0, 2, _performancev5, _candle_typev5, array.get(str.split(symbol5, ':'), 1))
+        [_performancev6, _candle_typev6] = f_performance(symbol6)
+        f_fillCell(perfTable, 1, 2, _performancev6, _candle_typev6, array.get(str.split(symbol6, ':'), 1))
+        [_performancev7, _candle_typev7] = f_performance(symbol7)
+        f_fillCell(perfTable, 0, 3, _performancev7, _candle_typev7, array.get(str.split(symbol7, ':'), 1))
+        [_performancev8, _candle_typev8] = f_performance(symbol8)
+        f_fillCell(perfTable, 1, 3, _performancev8, _candle_typev8, array.get(str.split(symbol8, ':'), 1))
+        [_performancev9, _candle_typev9] = f_performance(symbol9)
+        f_fillCell(perfTable, 0, 4, _performancev9, _candle_typev9, array.get(str.split(symbol9, ':'), 1))
+        [_performancev10, _candle_typev10] = f_performance(symbol10)
+        f_fillCell(perfTable, 1, 4, _performancev10, _candle_typev10, array.get(str.split(symbol10, ':'), 1))
+        [_performancev11, _candle_typev11] = f_performance(symbol11)
+        f_fillCell(perfTable, 0, 5, _performancev11, _candle_typev11, array.get(str.split(symbol11, ':'), 1))
+        [_performancev12, _candle_typev12] = f_performance(symbol12)
+        f_fillCell(perfTable, 1, 5, _performancev12, _candle_typev12, array.get(str.split(symbol12, ':'), 1))
+        [_performancev13, _candle_typev13] = f_performance(symbol13)
+        f_fillCell(perfTable, 0, 6, _performancev13, _candle_typev13, array.get(str.split(symbol13, ':'), 1))
+        [_performancev14, _candle_typev14] = f_performance(symbol14)
+        f_fillCell(perfTable, 1, 6, _performancev14, _candle_typev14, array.get(str.split(symbol14, ':'), 1))
+
+

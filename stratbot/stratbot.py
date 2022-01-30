@@ -220,6 +220,7 @@ if __name__ == "__main__":
     dailyTable.add_column("Profit", justify="right", style="cyan", no_wrap=True)
     dailyTable.add_column("Last 5 Candles", justify="right", style="cyan", no_wrap=True)
     dailyTable.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
+    dailyTable.add_column("OHLC", justify="right", style="cyan", no_wrap=True)
 
 
     #Get the tickers
@@ -241,7 +242,7 @@ if __name__ == "__main__":
                 stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1D",False)
                 if(stratSetup is not None):
                     if(stratSetup.profit >= PROFIT_TARGET):
-                        dailyTable.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+                        dailyTable.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern, repr(candles[len(candles)-1]))
                 # else:
                 #     console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
             # elif(len(candles) > 0):
@@ -279,6 +280,7 @@ if __name__ == "__main__":
     weeklyTable.add_column("Profit", justify="right", style="cyan", no_wrap=True)
     weeklyTable.add_column("Last 5 Candles", justify="right", style="cyan", no_wrap=True)
     weeklyTable.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
+    weeklyTable.add_column("OHLC", justify="right", style="cyan", no_wrap=True)
 
 
     stratSetups = []
@@ -296,7 +298,7 @@ if __name__ == "__main__":
                 stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1W",True)
                 if(stratSetup is not None):
                     if(stratSetup.profit >= PROFIT_TARGET):
-                        weeklyTable.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+                        weeklyTable.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern, repr(candles[len(candles)-1]))
                 # else:
                 #     console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
 
@@ -340,6 +342,7 @@ if __name__ == "__main__":
     monthlyTable.add_column("Profit", justify="right", style="cyan", no_wrap=True)
     monthlyTable.add_column("Last 5 Candles", justify="right", style="cyan", no_wrap=True)
     monthlyTable.add_column("Candle Pattern", justify="center", style="cyan", no_wrap=True)
+    monthlyTable.add_column("OHLC", justify="right", style="cyan", no_wrap=True)
 
 
     stratSetups = []
@@ -357,7 +360,7 @@ if __name__ == "__main__":
                 stratSetup = stratbotapi.determineStratSetup(symbol,candles,"1M",True)
                 if(stratSetup is not None):
                     if(stratSetup.profit >= PROFIT_TARGET):
-                        monthlyTable.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern)
+                        monthlyTable.add_row(str(stratSetup.symbol),str(stratSetup.timeframe), stratSetup.setup ,stratSetup.inForce, "$" + str(round(stratSetup.profit, 2)),  stratSetup.lastFiveCandles, stratSetup.candlePattern, repr(candles[len(candles)-1]))
                 # else:
                 #     console.print("[red]ERROR: Symbol: %s does not have a setup.[/red]" % (symbol))
 

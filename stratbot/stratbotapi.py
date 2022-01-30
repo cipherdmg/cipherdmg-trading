@@ -55,7 +55,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def getTickers():
-    tickers_TEST = ["RBLX","SPY","QQQ"]
+    tickers_TEST = ["RBLX","SPY","QQQ", "XLI", "XLK", "XLRE", "XLU", "XLY", "XLV", "IYT", "OIH", "IBB" ]
 
     tickers_ETFs= ["SPY","QQQ", "DIA", "IWM", "XBI", "XHB", "XLB", "XLC", "XLF", "XLI", "XLK", "XLRE", "XLU", "XLY", "XLV", "IYT", "OIH", "IBB"]
 
@@ -85,6 +85,12 @@ def getTickers():
     tickers.sort()
     return tickers
 
+# end of getTickers()
+
+def getPriceString(value):
+    return "$" + str(round(value, 2))
+
+# end of getPriceString()
 
 #Candle
 class Candle:
@@ -229,6 +235,12 @@ class Candle:
                 False
 
     # end of isHammer()
+
+    def __repr__(self):
+        return "[" + getPriceString(self.open) + "," + getPriceString(self.high) + "," + getPriceString(self.low) + "," + getPriceString(self.close) + "]"
+
+    # end of __repr__()
+
 
 #     def __str__(self):
 #         return "
