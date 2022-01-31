@@ -28,7 +28,9 @@ getSecurityByTimeFrame(timeFrame) =>
 
 //getPercentChange
 getPercentChange(openPrice,closePrice) =>
-    percentChange = (closePrice - openPrice) / openPrice * 100.0
+
+    //The Percent Change will be the closePrice - openPrice / (max (openPrice, closePrice))
+    percentChange = ((closePrice - openPrice) / (math.max(openPrice,closePrice)) ) * 100.0
     resultColor = openPrice >= closePrice ? bearishColor : bullishColor
     [percentChange,resultColor]
 

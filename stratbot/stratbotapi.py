@@ -55,7 +55,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 def getTickers():
-    tickers_TEST = ["RBLX","SPY","QQQ", "XLI", "XLK", "XLRE", "XLU", "XLY", "XLV", "IYT", "OIH", "IBB" ]
+    tickers_TEST = ["ALL","RBLX","DIS","SPY","QQQ" ]
 
     tickers_ETFs= ["SPY","QQQ", "DIA", "IWM", "XBI", "XHB", "XLB", "XLC", "XLF", "XLI", "XLK", "XLRE", "XLU", "XLY", "XLV", "IYT", "OIH", "IBB"]
 
@@ -77,7 +77,7 @@ def getTickers():
     tickers = tickers_ETFs + tickers_Auto + tickers_Airlines + tickers_Biotech + tickers_Cannabis + tickers_Consumer_Staples + tickers_Energy + tickers_Financial + tickers_XLE + tickers_Oil + tickers_Gamming + tickers_Insurance + tickers_Materials + tickers_Retail + tickers_Tech
 
 
-    #tickers = tickers_TEST
+    tickers = tickers_TEST
     # tickers=[random.choice (tickers)]
     # tickers=['WMG']
     # tickers = tickers_TEST
@@ -597,8 +597,6 @@ def determineStratSetup(symbol,candles,timeframe,isLastCandleActive) -> StratSet
         profitTarget = secondLastCandleHigh - lastCandleHigh
         stratPattern =  lastCandle + ",[green]2U[/green]"
         isInForce="false"
-
-
 
     else:
         profitTarget = 0.00
