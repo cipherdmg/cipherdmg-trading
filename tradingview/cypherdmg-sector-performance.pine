@@ -28,155 +28,180 @@ tableXPositive = input.string('right', '', inline='11', options=['left', 'center
 indicatorPosition = input.string('horizontal', 'Direction', options=['horizontal', 'vertical'], group=_gp2)
 indicatorTextSize = input.string('normal', 'Text Size', options=['tiny', 'small', 'normal', 'large', 'huge'], group=_gp2)
 
+//XBI, XHB, XLB, XLC, XLE, XLF, XLI, XLK, XLP, XLRE, XLU, XLY, XLV, XRT, XOP, IBB, IYT, TLT
 var string _gp3 = 'Symbols'
 symbol1 = input.symbol('SPY', group=_gp3)
-symbol2 = input.symbol('XLK', group=_gp3)
-symbol3 = input.symbol('XLF', group=_gp3)
-symbol4 = input.symbol('XLC', group=_gp3)
-symbol5 = input.symbol('XLE', group=_gp3)
-symbol6 = input.symbol('XLRE', group=_gp3)
-symbol7 = input.symbol('XLY', group=_gp3)
-symbol8 = input.symbol('XLU', group=_gp3)
-symbol9 = input.symbol('XLP', group=_gp3)
-symbol10 = input.symbol('XLI', group=_gp3)
-symbol11 = input.symbol('XLV', group=_gp3)
-symbol12 = input.symbol('XLB', group=_gp3)
-symbol13 = input.symbol('VXX', group=_gp3)
-symbol14 = input.symbol('SMH', group=_gp3)
+symbol2 = input.symbol('QQQ', group=_gp3)
+symbol3 = input.symbol('VXX', group=_gp3)
+symbol4 = input.symbol('SMH', group=_gp3)
+symbol5 = input.symbol('XLK', group=_gp3)
+symbol6 = input.symbol('XLF', group=_gp3)
+symbol7 = input.symbol('XLC', group=_gp3)
+symbol8 = input.symbol('XLE', group=_gp3)
+symbol9 = input.symbol('XLRE', group=_gp3)
+symbol10 = input.symbol('XLY', group=_gp3)
+symbol11 = input.symbol('XLU', group=_gp3)
+symbol12 = input.symbol('XLP', group=_gp3)
+symbol13 = input.symbol('XLI', group=_gp3)
+symbol14 = input.symbol('XLV', group=_gp3)
 
 
-var table perfTable = table.new(tableYPositive + '_' + tableXPositive, 7, 7, border_width=3)
+var table perfTable = table.new(position = tableYPositive + '_' + tableXPositive, columns=7, rows=7, border_width=0)
 
 //##################################################################################################
 //Candle Type
 //##################################################################################################
 getCandleType(_high, _high1, _low, _low1) =>
-    _candle_type = 0
+    candleType = 0
+
+    //Higher High and Lower Low
     if _high > _high1 and _low < _low1
-        _candle_type := 3
-        _candle_type
-    else
+        candleType := 3
+        candleType
+
+    else if _high <= _high1 and _low >= _low1
+        //Lower High and Higher Low
         if _high <= _high1 and _low >= _low1
-            _candle_type := 1
-            _candle_type
+            candleType := 1
+            candleType
         else
-            _candle_type := 2
-            _candle_type
-    _candle_type
+            candleType := 2
+            candleType
+    candleType
+
+
+
+// @function Entire Candle wick to wick is inside the previous candle.  This is considered a Scenario 1.
+// It means its consolidation on a smaller timeframe  We do not want to trade things on a 1 because it has Not picked its direction.
+// @param idx index to use
+// @returns
+isInsideCandle(int idx) =>
+    high[idx] <= high[idx + 1] and low[idx] >= low[idx + 1]
+
+//@function Candle engulfs the previous candle and is typically the larges bar.  This is considered a Scenario 3
+//Most commonly 3s occur after 1
+//@return
+isOutsideCandle(int idx) =>
+    high[idx] > high[idx + 1] and low[idx] < low[idx + 1]
+
+
+
 
 //##################################################################################################
 //Functions
 //##################################################################################################
 getRateOfReturn(_v1, _v2, _high, _high1, _low, _low1) =>
-    _performance = (_v1 - _v2) * 100 / math.abs(_v2)
-    _candle_type = getCandleType(_high, _high1, _low, _low1)
-    [_performance, _candle_type]
+    performance = (_v1 - _v2) * 100 / math.abs(_v2)
+    candleType = getCandleType(_high, _high1, _low, _low1)
+    [performance, candleType]
 
-getPerformance(_symbol) =>
-    [_performance, _candle_type] = request.security(_symbol, i_time_interval, getRateOfReturn(close, close[1], high, high[1], low, low[1]))
-    [_performance, _candle_type]
+getPerformance(symbol) =>
+    [performance, candleType] = request.security(symbol=symbol, timeframe=i_time_interval, expression=getRateOfReturn(close, close[1], high, high[1], low, low[1]))
+    [performance, candleType]
 
-addCellToRow(_table, _column, _row, _performance, _candle_type, _symbol) =>
-    _c_color = _performance >= 0 ? bullishColor : bearishColor
-    _transp = math.abs(_performance) > 2 ? HEAVYTRANSP : math.abs(_performance) > 1 ? AVGTRANSP : LIGHTTRANSP
-    _cellText = str.tostring(_performance, '0.00') + '%\n' + _symbol
-    color _text_color = na
-    if _candle_type == 1
-        _text_color := insideColor
-        _text_color
+
+//Add Cell to Row
+addCellToRow(table, column, _row, performance, candleType, symbol) =>
+    _c_color = performance >= 0 ? bullishColor : bearishColor
+    _transp = math.abs(performance) > 2 ? HEAVYTRANSP : math.abs(performance) > 1 ? AVGTRANSP : LIGHTTRANSP
+    cellText = str.tostring(performance, '0.00') + '%\n' + symbol
+    color textColor = na
+    if candleType == 1
+        textColor := insideColor
+        textColor
+    else if candleType == 3
+        textColor := outsideColor
+        textColor
     else
-        if _candle_type == 3
-            _text_color := outsideColor
-            _text_color
-        else
-            _text_color := _c_color
-            _text_color
-    table.cell(_table, _column, _row, _cellText, bgcolor=color.new(_c_color, _transp), text_color=_text_color, text_size=indicatorTextSize)
+        textColor := _c_color
+        textColor
+
+    table.cell(table_id=table, column=column, row=_row, text=cellText, bgcolor=color.new(_c_color, _transp), text_color=textColor, text_size=indicatorTextSize)
 
 if barstate.islast
     if indicatorPosition == 'horizontal'
-        [_performanceh1, _candle_typeh1] = getPerformance(symbol1)
-        addCellToRow(perfTable, 0, 0, _performanceh1, _candle_typeh1, array.get(str.split(symbol1, ':'), 1))
+        [perfHorizontal1, candleTypeHorizontal1] = getPerformance(symbol1)
+        addCellToRow(perfTable, 0, 0, perfHorizontal1, candleTypeHorizontal1, array.get(str.split(symbol1, ':'), 1))
 
-        [_performanceh2, _candle_typeh2] = getPerformance(symbol2)
-        addCellToRow(perfTable, 1, 0, _performanceh2, _candle_typeh2, array.get(str.split(symbol2, ':'), 1))
+        [perfHorizontal2, candleTypeHorizontal2] = getPerformance(symbol2)
+        addCellToRow(perfTable, 1, 0, perfHorizontal2, candleTypeHorizontal2, array.get(str.split(symbol2, ':'), 1))
 
-        [_performanceh3, _candle_typeh3] = getPerformance(symbol3)
-        addCellToRow(perfTable, 2, 0, _performanceh3, _candle_typeh3, array.get(str.split(symbol3, ':'), 1))
+        [perfHorizontal3, candleTypeHorizontal3] = getPerformance(symbol3)
+        addCellToRow(perfTable, 2, 0, perfHorizontal3, candleTypeHorizontal3, array.get(str.split(symbol3, ':'), 1))
 
-        [_performanceh4, _candle_typeh4] = getPerformance(symbol4)
-        addCellToRow(perfTable, 3, 0, _performanceh4, _candle_typeh4, array.get(str.split(symbol4, ':'), 1))
+        [perfHorizontal4, candleTypeHorizontal4] = getPerformance(symbol4)
+        addCellToRow(perfTable, 3, 0, perfHorizontal4, candleTypeHorizontal4, array.get(str.split(symbol4, ':'), 1))
 
-        [_performanceh5, _candle_typeh5] = getPerformance(symbol5)
-        addCellToRow(perfTable, 4, 0, _performanceh5, _candle_typeh5, array.get(str.split(symbol5, ':'), 1))
+        [perfHorizontal5, candleTypeHorizontal5] = getPerformance(symbol5)
+        addCellToRow(perfTable, 4, 0, perfHorizontal5, candleTypeHorizontal5, array.get(str.split(symbol5, ':'), 1))
 
-        [_performanceh6, _candle_typeh6] = getPerformance(symbol6)
-        addCellToRow(perfTable, 5, 0, _performanceh6, _candle_typeh6, array.get(str.split(symbol6, ':'), 1))
+        [perfHorizontal6, candleTypeHorizontal6] = getPerformance(symbol6)
+        addCellToRow(perfTable, 5, 0, perfHorizontal6, candleTypeHorizontal6, array.get(str.split(symbol6, ':'), 1))
 
-        [_performanceh7, _candle_typeh7] = getPerformance(symbol7)
-        addCellToRow(perfTable, 6, 0, _performanceh7, _candle_typeh7, array.get(str.split(symbol7, ':'), 1))
+        [perfHorizontal7, candleTypeHorizontal7] = getPerformance(symbol7)
+        addCellToRow(perfTable, 6, 0, perfHorizontal7, candleTypeHorizontal7, array.get(str.split(symbol7, ':'), 1))
 
-        [_performanceh8, _candle_typeh8] = getPerformance(symbol8)
-        addCellToRow(perfTable, 0, 1, _performanceh8, _candle_typeh8, array.get(str.split(symbol8, ':'), 1))
+        [perfHorizontal8, candleTypeHorizontal8] = getPerformance(symbol8)
+        addCellToRow(perfTable, 0, 1, perfHorizontal8, candleTypeHorizontal8, array.get(str.split(symbol8, ':'), 1))
 
-        [_performanceh9, _candle_typeh9] = getPerformance(symbol9)
-        addCellToRow(perfTable, 1, 1, _performanceh9, _candle_typeh9, array.get(str.split(symbol9, ':'), 1))
+        [perfHorizontal9, candleTypeHorizontal9] = getPerformance(symbol9)
+        addCellToRow(perfTable, 1, 1, perfHorizontal9, candleTypeHorizontal9, array.get(str.split(symbol9, ':'), 1))
 
-        [_performanceh10, _candle_typeh10] = getPerformance(symbol10)
-        addCellToRow(perfTable, 2, 1, _performanceh10, _candle_typeh10, array.get(str.split(symbol10, ':'), 1))
+        [perfHorizontal10, candleTypeHorizontal10] = getPerformance(symbol10)
+        addCellToRow(perfTable, 2, 1, perfHorizontal10, candleTypeHorizontal10, array.get(str.split(symbol10, ':'), 1))
 
-        [_performanceh11, _candle_typeh11] = getPerformance(symbol11)
-        addCellToRow(perfTable, 3, 1, _performanceh11, _candle_typeh11, array.get(str.split(symbol11, ':'), 1))
+        [perfHorizontal11, candleTypeHorizontal11] = getPerformance(symbol11)
+        addCellToRow(perfTable, 3, 1, perfHorizontal11, candleTypeHorizontal11, array.get(str.split(symbol11, ':'), 1))
 
-        [_performanceh12, _candle_typeh12] = getPerformance(symbol12)
-        addCellToRow(perfTable, 4, 1, _performanceh12, _candle_typeh12, array.get(str.split(symbol12, ':'), 1))
+        [perfHorizontal12, candleTypeHorizontal12] = getPerformance(symbol12)
+        addCellToRow(perfTable, 4, 1, perfHorizontal12, candleTypeHorizontal12, array.get(str.split(symbol12, ':'), 1))
 
-        [_performanceh13, _candle_typeh13] = getPerformance(symbol13)
-        addCellToRow(perfTable, 5, 1, _performanceh13, _candle_typeh13, array.get(str.split(symbol13, ':'), 1))
+        [perfHorizontal13, candleTypeHorizontal13] = getPerformance(symbol13)
+        addCellToRow(perfTable, 5, 1, perfHorizontal13, candleTypeHorizontal13, array.get(str.split(symbol13, ':'), 1))
 
-        [_performanceh14, _candle_typeh14] = getPerformance(symbol14)
-        addCellToRow(perfTable, 6, 1, _performanceh14, _candle_typeh14, array.get(str.split(symbol14, ':'), 1))
+        [perfHorizontal14, candleTypeHorizontal14] = getPerformance(symbol14)
+        addCellToRow(perfTable, 6, 1, perfHorizontal14, candleTypeHorizontal14, array.get(str.split(symbol14, ':'), 1))
     else if indicatorPosition == 'vertical'
-        [_performancev1, _candle_typev1] = getPerformance(symbol1)
-        addCellToRow(perfTable, 0, 0, _performancev1, _candle_typev1, array.get(str.split(symbol1, ':'), 1))
+        [perfVertical, candleTypeVertical1] = getPerformance(symbol1)
+        addCellToRow(perfTable, 0, 0, perfVertical, candleTypeVertical1, array.get(str.split(symbol1, ':'), 1))
 
-        [_performancev2, _candle_typev2] = getPerformance(symbol2)
-        addCellToRow(perfTable, 1, 0, _performancev2, _candle_typev2, array.get(str.split(symbol2, ':'), 1))
+        [perfv2, candleTypeVertical2] = getPerformance(symbol2)
+        addCellToRow(perfTable, 1, 0, perfv2, candleTypeVertical2, array.get(str.split(symbol2, ':'), 1))
 
-        [_performancev3, _candle_typev3] = getPerformance(symbol3)
-        addCellToRow(perfTable, 0, 1, _performancev3, _candle_typev3, array.get(str.split(symbol3, ':'), 1))
+        [perfv3, candleTypeVertical3] = getPerformance(symbol3)
+        addCellToRow(perfTable, 0, 1, perfv3, candleTypeVertical3, array.get(str.split(symbol3, ':'), 1))
 
-        [_performancev4, _candle_typev4] = getPerformance(symbol4)
-        addCellToRow(perfTable, 1, 1, _performancev4, _candle_typev4, array.get(str.split(symbol4, ':'), 1))
+        [perfv4, candleTypeVertical4] = getPerformance(symbol4)
+        addCellToRow(perfTable, 1, 1, perfv4, candleTypeVertical4, array.get(str.split(symbol4, ':'), 1))
 
-        [_performancev5, _candle_typev5] = getPerformance(symbol5)
-        addCellToRow(perfTable, 0, 2, _performancev5, _candle_typev5, array.get(str.split(symbol5, ':'), 1))
+        [perfv5, candleTypeVertical5] = getPerformance(symbol5)
+        addCellToRow(perfTable, 0, 2, perfv5, candleTypeVertical5, array.get(str.split(symbol5, ':'), 1))
 
-        [_performancev6, _candle_typev6] = getPerformance(symbol6)
-        addCellToRow(perfTable, 1, 2, _performancev6, _candle_typev6, array.get(str.split(symbol6, ':'), 1))
+        [perfv6, candleTypeVertical6] = getPerformance(symbol6)
+        addCellToRow(perfTable, 1, 2, perfv6, candleTypeVertical6, array.get(str.split(symbol6, ':'), 1))
 
-        [_performancev7, _candle_typev7] = getPerformance(symbol7)
-        addCellToRow(perfTable, 0, 3, _performancev7, _candle_typev7, array.get(str.split(symbol7, ':'), 1))
+        [perfv7, candleTypeVertical7] = getPerformance(symbol7)
+        addCellToRow(perfTable, 0, 3, perfv7, candleTypeVertical7, array.get(str.split(symbol7, ':'), 1))
 
-        [_performancev8, _candle_typev8] = getPerformance(symbol8)
-        addCellToRow(perfTable, 1, 3, _performancev8, _candle_typev8, array.get(str.split(symbol8, ':'), 1))
+        [perfv8, candleTypeVertical8] = getPerformance(symbol8)
+        addCellToRow(perfTable, 1, 3, perfv8, candleTypeVertical8, array.get(str.split(symbol8, ':'), 1))
 
-        [_performancev9, _candle_typev9] = getPerformance(symbol9)
-        addCellToRow(perfTable, 0, 4, _performancev9, _candle_typev9, array.get(str.split(symbol9, ':'), 1))
+        [perfv9, candleTypeVertical9] = getPerformance(symbol9)
+        addCellToRow(perfTable, 0, 4, perfv9, candleTypeVertical9, array.get(str.split(symbol9, ':'), 1))
 
-        [_performancev10, _candle_typev10] = getPerformance(symbol10)
-        addCellToRow(perfTable, 1, 4, _performancev10, _candle_typev10, array.get(str.split(symbol10, ':'), 1))
+        [perfVertical0, candleTypeVertical10] = getPerformance(symbol10)
+        addCellToRow(perfTable, 1, 4, perfVertical0, candleTypeVertical10, array.get(str.split(symbol10, ':'), 1))
 
-        [_performancev11, _candle_typev11] = getPerformance(symbol11)
-        addCellToRow(perfTable, 0, 5, _performancev11, _candle_typev11, array.get(str.split(symbol11, ':'), 1))
+        [perfVertical1, candleTypeVertical11] = getPerformance(symbol11)
+        addCellToRow(perfTable, 0, 5, perfVertical1, candleTypeVertical11, array.get(str.split(symbol11, ':'), 1))
 
-        [_performancev12, _candle_typev12] = getPerformance(symbol12)
-        addCellToRow(perfTable, 1, 5, _performancev12, _candle_typev12, array.get(str.split(symbol12, ':'), 1))
+        [perfVertical2, candleTypeVertical12] = getPerformance(symbol12)
+        addCellToRow(perfTable, 1, 5, perfVertical2, candleTypeVertical12, array.get(str.split(symbol12, ':'), 1))
 
-        [_performancev13, _candle_typev13] = getPerformance(symbol13)
-        addCellToRow(perfTable, 0, 6, _performancev13, _candle_typev13, array.get(str.split(symbol13, ':'), 1))
+        [perfVertical3, candleTypeVertical13] = getPerformance(symbol13)
+        addCellToRow(perfTable, 0, 6, perfVertical3, candleTypeVertical13, array.get(str.split(symbol13, ':'), 1))
 
-        [_performancev14, _candle_typev14] = getPerformance(symbol14)
-        addCellToRow(perfTable, 1, 6, _performancev14, _candle_typev14, array.get(str.split(symbol14, ':'), 1))
+        [perfVertical4, candleTypeVertical14] = getPerformance(symbol14)
+        addCellToRow(perfTable, 1, 6, perfVertical4, candleTypeVertical14, array.get(str.split(symbol14, ':'), 1))
 
 

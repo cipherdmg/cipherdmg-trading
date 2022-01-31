@@ -1,0 +1,111 @@
+//@version=5
+// ||###################################################################################||
+// ||                                                                                   ||
+// || Cipher DMG
+// || The Strat                                                                         ||
+// ||     What are the 1s, 2s, & 3s                                                     ||
+// ||                                                                                   ||
+// ||                                                                                   ||
+// ||###################################################################################||
+
+indicator(title="The Strat", shorttitle="The Strat", max_labels_count = 500, overlay=true)
+
+
+bullishColor = input.color(color.new(color.green, 0), title='Bullish Candle color', group='Colors')
+bearishColor = input.color(color.new(color.red, 0), title='Bearish Candle color', group='Colors')
+insideColor = input.color(color.new(color.yellow, 0), title='Inside Candle color', group='Colors')
+outsideColor = input.color(color.new(color.fuchsia, 0), title='Outside Candle color', group='Colors')
+
+///////////////////////////////////////////////
+// END: user input
+///////////////////////////////////////////////
+
+//##################################################################################################
+//Functions
+//##################################################################################################
+
+
+// @function The given candle is up where the open is less then the close for the given index
+// @param idx index to use
+// @return true if the indexed candle is Green
+isGreenCandle(int idx) =>
+    open[idx] < close[idx]
+
+// @function The given candle is up where the open is greater then or equal to the close for the given index
+// @param idx index to use
+// @return true if the indexed candle is Red
+isRedCandle(int idx) =>
+    open[idx] >= close[idx]
+
+// @function Entire Candle wick to wick is inside the previous candle.  This is considered a Scenario 1.
+// It means its consolidation on a smaller timeframe  We do not want to trade things on a 1 because it has Not picked its direction.
+// @param idx index to use
+// @returns
+isInsideCandle(int idx) =>
+    high[idx] <= high[idx + 1] and low[idx] >= low[idx + 1]
+
+//@function Candle engulfs the previous candle and is typically the larges bar.  This is considered a Scenario 3
+//Most commonly 3s occur after 1
+//@return
+isOutsideCandle(int idx) =>
+    high[idx] > high[idx + 1] and low[idx] < low[idx + 1]
+
+
+//2
+//@function  Down Directional Candle which broke the previous candle's low
+isTwoDownCandle(int idx) =>
+    low[idx] < low[idx + 1] and not (high[idx] > high[idx + 1])
+
+
+//2
+//@function Up Directional Candle which broke the previous candle's low
+isTwoUpCandle(int idx) =>
+    high[idx] > high[idx + 1] and not (low[idx] < low[idx + 1])
+
+
+// reusable bar identifier functions for series
+isInsideCandleSeries(highSeries, lowSeries) =>
+    highSeries[0] <= highSeries[1] and lowSeries[0] >= lowSeries[1]
+
+isOutsideCandleSeries(highSeries, lowSeries) =>
+    highSeries[0] > highSeries[1] and lowSeries[0] < lowSeries[1]
+
+
+///////////////////////////////////////////////
+// END: Functions & Logic
+///////////////////////////////////////////////
+
+
+//##################################################################################################
+//The Strat Combinations
+//
+
+
+//##################################################################################################
+//Plot the 1, 2U, 2D, 3 Strat Numbering System
+//##################################################################################################
+
+// identify 1 candles with identifier below
+plotchar(isInsideCandle(0), title='One Bar', char='1', location=location.belowbar, color=insideColor)
+
+// identify 2 up candle with identifier below and indicator above
+plotshape(isTwoUpCandle(0), style=shape.arrowup, title='Two Up Bar Shape', location=location.abovebar, color=bullishColor)
+plotchar(isTwoUpCandle(0), title='Two Up Bar', char='2', location=location.belowbar, color=bullishColor)
+
+// identify 2 down candle with identifier below and indicator above
+plotshape(isTwoDownCandle(0), style=shape.arrowdown, title='Two Bar Shape', location=location.abovebar, color=bearishColor)
+plotchar(isTwoDownCandle(0), title='Two Down Bar', char='2', location=location.belowbar, color=bearishColor)
+
+// identify 3 candle with indentifier below
+plotchar(isOutsideCandle(0), title='Three Bar', char='3', location=location.belowbar, color=outsideColor)
+
+//##################################################################################################
+// Change Bar Color
+//##################################################################################################
+// barcolor(color=getBarColor())
+_isInsideCandle = isInsideCandle(0)
+_isOutsideCandle = isOutsideCandle(0)
+_isGreenCandle = isGreenCandle(0)
+_isRedCandle = isRedCandle(0)
+
+barcolor(color=_isInsideCandle? insideColor : _isOutsideCandle? outsideColor : _isGreenCandle? bullishColor : _isRedCandle? bearishColor : na,offset=0,editable=true)

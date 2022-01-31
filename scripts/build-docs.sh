@@ -29,6 +29,10 @@ export STRATBOTAPI_PY="${CIPHERDMG_HOME}/stratbot/stratbotapi.py"
 export STRATBOT_BACKUP_DIR="${CIPHERDMG_HOME}/stratbot/backup"
 
 export INDICATOR_PINE="${CIPHERDMG_HOME}/tradingview/cypherdmg-the-strat.pine"
+export INDICATOR_PERF_PINE="${CIPHERDMG_HOME}/tradingview/cypherdmg-sector-performance.pine"
+export INDICATOR_TIME_FRAME_PINE="${CIPHERDMG_HOME}/tradingview/cypherdmg-timeframes.pine"
+
+
 
 #[DEFAULTS]
 
@@ -75,8 +79,13 @@ backupIB(){
 # @internal
 #
 backupStratBot(){
+    datestamp
+
     backupFile "${STRATBOT_PY}" "${STRATBOT_BACKUP_DIR}"
     backupFile "${STRATBOTAPI_PY}" "${STRATBOT_BACKUP_DIR}"
+    backupFile "${INDICATOR_PINE}" "${TRADING_VIEW_BACKUP_DIR}"
+    backupFile "${INDICATOR_PERF_PINE}" "${TRADING_VIEW_BACKUP_DIR}"
+    backupFile "${INDICATOR_TIME_FRAME_PINE}" "${TRADING_VIEW_BACKUP_DIR}"
 }
 
 ###############################################################################
