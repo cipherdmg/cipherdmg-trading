@@ -24,13 +24,13 @@ if [[ -z "${CIPHERDMG_HOME_PROJECT}" ]] ; then export CIPHERDMG_HOME_PROJECT="${
 
 #[REQUIRED]
 export TRADING_VIEW_BACKUP_DIR="${CIPHERDMG_HOME}/tradingview/backup"
-export STRATBOT_PY="${CIPHERDMG_HOME}/stratbot/stratbot.py"
-export STRATBOTAPI_PY="${CIPHERDMG_HOME}/stratbot/stratbotapi.py"
+#export STRATBOT_PY="${CIPHERDMG_HOME}/stratbot/stratbot.py"
+#export STRATBOTAPI_PY="${CIPHERDMG_HOME}/stratbot/stratbotapi.py"
 export STRATBOT_BACKUP_DIR="${CIPHERDMG_HOME}/stratbot/backup"
 
-export INDICATOR_PINE="${CIPHERDMG_HOME}/tradingview/cypherdmg-the-strat.pine"
-export INDICATOR_PERF_PINE="${CIPHERDMG_HOME}/tradingview/cypherdmg-sector-performance.pine"
-export INDICATOR_TIME_FRAME_PINE="${CIPHERDMG_HOME}/tradingview/cypherdmg-timeframes.pine"
+# export INDICATOR_PINE="${CIPHERDMG_HOME}/tradingview/cypherdmg-the-strat.pine"
+# export INDICATOR_PERF_PINE="${CIPHERDMG_HOME}/tradingview/cypherdmg-sector-performance.pine"
+# export INDICATOR_TIME_FRAME_PINE="${CIPHERDMG_HOME}/tradingview/cypherdmg-timeframes.pine"
 
 
 
@@ -81,21 +81,16 @@ backupIB(){
 backupStratBot(){
     datestamp
 
-    backupFile "${STRATBOT_PY}" "${STRATBOT_BACKUP_DIR}"
-    backupFile "${STRATBOTAPI_PY}" "${STRATBOT_BACKUP_DIR}"
-    backupFile "${INDICATOR_PINE}" "${TRADING_VIEW_BACKUP_DIR}"
-    backupFile "${INDICATOR_PERF_PINE}" "${TRADING_VIEW_BACKUP_DIR}"
-    backupFile "${INDICATOR_TIME_FRAME_PINE}" "${TRADING_VIEW_BACKUP_DIR}"
+    backupFile "${CIPHERDMG_HOME}/stratbot/stratbot.py" "${STRATBOT_BACKUP_DIR}"
+    backupFile "${CIPHERDMG_HOME}/stratbot/stratbotapi.py" "${STRATBOT_BACKUP_DIR}"
+
+    backupFile "${CIPHERDMG_HOME}/tradingview/cypherdmg-rsi-background.pine" "${TRADING_VIEW_BACKUP_DIR}"
+    backupFile "${CIPHERDMG_HOME}/tradingview/cypherdmg-sector-performance-monitor.pine" "${TRADING_VIEW_BACKUP_DIR}"
+    backupFile "${CIPHERDMG_HOME}/tradingview/cypherdmg-sector-performance.pine" "${TRADING_VIEW_BACKUP_DIR}"
+    backupFile "${CIPHERDMG_HOME}/tradingview/cypherdmg-the-strat.pine" "${TRADING_VIEW_BACKUP_DIR}"
+    backupFile "${CIPHERDMG_HOME}/tradingview/cypherdmg-timeframes.pine" "${TRADING_VIEW_BACKUP_DIR}"
+
 }
-
-###############################################################################
-# @description Backup cypherdmg-the-strat.pine
-# @noargs
-# @internal
-#
-backupTradingviewIndicator(){ backupFile "${INDICATOR_PINE}" "${TRADING_VIEW_BACKUP_DIR}";}
-
-
 
 ###############################################################################
 # @description Install MKDocs for Python
