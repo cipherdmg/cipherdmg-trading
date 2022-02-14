@@ -3,36 +3,17 @@
 // ||###################################################################################||
 // ||                                                                                   ||
 // || Cipher DMG                                                                        ||
-// || The Strat TimeFrames Performance Monitor Sectors                                  ||
+// || The Strat                                                                         ||
 // ||                                                                                   ||
 // ||                                                                                   ||
 // ||###################################################################################||
 
-indicator(title="The Strat TimeFrames Sectors", shorttitle="The Strat TimeFrames Sectors", max_labels_count = 500, overlay=false)
+indicator(title="The Strat TimeFrames Sectors", shorttitle="The Strat TimeFrames Sectors", max_labels_count = 500, overlay=true)
 
-LIGHTTRANSP = 90
-AVGTRANSP = 80
-HEAVYTRANSP = 70
-
-var string _gp2 = 'Display'
-emptyTopTableRow = input.bool(true, title='Insert a blank table row at the top to gain more space', group=_gp2)
-bullishColor = input.color(color.new(color.green, 0), title='Bullish Color', group=_gp2)
-bearishColor = input.color(color.new(color.red, 0), title='Bearish Color', group=_gp2)
-tfTableOpacity = input.int(80, title='Multi time frame table opacity', group=_gp2)
-
-
-//##################################################################################################
-//Ticker Details
-//SPY, QQQ, VXX, SHM, IWM
-//XLK, XLE, XOP, XLF, XBI, XHB, XLB, XLC, XLI, XLP, XLRE, XLU, XLY, XLV, XRT
-//##################################################################################################
-var string _gp3 = 'Symbols'
-//symbol1 = input.symbol('SPY', group=_gp3)
-symbol1 = input.string('SPY', group=_gp3)
-symbol2 = input.string('QQQ', group=_gp3)
-symbol3 = input.string('VXX', group=_gp3)
-symbol4 = input.string('SMH', group=_gp3)
-symbol5 = input.string('IWM', group=_gp3)
+var string _gp1 = 'Display'
+bullishColor = input.color(color.new(color.green, 0), title='Bullish Color', group=_gp1)
+bearishColor = input.color(color.new(color.red, 0), title='Bearish Color', group=_gp1)
+tfTableOpacity = input.int(80, title='Multi time frame table opacity', group=_gp1)
 
 //##################################################################################################
 //Candle Type
@@ -88,50 +69,47 @@ getSecurityByTimeFrame(symbol,timeFrame) =>
     [openValue, closeValue, highValue, lowValue, timeValue, percentChange, resultColor]
 
 
-addTableRow(tcTable,symbol, row) =>
+addTableRow(tcTable,symbol1,symbol2,symbol3,symbol4,symbol5,symbol6,symbol7, row) =>
 
 
-    [openValue_15, closeValue_15, highValue_15, lowValue_15, timeValue_15, percentChange_15, resultColor_15] = getSecurityByTimeFrame(symbol,'15')
-    [openValue_30, closeValue_30, highValue_30, lowValue_30, timeValue_30, percentChange_30, resultColor_30] = getSecurityByTimeFrame(symbol,'30')
-    [openValue_60, closeValue_60, highValue_60, lowValue_60, timeValue_60, percentChange_60, resultColor_60] = getSecurityByTimeFrame(symbol,'60')
-    [openValue_1D, closeValue_1D, highValue_1D, lowValue_1D, timeValue_1D, percentChange_1D, resultColor_1D] = getSecurityByTimeFrame(symbol,'1D')
-    [openValue_1W, closeValue_1W, highValue_1W, lowValue_1W, timeValue_1W, percentChange_1W, resultColor_1W] = getSecurityByTimeFrame(symbol,'1W')
-    [openValue_1M, closeValue_1M, highValue_1M, lowValue_1M, timeValue_1M, percentChange_1M, resultColor_1M] = getSecurityByTimeFrame(symbol,'1M')
-    [openValue_3M, closeValue_3M, highValue_3M, lowValue_3M, timeValue_3M, percentChange_3M, resultColor_3M] = getSecurityByTimeFrame(symbol,'3M')
+    [openValue1, closeValue1, highValue1, lowValue1, timeValue1, percentChange1, resultColor1] = getSecurityByTimeFrame(symbol1,timeframe.period)
+    [openValue2, closeValue2, highValue2, lowValue2, timeValue2, percentChange2, resultColor2] = getSecurityByTimeFrame(symbol2,timeframe.period)
+    [openValue3, closeValue3, highValue3, lowValue3, timeValue3, percentChange3, resultColor3] = getSecurityByTimeFrame(symbol3,timeframe.period)
+    [openValue4, closeValue4, highValue4, lowValue4, timeValue4, percentChange4, resultColor4] = getSecurityByTimeFrame(symbol4,timeframe.period)
+    [openValue5, closeValue5, highValue5, lowValue5, timeValue5, percentChange5, resultColor5] = getSecurityByTimeFrame(symbol5,timeframe.period)
+    [openValue6, closeValue6, highValue6, lowValue6, timeValue6, percentChange6, resultColor6] = getSecurityByTimeFrame(symbol6,timeframe.period)
+    [openValue7, closeValue7, highValue7, lowValue7, timeValue7, percentChange7, resultColor7] = getSecurityByTimeFrame(symbol7,timeframe.period)
 
 
-    table.cell(table_id = tcTable, column = 0, row = row, text = symbol, bgcolor=color.new(resultColor_1D, tfTableOpacity), text_color=resultColor_1D, text_size=size.auto, width=0)
-    table.cell(table_id = tcTable, column = 1, row = row, text = '15' + '\n' + str.tostring(percentChange_15, '#.##') + '%', bgcolor=color.new(resultColor_15, tfTableOpacity), text_color=resultColor_15, text_size=size.auto, width=0)
-    table.cell(table_id = tcTable, column = 2, row = row, text = '30' + '\n' + str.tostring(percentChange_30, '#.##') + '%', bgcolor=color.new(resultColor_30, tfTableOpacity), text_color=resultColor_30, text_size=size.auto, width=0)
-    table.cell(table_id = tcTable, column = 3, row = row, text = '60' + '\n' + str.tostring(percentChange_60, '#.##') + '%', bgcolor=color.new(resultColor_60, tfTableOpacity), text_color=resultColor_60, text_size=size.auto, width=0)
-    table.cell(table_id = tcTable, column = 4, row = row, text = 'D' + '\n' + str.tostring(percentChange_1D, '#.##') + '%', bgcolor=color.new(resultColor_1D, tfTableOpacity), text_color=resultColor_1D, text_size=size.auto, width=0)
-    table.cell(table_id = tcTable, column = 5, row = row, text = 'W' + '\n' + str.tostring(percentChange_1W, '#.##') + '%', bgcolor=color.new(resultColor_1W, tfTableOpacity), text_color=resultColor_1W, text_size=size.auto, width=0)
-    table.cell(table_id = tcTable, column = 6, row = row, text = 'M' + '\n' + str.tostring(percentChange_1M, '#.##') + '%', bgcolor=color.new(resultColor_1M, tfTableOpacity), text_color=resultColor_1M, text_size=size.auto, width=0)
-    table.cell(table_id = tcTable, column = 7, row = row, text = '3M' + '\n' + str.tostring(percentChange_3M, '#.##') + '%', bgcolor=color.new(resultColor_3M, tfTableOpacity), text_color=resultColor_3M, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 0, row = row, text = symbol1 + '\n' + str.tostring(percentChange1, '#.##') + '%', bgcolor=color.new(resultColor1, tfTableOpacity), text_color=resultColor1, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 1, row = row, text = symbol2 + '\n' + str.tostring(percentChange2, '#.##') + '%', bgcolor=color.new(resultColor2, tfTableOpacity), text_color=resultColor2, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 2, row = row, text = symbol3 + '\n' + str.tostring(percentChange3, '#.##') + '%', bgcolor=color.new(resultColor3, tfTableOpacity), text_color=resultColor3, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 3, row = row, text = symbol4 + '\n' + str.tostring(percentChange4, '#.##') + '%', bgcolor=color.new(resultColor4, tfTableOpacity), text_color=resultColor4, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 4, row = row, text = symbol5 + '\n' + str.tostring(percentChange5, '#.##') + '%', bgcolor=color.new(resultColor5, tfTableOpacity), text_color=resultColor5, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 5, row = row, text = symbol6 + '\n' + str.tostring(percentChange6, '#.##') + '%', bgcolor=color.new(resultColor6, tfTableOpacity), text_color=resultColor6, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 6, row = row, text = symbol7 + '\n' + str.tostring(percentChange7, '#.##') + '%', bgcolor=color.new(resultColor7, tfTableOpacity), text_color=resultColor7, text_size=size.auto, width=0)
+
 
 //##################################################################################################
 //Ticker Details
-//SPY, QQQ, VXX, SHM, IWM
-//XLK, XLE, XOP, XLF, XBI, XHB, XLB, XLC, XLI, XLP, XLRE, XLU, XLY, XLV, XRT
+//SPY, QQQ, VXX, XBI, XHB, XLB, XLC, XLE, XLF, XLI, XLK, XLP, XLRE, XLU, XLY, XLV, XRT, XOP, IBB, IYT, TLT, SMH
 //##################################################################################################
 
 // do not show timeframes that are less than the time frame selected (it will be inaccurate)
 if barstate.islast
-    var table tcTable = table.new(position=position.top_right, columns = 9, rows = 6, border_width=3)
+    var table tcTable = table.new(position=position.top_right, columns = 7, rows = 25, border_width=3)
 
-    // table.cell(table_id = tcTable, column = 0, row = 0, text = '')
-    // table.cell(table_id = tcTable, column = 1, row = 0, text = '')
-    // table.cell(table_id = tcTable, column = 2, row = 0, text = '')
-    // table.cell(table_id = tcTable, column = 3, row = 0, text = '')
-    // table.cell(table_id = tcTable, column = 4, row = 0, text = '')
-    // table.cell(table_id = tcTable, column = 5, row = 0, text = '')
-    // table.cell(table_id = tcTable, column = 6, row = 0, text = '')
-    // table.cell(table_id = tcTable, column = 7, row = 0, text = '')
+    table.cell(table_id = tcTable, column = 0, row = 0, text = '')
+    table.cell(table_id = tcTable, column = 1, row = 0, text = '')
+    table.cell(table_id = tcTable, column = 2, row = 0, text = '')
+    table.cell(table_id = tcTable, column = 3, row = 0, text = '')
+    table.cell(table_id = tcTable, column = 4, row = 0, text = '')
+    table.cell(table_id = tcTable, column = 5, row = 0, text = '')
+    table.cell(table_id = tcTable, column = 6, row = 0, text = '')
 
-    addTableRow(tcTable,symbol1,1)
-    addTableRow(tcTable,symbol2,2)
-    addTableRow(tcTable,symbol3,3)
-    addTableRow(tcTable,symbol4,4)
-    addTableRow(tcTable,symbol5,5)
+    addTableRow(tcTable,"SPY","QQQ","VIX","DIA","IWM","SMH","XOP",1)
 
-    //ARKK, ARKQ, ARKX, ARKF, ARKG, ARKW, CTRU, PRNT
+    addTableRow(tcTable,"XLE","XLK","XLU","XBI","XHB","XLB","XLC",2)
+
+    //addTableRow(tcTable,"XLF","XLI","XLP","XLRE","XRT","XLY","XLV",3)
+
