@@ -9,22 +9,25 @@
 // ||                                                                                   ||
 // ||###################################################################################||
 
-indicator(title="The Strat Performance Monitor Sectors", shorttitle="The Strat Performance Monitor Sectors", max_labels_count = 500, overlay=false)
+indicator(title="The Strat Sector Performance Monitor", shorttitle="The Strat Sector Performance Monitor", max_labels_count = 500, overlay=true)
 
 LIGHTTRANSP = 90
 AVGTRANSP = 80
 HEAVYTRANSP = 70
 
-var string _gp1 = 'Display'
-emptyTopTableRow = input.bool(true, title='Insert a blank table row at the top to gain more space', group=_gp1)
-bullishColor = input.color(color.new(color.green, 0), title='Bullish Color', group=_gp1)
-bearishColor = input.color(color.new(color.red, 0), title='Bearish Color', group=_gp1)
-insideColor = input.color(color.new(color.white, 0), 'Inside Bar', inline='12', group=_gp1)
-outsideColor = input.color(color.new(color.yellow, 0), 'Outside Bar', inline='12', group=_gp1)
-tableYPositive = input.string('top', 'Panel position', inline='11', options=['top', 'middle', 'bottom'], group=_gp1)
-tableXPositive = input.string('right', '', inline='11', options=['left', 'center', 'right'], group=_gp1)
-indicatorTextSize = input.string('normal', 'Text Size', options=['tiny', 'small', 'normal', 'large', 'huge'], group=_gp1)
-tfTableOpacity = input.int(80, title='Multi time frame table opacity', group=_gp1)
+var string _gp1 = 'Time Interval'
+string i_time_interval = input.string('1D', '', inline='11', options=['1', '5', '15', '30', '60', '1D', '1W', '1M', '3M', '12M'], group=_gp1)
+
+var string _gp2 = 'Display'
+emptyTopTableRow = input.bool(true, title='Insert a blank table row at the top to gain more space', group=_gp2)
+bullishColor = input.color(color.new(color.green, 0), title='Bullish Color', group=_gp2)
+bearishColor = input.color(color.new(color.red, 0), title='Bearish Color', group=_gp2)
+insideColor = input.color(color.new(color.white, 0), 'Inside Bar', inline='12', group=_gp2)
+outsideColor = input.color(color.new(color.yellow, 0), 'Outside Bar', inline='12', group=_gp2)
+tableYPositive = input.string('top', 'Panel position', inline='11', options=['top', 'middle', 'bottom'], group=_gp2)
+tableXPositive = input.string('right', '', inline='11', options=['left', 'center', 'right'], group=_gp2)
+indicatorTextSize = input.string('normal', 'Text Size', options=['tiny', 'small', 'normal', 'large', 'huge'], group=_gp2)
+tfTableOpacity = input.int(80, title='Multi time frame table opacity', group=_gp2)
 
 //##################################################################################################
 //Candle Type
@@ -122,5 +125,8 @@ if barstate.islast
 
     addTableRow(tcTable,"XLE","XLK","XLU","XBI","XHB","XLB","XLC",2)
 
-    //addTableRow(tcTable,"XLF","XLI","XLP","XLRE","XRT","XLY","XLV",3)
+    addTableRow(tcTable,"XLF","XLI","XLP","XLRE","XLU","XLY","XLV",3)
 
+    addTableRow(tcTable,"XRT","XLU","IBB","IYT","TLT","ARKK","ARKQ",4)
+
+    addTableRow(tcTable,"ARKW","ARKG","ARKF","ARKX","TLT","ARKK","ARKQ",5)
