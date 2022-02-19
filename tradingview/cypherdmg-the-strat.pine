@@ -11,10 +11,17 @@
 indicator(title="The Strat", shorttitle="The Strat", max_labels_count = 500, overlay=true)
 
 
-bullishColor = input.color(color.new(color.green, 0), title='Bullish Candle color', group='Colors')
-bearishColor = input.color(color.new(color.red, 0), title='Bearish Candle color', group='Colors')
-insideColor = input.color(color.new(color.yellow, 0), title='Inside Candle color', group='Colors')
-outsideColor = input.color(color.new(color.fuchsia, 0), title='Outside Candle color', group='Colors')
+bullishColor = input.color(color.new(color.green, 0), title='Bullish Candle Color', group='Colors')
+bullishColorLabel = input.color(color.new(color.green, 0), title='Bullish Label Color', group='Colors')
+
+bearishColor = input.color(color.new(color.red, 0), title='Bearish Candle Color', group='Colors')
+bearishColorLabel = input.color(color.new(color.red, 0), title='Bearish Label Color', group='Colors')
+
+insideColor = input.color(color.new(color.yellow, 0), title='Inside Candle Color', group='Colors')
+insideColorLabel = input.color(color.new(color.yellow, 0), title='Inside Label Color', group='Colors')
+
+outsideColor = input.color(color.new(color.fuchsia, 0), title='Outside Candle Color', group='Colors')
+outsideColorLabel = input.color(color.new(color.fuchsia, 0), title='Outside Label Ccolor', group='Colors')
 
 ///////////////////////////////////////////////
 // END: user input
@@ -86,18 +93,18 @@ isOutsideCandleSeries(highSeries, lowSeries) =>
 //##################################################################################################
 
 // identify 1 candles with identifier below
-plotchar(isInsideCandle(0), title='One Bar', char='1', location=location.belowbar, color=insideColor)
+plotchar(isInsideCandle(0), title='One Bar', char='1', location=location.belowbar, color=insideColorLabel)
 
 // identify 2 up candle with identifier below and indicator above
-plotshape(isTwoUpCandle(0), style=shape.arrowup, title='Two Up Bar Shape', location=location.abovebar, color=bullishColor)
-plotchar(isTwoUpCandle(0), title='Two Up Bar', char='2', location=location.belowbar, color=bullishColor)
+plotshape(isTwoUpCandle(0), style=shape.arrowup, title='Two Up Bar Shape', location=location.abovebar, color=bullishColorLabel)
+plotchar(isTwoUpCandle(0), title='Two Up Bar', char='2', location=location.belowbar, color=bullishColorLabel)
 
 // identify 2 down candle with identifier below and indicator above
-plotshape(isTwoDownCandle(0), style=shape.arrowdown, title='Two Bar Shape', location=location.abovebar, color=bearishColor)
-plotchar(isTwoDownCandle(0), title='Two Down Bar', char='2', location=location.belowbar, color=bearishColor)
+plotshape(isTwoDownCandle(0), style=shape.arrowdown, title='Two Bar Shape', location=location.abovebar, color=bearishColorLabel)
+plotchar(isTwoDownCandle(0), title='Two Down Bar', char='2', location=location.belowbar, color=bearishColorLabel)
 
 // identify 3 candle with indentifier below
-plotchar(isOutsideCandle(0), title='Three Bar', char='3', location=location.belowbar, color=outsideColor)
+plotchar(isOutsideCandle(0), title='Three Bar', char='3', location=location.belowbar, color=outsideColorLabel)
 
 //##################################################################################################
 // Change Bar Color
@@ -109,3 +116,5 @@ _isGreenCandle = isGreenCandle(0)
 _isRedCandle = isRedCandle(0)
 
 barcolor(color=_isInsideCandle? insideColor : _isOutsideCandle? outsideColor : _isGreenCandle? bullishColor : _isRedCandle? bearishColor : na,offset=0,editable=true)
+// _barColor=_isInsideCandle? insideColor : _isOutsideCandle? outsideColor : open < close ? color.green : color.red
+// plotcandle(open=open, high=high, low=low, close=close, color = _barColor, bordercolor=open < close ? color.green : color.red, wickcolor=color.black)
