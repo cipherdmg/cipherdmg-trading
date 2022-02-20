@@ -23,6 +23,9 @@ insideColorLabel = input.color(color.new(color.yellow, 0), title='Inside Label C
 outsideColor = input.color(color.new(color.fuchsia, 0), title='Outside Candle Color', group='Colors')
 outsideColorLabel = input.color(color.new(color.fuchsia, 0), title='Outside Label Ccolor', group='Colors')
 
+insideCandleColor = input.bool(true, title='Use Inside Candle Color', group='Enable Candle Colors')
+outsideCandleColor = input.bool(true, title='Use Outside Candle Color', group='Enable Candle Colors')
+
 ///////////////////////////////////////////////
 // END: user input
 ///////////////////////////////////////////////
@@ -115,6 +118,6 @@ _isOutsideCandle = isOutsideCandle(0)
 _isGreenCandle = isGreenCandle(0)
 _isRedCandle = isRedCandle(0)
 
-barcolor(color=_isInsideCandle? insideColor : _isOutsideCandle? outsideColor : _isGreenCandle? bullishColor : _isRedCandle? bearishColor : na,offset=0,editable=true)
+barcolor(color=_isInsideCandle and insideCandleColor? insideColor : _isOutsideCandle and outsideCandleColor ? outsideColor : _isGreenCandle? bullishColor : _isRedCandle? bearishColor : na,offset=0,editable=true)
 // _barColor=_isInsideCandle? insideColor : _isOutsideCandle? outsideColor : open < close ? color.green : color.red
 // plotcandle(open=open, high=high, low=low, close=close, color = _barColor, bordercolor=open < close ? color.green : color.red, wickcolor=color.black)

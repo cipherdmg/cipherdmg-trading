@@ -10,10 +10,13 @@
 
 indicator(title="The Strat TimeFrames Sectors", shorttitle="The Strat TimeFrames Sectors", max_labels_count = 500, overlay=true)
 
-var string _gp1 = 'Display'
-bullishColor = input.color(color.new(color.green, 0), title='Bullish Color', group=_gp1)
-bearishColor = input.color(color.new(color.red, 0), title='Bearish Color', group=_gp1)
-tfTableOpacity = input.int(80, title='Multi time frame table opacity', group=_gp1)
+bullishColor = input.color(color.new(color.green, 0), title='Bullish Color', group="Time Frame Continuation Colors")
+bearishColor = input.color(color.new(color.red, 0), title='Bearish Color', group="Time Frame Continuation Colors")
+
+bullishTextColor = input.color(color.new(color.green, 0), title='Bullish Text Color', group='Time Frame Continuation Colors')
+bearishTextColor = input.color(color.new(color.red, 0), title='Bearish Text Color', group='Time Frame Continuation Colors')
+
+tfTableOpacity = input.int(80, title='Multi time frame table opacity', group="Time Frame Continuation Colors")
 
 //##################################################################################################
 //Candle Type
@@ -58,36 +61,37 @@ getPercentChange(openPrice,closePrice) =>
     //The Percent Change will be the closePrice - openPrice / (max (openPrice, closePrice))
     percentChange = ((closePrice - openPrice) / (math.max(openPrice,closePrice)) ) * 100.0
     resultColor = openPrice >= closePrice ? bearishColor : bullishColor
-    [percentChange,resultColor]
+    resultTextColor = openPrice >= closePrice ? bearishTextColor : bullishTextColor
+    [percentChange,resultTextColor,resultColor]
 
 // FULL TIME FRAME CONTINUITY CODE:
 //reusable function for getting detail on the security
 getSecurityByTimeFrame(symbol,timeFrame) =>
     [openValue, closeValue, highValue, lowValue, timeValue] = request.security(symbol = symbol, timeframe = timeFrame, expression = [open, close, high, low, time], gaps = barmerge.gaps_off)
 
-    [percentChange,resultColor] = getPercentChange(openValue,closeValue)
-    [openValue, closeValue, highValue, lowValue, timeValue, percentChange, resultColor]
+    [percentChange,resultTextColor, resultColor] = getPercentChange(openValue,closeValue)
+    [openValue, closeValue, highValue, lowValue, timeValue, percentChange, resultTextColor, resultColor]
 
 
 addTableRow(tcTable,symbol1,symbol2,symbol3,symbol4,symbol5,symbol6,symbol7, row) =>
 
 
-    [openValue1, closeValue1, highValue1, lowValue1, timeValue1, percentChange1, resultColor1] = getSecurityByTimeFrame(symbol1,timeframe.period)
-    [openValue2, closeValue2, highValue2, lowValue2, timeValue2, percentChange2, resultColor2] = getSecurityByTimeFrame(symbol2,timeframe.period)
-    [openValue3, closeValue3, highValue3, lowValue3, timeValue3, percentChange3, resultColor3] = getSecurityByTimeFrame(symbol3,timeframe.period)
-    [openValue4, closeValue4, highValue4, lowValue4, timeValue4, percentChange4, resultColor4] = getSecurityByTimeFrame(symbol4,timeframe.period)
-    [openValue5, closeValue5, highValue5, lowValue5, timeValue5, percentChange5, resultColor5] = getSecurityByTimeFrame(symbol5,timeframe.period)
-    [openValue6, closeValue6, highValue6, lowValue6, timeValue6, percentChange6, resultColor6] = getSecurityByTimeFrame(symbol6,timeframe.period)
-    [openValue7, closeValue7, highValue7, lowValue7, timeValue7, percentChange7, resultColor7] = getSecurityByTimeFrame(symbol7,timeframe.period)
+    [openValue1, closeValue1, highValue1, lowValue1, timeValue1, percentChange1, resultTextColor1, resultColor1] = getSecurityByTimeFrame(symbol1,timeframe.period)
+    [openValue2, closeValue2, highValue2, lowValue2, timeValue2, percentChange2, resultTextColor2, resultColor2] = getSecurityByTimeFrame(symbol2,timeframe.period)
+    [openValue3, closeValue3, highValue3, lowValue3, timeValue3, percentChange3, resultTextColor3, resultColor3] = getSecurityByTimeFrame(symbol3,timeframe.period)
+    [openValue4, closeValue4, highValue4, lowValue4, timeValue4, percentChange4, resultTextColor4, resultColor4] = getSecurityByTimeFrame(symbol4,timeframe.period)
+    [openValue5, closeValue5, highValue5, lowValue5, timeValue5, percentChange5, resultTextColor5, resultColor5] = getSecurityByTimeFrame(symbol5,timeframe.period)
+    [openValue6, closeValue6, highValue6, lowValue6, timeValue6, percentChange6, resultTextColor6, resultColor6] = getSecurityByTimeFrame(symbol6,timeframe.period)
+    [openValue7, closeValue7, highValue7, lowValue7, timeValue7, percentChange7, resultTextColor7, resultColor7] = getSecurityByTimeFrame(symbol7,timeframe.period)
 
 
-    table.cell(table_id = tcTable, column = 0, row = row, text = symbol1 + '\n' + str.tostring(percentChange1, '#.##') + '%', bgcolor=color.new(resultColor1, tfTableOpacity), text_color=resultColor1, text_size=size.auto, width=0)
-    table.cell(table_id = tcTable, column = 1, row = row, text = symbol2 + '\n' + str.tostring(percentChange2, '#.##') + '%', bgcolor=color.new(resultColor2, tfTableOpacity), text_color=resultColor2, text_size=size.auto, width=0)
-    table.cell(table_id = tcTable, column = 2, row = row, text = symbol3 + '\n' + str.tostring(percentChange3, '#.##') + '%', bgcolor=color.new(resultColor3, tfTableOpacity), text_color=resultColor3, text_size=size.auto, width=0)
-    table.cell(table_id = tcTable, column = 3, row = row, text = symbol4 + '\n' + str.tostring(percentChange4, '#.##') + '%', bgcolor=color.new(resultColor4, tfTableOpacity), text_color=resultColor4, text_size=size.auto, width=0)
-    table.cell(table_id = tcTable, column = 4, row = row, text = symbol5 + '\n' + str.tostring(percentChange5, '#.##') + '%', bgcolor=color.new(resultColor5, tfTableOpacity), text_color=resultColor5, text_size=size.auto, width=0)
-    table.cell(table_id = tcTable, column = 5, row = row, text = symbol6 + '\n' + str.tostring(percentChange6, '#.##') + '%', bgcolor=color.new(resultColor6, tfTableOpacity), text_color=resultColor6, text_size=size.auto, width=0)
-    table.cell(table_id = tcTable, column = 6, row = row, text = symbol7 + '\n' + str.tostring(percentChange7, '#.##') + '%', bgcolor=color.new(resultColor7, tfTableOpacity), text_color=resultColor7, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 0, row = row, text = symbol1 + '\n' + str.tostring(percentChange1, '#.##') + '%', bgcolor=color.new(resultColor1, tfTableOpacity), text_color=resultTextColor1, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 1, row = row, text = symbol2 + '\n' + str.tostring(percentChange2, '#.##') + '%', bgcolor=color.new(resultColor2, tfTableOpacity), text_color=resultTextColor2, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 2, row = row, text = symbol3 + '\n' + str.tostring(percentChange3, '#.##') + '%', bgcolor=color.new(resultColor3, tfTableOpacity), text_color=resultTextColor3, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 3, row = row, text = symbol4 + '\n' + str.tostring(percentChange4, '#.##') + '%', bgcolor=color.new(resultColor4, tfTableOpacity), text_color=resultTextColor4, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 4, row = row, text = symbol5 + '\n' + str.tostring(percentChange5, '#.##') + '%', bgcolor=color.new(resultColor5, tfTableOpacity), text_color=resultTextColor5, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 5, row = row, text = symbol6 + '\n' + str.tostring(percentChange6, '#.##') + '%', bgcolor=color.new(resultColor6, tfTableOpacity), text_color=resultTextColor6, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 6, row = row, text = symbol7 + '\n' + str.tostring(percentChange7, '#.##') + '%', bgcolor=color.new(resultColor7, tfTableOpacity), text_color=resultTextColor7, text_size=size.auto, width=0)
 
 
 //##################################################################################################

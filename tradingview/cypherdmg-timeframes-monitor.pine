@@ -12,14 +12,16 @@ indicator(title="The Strat TimeFrames", shorttitle="The Strat TimeFrames", max_l
 //User Inputs
 //##################################################################################################
 
-bullishColor = input.color(color.new(color.green, 0), title='Bullish Candle Color', group='Time Frame Continuation Colors')
-bearishColor = input.color(color.new(color.red, 0), title='Bearish Candle Color', group='Time Frame Continuation Colors')
+bullishColor = input.color(color.new(color.green, 0), title='Bullish Candle Color', group='Timeframe Continuity Colors')
+bullishTextColor = input.color(color.new(color.green, 0), title='Bullish Text Color', group='Timeframe Continuity Colors')
 
-bullishTextColor = input.color(color.new(color.green, 0), title='Bullish Text Color', group='Time Frame Continuation Colors')
-bearishTextColor = input.color(color.new(color.red, 0), title='Bearish Text Color', group='Time Frame Continuation Colors')
+bearishColor = input.color(color.new(color.red, 0), title='Bearish Candle Color', group='Timeframe Continuity Colors')
+bearishTextColor = input.color(color.new(color.red, 0), title='Bearish Text Color', group='Timeframe Continuity Colors')
 
-atrTextColor = input.color(color.new(color.white, 0), title='ATR Text Color', group='')
-tfTableOpacity = input.int(80, title='Multi time frame table opacity', group='Time Frame Continuation Colors')
+atrColor = input.color(color.new(color.gray, 0), title='ATR Candle Color', group='Timeframe Continuity Colors')
+atrTextColor = input.color(color.new(color.white, 0), title='ATR Text Color', group='Timeframe Continuity Colors')
+
+tfTableOpacity = input.int(80, title='Multi time frame table opacity', group='Timeframe Continuity Colors')
 
 cellWidth = input.int(3, title='Cell Width', group='Time Frame Continuation Table')
 isTfEnabled = input.bool(true, title='Time Frame Continuity Panel Enabled', group='Time Frame Continuation')
@@ -117,10 +119,10 @@ if barstate.islast and isTfEnabled
 
             if showDTRAndATR
                 table.cell(table_id = tcTable, column = 7, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 7, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 7, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
                 table.cell(table_id = tcTable, column = 8, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 8, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 8, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
         else
             var table tcTable = table.new(position=position.top_right, columns = 9, rows = 1, border_width=cellWidth)
@@ -140,9 +142,9 @@ if barstate.islast and isTfEnabled
             table.cell(table_id = tcTable, column = 6, row = 0, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MTextColor, text_size=size.auto, width=0)
 
             if showDTRAndATR
-                table.cell(table_id = tcTable, column = 7, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 7, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
-                table.cell(table_id = tcTable, column = 8, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 8, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
     else if is30ValidTimeFrame
         if emptyTopTableRow
@@ -168,10 +170,10 @@ if barstate.islast and isTfEnabled
 
             if showDTRAndATR
                 table.cell(table_id = tcTable, column = 6, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 6, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 6, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
                 table.cell(table_id = tcTable, column = 7, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 7, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 7, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
         else
             var table tcTable = table.new(position=position.top_right, columns = 8, rows = 1, border_width=cellWidth)
@@ -189,9 +191,9 @@ if barstate.islast and isTfEnabled
             table.cell(table_id = tcTable, column = 5, row = 0, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MTextColor, text_size=size.auto, width=0)
 
             if showDTRAndATR
-                table.cell(table_id = tcTable, column = 6, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 6, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
-                table.cell(table_id = tcTable, column = 7, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 7, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
     else if isHourValidTimeFrame
 
@@ -215,10 +217,10 @@ if barstate.islast and isTfEnabled
 
             if showDTRAndATR
                 table.cell(table_id = tcTable, column = 5, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 5, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 5, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
                 table.cell(table_id = tcTable, column = 6, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 6, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 6, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
         else
             var table tcTable = table.new(position=position.top_right, columns = 7, rows = 1, border_width=cellWidth)
@@ -234,9 +236,9 @@ if barstate.islast and isTfEnabled
             table.cell(table_id = tcTable, column = 4, row = 0, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MTextColor, text_size=size.auto, width=0)
 
             if showDTRAndATR
-                table.cell(table_id = tcTable, column = 5, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 5, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
-                table.cell(table_id = tcTable, column = 6, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 6, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
 
     else if isDayValidTimeFrame
@@ -257,10 +259,10 @@ if barstate.islast and isTfEnabled
 
             if showDTRAndATR
                 table.cell(table_id = tcTable, column = 4, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 4, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 4, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
                 table.cell(table_id = tcTable, column = 5, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 5, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 5, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
         else
             var table tcTable = table.new(position=position.top_right, columns = 6, rows = 1, border_width=cellWidth)
@@ -274,9 +276,9 @@ if barstate.islast and isTfEnabled
             table.cell(table_id = tcTable, column = 3, row = 0, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MTextColor, text_size=size.auto, width=0)
 
             if showDTRAndATR
-                table.cell(table_id = tcTable, column = 4, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 4, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
-                table.cell(table_id = tcTable, column = 5, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 5, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
 
     else if isWeekValidTimeFrame
@@ -294,10 +296,10 @@ if barstate.islast and isTfEnabled
 
             if showDTRAndATR
                 table.cell(table_id = tcTable, column = 3, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 3, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 3, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
                 table.cell(table_id = tcTable, column = 4, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 4, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 4, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
         else
             var table tcTable = table.new(position=position.top_right, columns = 5, rows = 1, border_width=cellWidth)
@@ -309,9 +311,9 @@ if barstate.islast and isTfEnabled
             table.cell(table_id = tcTable, column = 2, row = 0, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MTextColor, text_size=size.auto, width=0)
 
             if showDTRAndATR
-                table.cell(table_id = tcTable, column = 3, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 3, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
-                table.cell(table_id = tcTable, column = 4, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 4, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
 
     else if isMonthValidTimeFrame
@@ -326,10 +328,10 @@ if barstate.islast and isTfEnabled
 
             if showDTRAndATR
                 table.cell(table_id = tcTable, column = 2, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 2, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 2, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
                 table.cell(table_id = tcTable, column = 3, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 3, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 3, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
         else
             var table tcTable = table.new(position=position.top_right, columns = 4, rows = 1, border_width=cellWidth)
@@ -339,9 +341,9 @@ if barstate.islast and isTfEnabled
             table.cell(table_id = tcTable, column = 1, row = 0, text = '3M' + '\n' + str.tostring(tf3MChg, '#.##') + '%', bgcolor=color.new(tf3MColor, tfTableOpacity), text_color=tf3MTextColor, text_size=size.auto, width=0)
 
             if showDTRAndATR
-                table.cell(table_id = tcTable, column = 2, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 2, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
-                table.cell(table_id = tcTable, column = 3, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 3, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
     else if isQuarterValidTimeFrame
 
@@ -350,16 +352,16 @@ if barstate.islast and isTfEnabled
 
             if showDTRAndATR
                 table.cell(table_id = tcTable, column = 0, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 0, row = 1, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
                 table.cell(table_id = tcTable, column = 1, row = 0, text = '')
-                table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 1, row = 1, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
         else
             var table tcTable = table.new(position=position.top_right, columns = 2, rows = 1, border_width=cellWidth)
 
             if showDTRAndATR
-                table.cell(table_id = tcTable, column = 0, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 0, row = 0, text = 'DTR' + '\n' + str.tostring(cdayhigh - cdaylow, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
-                table.cell(table_id = tcTable, column = 1, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(color.gray, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
+                table.cell(table_id = tcTable, column = 1, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
