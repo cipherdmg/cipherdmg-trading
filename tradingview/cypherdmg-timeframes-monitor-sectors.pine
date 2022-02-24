@@ -83,7 +83,7 @@ addTableRow(tcTable,symbol1,symbol2,symbol3,symbol4,symbol5,symbol6,symbol7,symb
     [openValue5, closeValue5, highValue5, lowValue5, timeValue5, percentChange5, resultTextColor5, resultColor5] = getSecurityByTimeFrame(symbol5,timeframe.period)
     [openValue6, closeValue6, highValue6, lowValue6, timeValue6, percentChange6, resultTextColor6, resultColor6] = getSecurityByTimeFrame(symbol6,timeframe.period)
     [openValue7, closeValue7, highValue7, lowValue7, timeValue7, percentChange7, resultTextColor7, resultColor7] = getSecurityByTimeFrame(symbol7,timeframe.period)
-    [openValue8, closeValue8, highValue8, lowValue8, timeValue8, percentChange8, resultTextColor8, resultColor8] = getSecurityByTimeFrame(symbol7,timeframe.period)
+    [openValue8, closeValue8, highValue8, lowValue8, timeValue8, percentChange8, resultTextColor8, resultColor8] = getSecurityByTimeFrame(symbol8,timeframe.period)
 
 
     table.cell(table_id = tcTable, column = 0, row = row, text = symbol1 + '\n' + str.tostring(percentChange1, '#.##') + '%', bgcolor=color.new(resultColor1, tfTableOpacity), text_color=resultTextColor1, text_size=size.auto, width=0)
