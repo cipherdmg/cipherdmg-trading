@@ -11,9 +11,9 @@
 indicator(title="The Strat TimeFrames Sectors", shorttitle="The Strat TimeFrames Sectors", max_labels_count = 500, overlay=true)
 
 bullishColor = input.color(color.new(color.green, 0), title='Bullish Color', group="Time Frame Continuation Colors")
-bearishColor = input.color(color.new(color.red, 0), title='Bearish Color', group="Time Frame Continuation Colors")
-
 bullishTextColor = input.color(color.new(color.green, 0), title='Bullish Text Color', group='Time Frame Continuation Colors')
+
+bearishColor = input.color(color.new(color.red, 0), title='Bearish Color', group="Time Frame Continuation Colors")
 bearishTextColor = input.color(color.new(color.red, 0), title='Bearish Text Color', group='Time Frame Continuation Colors')
 
 tfTableOpacity = input.int(80, title='Multi time frame table opacity', group="Time Frame Continuation Colors")
@@ -73,7 +73,7 @@ getSecurityByTimeFrame(symbol,timeFrame) =>
     [openValue, closeValue, highValue, lowValue, timeValue, percentChange, resultTextColor, resultColor]
 
 
-addTableRow(tcTable,symbol1,symbol2,symbol3,symbol4,symbol5,symbol6,symbol7, row) =>
+addTableRow(tcTable,symbol1,symbol2,symbol3,symbol4,symbol5,symbol6,symbol7,symbol8, row) =>
 
 
     [openValue1, closeValue1, highValue1, lowValue1, timeValue1, percentChange1, resultTextColor1, resultColor1] = getSecurityByTimeFrame(symbol1,timeframe.period)
@@ -83,6 +83,7 @@ addTableRow(tcTable,symbol1,symbol2,symbol3,symbol4,symbol5,symbol6,symbol7, row
     [openValue5, closeValue5, highValue5, lowValue5, timeValue5, percentChange5, resultTextColor5, resultColor5] = getSecurityByTimeFrame(symbol5,timeframe.period)
     [openValue6, closeValue6, highValue6, lowValue6, timeValue6, percentChange6, resultTextColor6, resultColor6] = getSecurityByTimeFrame(symbol6,timeframe.period)
     [openValue7, closeValue7, highValue7, lowValue7, timeValue7, percentChange7, resultTextColor7, resultColor7] = getSecurityByTimeFrame(symbol7,timeframe.period)
+    [openValue8, closeValue8, highValue8, lowValue8, timeValue8, percentChange8, resultTextColor8, resultColor8] = getSecurityByTimeFrame(symbol7,timeframe.period)
 
 
     table.cell(table_id = tcTable, column = 0, row = row, text = symbol1 + '\n' + str.tostring(percentChange1, '#.##') + '%', bgcolor=color.new(resultColor1, tfTableOpacity), text_color=resultTextColor1, text_size=size.auto, width=0)
@@ -92,6 +93,7 @@ addTableRow(tcTable,symbol1,symbol2,symbol3,symbol4,symbol5,symbol6,symbol7, row
     table.cell(table_id = tcTable, column = 4, row = row, text = symbol5 + '\n' + str.tostring(percentChange5, '#.##') + '%', bgcolor=color.new(resultColor5, tfTableOpacity), text_color=resultTextColor5, text_size=size.auto, width=0)
     table.cell(table_id = tcTable, column = 5, row = row, text = symbol6 + '\n' + str.tostring(percentChange6, '#.##') + '%', bgcolor=color.new(resultColor6, tfTableOpacity), text_color=resultTextColor6, text_size=size.auto, width=0)
     table.cell(table_id = tcTable, column = 6, row = row, text = symbol7 + '\n' + str.tostring(percentChange7, '#.##') + '%', bgcolor=color.new(resultColor7, tfTableOpacity), text_color=resultTextColor7, text_size=size.auto, width=0)
+    table.cell(table_id = tcTable, column = 7, row = row, text = symbol8 + '\n' + str.tostring(percentChange8, '#.##') + '%', bgcolor=color.new(resultColor8, tfTableOpacity), text_color=resultTextColor8, text_size=size.auto, width=0)
 
 
 //##################################################################################################
@@ -101,7 +103,7 @@ addTableRow(tcTable,symbol1,symbol2,symbol3,symbol4,symbol5,symbol6,symbol7, row
 
 // do not show timeframes that are less than the time frame selected (it will be inaccurate)
 if barstate.islast
-    var table tcTable = table.new(position=position.top_right, columns = 7, rows = 25, border_width=3)
+    var table tcTable = table.new(position=position.top_right, columns = 8, rows = 25, border_width=3)
 
     table.cell(table_id = tcTable, column = 0, row = 0, text = '')
     table.cell(table_id = tcTable, column = 1, row = 0, text = '')
@@ -110,10 +112,11 @@ if barstate.islast
     table.cell(table_id = tcTable, column = 4, row = 0, text = '')
     table.cell(table_id = tcTable, column = 5, row = 0, text = '')
     table.cell(table_id = tcTable, column = 6, row = 0, text = '')
+    table.cell(table_id = tcTable, column = 7, row = 0, text = '')
 
-    addTableRow(tcTable,"SPY","QQQ","VIX","DIA","IWM","SMH","XOP",1)
+    addTableRow(tcTable,"SPY","QQQ","VIX","DIA","IWM","SMH","XOP","XLE",1)
 
-    addTableRow(tcTable,"XLE","XLK","XLU","XBI","XHB","XLB","XLC",2)
+    addTableRow(tcTable,"XLP","XLK","XLU","XBI","XHB","XLB","XLC","XLY",2)
 
     //addTableRow(tcTable,"XLF","XLI","XLP","XLRE","XRT","XLY","XLV",3)
 
