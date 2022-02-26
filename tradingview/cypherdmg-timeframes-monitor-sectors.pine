@@ -114,9 +114,9 @@ if barstate.islast
     table.cell(table_id = tcTable, column = 6, row = 0, text = '')
     table.cell(table_id = tcTable, column = 7, row = 0, text = '')
 
-    addTableRow(tcTable,"SPY","QQQ","VIX","DIA","IWM","SMH","XOP","XLE",1)
+    addTableRow(tcTable,"SPY","QQQ","VIX","DIA","IWM","SMH","XLK","XLC",1)
 
-    addTableRow(tcTable,"XLP","XLK","XLU","XBI","XHB","XLB","XLC","XLY",2)
+    addTableRow(tcTable,"XOP","XLE","XLP","XLU","XBI","XHB","XLB","XLY",2)
 
     //addTableRow(tcTable,"XLF","XLI","XLP","XLRE","XRT","XLY","XLV",3)
 
