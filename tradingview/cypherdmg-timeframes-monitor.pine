@@ -365,3 +365,19 @@ if barstate.islast and isTfEnabled
 
                 table.cell(table_id = tcTable, column = 1, row = 0, text = 'ATR' + '\n' + str.tostring(dAtr, '#.##'), bgcolor=color.new(atrColor, tfTableOpacity), text_color=atrTextColor, text_size=size.auto, width=0)
 
+// // previous high low lines
+// if (timeframe.isintraday or timeframe.isdaily)
+//     highDayLine = line.new(x1=timeDayValue[1], y1=highDayValue[1], x2=time, xloc=xloc.bar_time, y2=highDayValue[1], extend=extend.right, color=color.green, style=line.style_dashed, width=1)
+//     line.delete(highDayLine[1])
+
+// if (timeframe.isintraday or timeframe.isdaily)
+//     lowDayLine = line.new(x1=timeDayValue[1], y1=lowDayValue[1], x2=time, xloc=xloc.bar_time, y2=lowDayValue[1], extend=extend.right, color=color.red, style=line.style_dashed, width=1)
+//     line.delete(lowDayLine[1])
+
+// if (timeframe.isintraday or timeframe.isdaily or timeframe.isweekly)
+//     highWeekLine = line.new(x1=timeDayValue[1], y1=highWeekValue[1], x2=time, xloc=xloc.bar_time, y2=highWeekValue[1], extend=extend.right, color=color.green, style=line.style_dashed, width=1)
+//     line.delete(highWeekLine[1])
+
+// if (timeframe.isintraday or timeframe.isdaily or timeframe.isweekly)
+//     lowWeekLine = line.new(x1=timeDayValue[1], y1=lowWeekValue[1], x2=time, xloc=xloc.bar_time, y2=lowWeekValue[1], extend=extend.right, color=color.red, style=line.style_dashed, width=1)
+//     line.delete(lowWeekLine[1])
